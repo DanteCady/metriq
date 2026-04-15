@@ -26,7 +26,9 @@ export * from "./components/evaluation-breakdown";
 
 export * from "./components/ui/badge";
 export * from "./components/ui/button";
+export * from "./components/ui/input";
 export * from "./components/ui/progress-bar";
 export * from "./components/ui/score-badge";
 export * from "./components/ui/tabs";
+export * from "./components/ui/textarea";
 
