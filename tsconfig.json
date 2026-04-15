@@ -1,0 +1,12 @@
+{
+  "extends": "./packages/config/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@metriq/ui/*": ["packages/ui/src/*"],
+      "@metriq/types/*": ["packages/types/src/*"],
+      "@metriq/validators/*": ["packages/validators/src/*"]
+    }
+  }
+}
+
