@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "../lib/cn";
+import { Surface } from "./surface";
 
 export type PageHeaderProps = {
   title: string;
@@ -31,7 +32,7 @@ export type PageSectionProps = {
 
 export function PageSection({ title, description, children, className }: PageSectionProps) {
   return (
-    <section className={cn("rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950", className)}>
+    <Surface as="section" className={cn("p-5", className)}>
       {title ? (
         <div className="mb-4">
           <div className="text-sm font-semibold">{title}</div>
@@ -39,7 +40,7 @@ export function PageSection({ title, description, children, className }: PageSec
         </div>
       ) : null}
       {children}
-    </section>
+    </Surface>
   );
 }
 
