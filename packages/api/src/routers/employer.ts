@@ -3,7 +3,7 @@ import { z } from "zod";
 import { candidateQueries, evaluationQueries, submissionQueries } from "@metriq/db";
 import { talentPoolFiltersSchema } from "@metriq/validators";
 
-import { createTRPCRouter, publicProcedure } from "../trpc.js";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const employerRouter = createTRPCRouter({
   listTalentPool: publicProcedure.input(talentPoolFiltersSchema).query(async ({ ctx, input }) => {

@@ -1,7 +1,7 @@
 import type { Kysely } from "kysely";
 
-import type { DbScope } from "../scope.js";
-import type { Database, NewEvaluation, NewScoreBreakdown, Uuid } from "../types.js";
+import type { DbScope } from "../scope";
+import type { Database, NewEvaluation, NewScoreBreakdown, Uuid } from "../types";
 
 export async function getEvaluationBySubmissionId(
   db: Kysely<Database>,

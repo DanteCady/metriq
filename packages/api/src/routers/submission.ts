@@ -3,7 +3,7 @@ import { z } from "zod";
 import { evaluationQueries, submissionQueries } from "@metriq/db";
 import { submitSubmissionSchema, upsertArtifactSchema } from "@metriq/validators";
 
-import { createTRPCRouter, publicProcedure } from "../trpc.js";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const submissionRouter = createTRPCRouter({
   getSubmission: publicProcedure

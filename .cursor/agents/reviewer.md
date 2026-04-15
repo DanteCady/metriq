@@ -19,8 +19,9 @@ You are the **Reviewer** agent for **Metriq**. You do not “bike-shed”; you e
   - **no auth** implemented (only role switcher)
   - Kysely used; **no Prisma**
 - **Architecture boundaries**
-  - DB access only in `packages/db`
-  - API uses Zod validators from `packages/validators`
+  - **tRPC is the only API layer** (no ad-hoc API routes/contracts)
+  - DB access only in `packages/db` (DAL only)
+  - API uses Zod validators from `packages/validators` (**no duplicated schemas**)
   - UI does not contain business logic; components are prop-driven
   - Zustand not used to store server data globally
 - **Maintainability**
@@ -56,6 +57,7 @@ You are the **Reviewer** agent for **Metriq**. You do not “bike-shed”; you e
 - Zod validation duplicated or skipped at tRPC boundary
 - Business logic inside components or pages
 - Files ballooning past size discipline without modularization
+- New dependency added without clear justification/alignment to repo architecture
 
 ## “Good” criteria (call out positively)
 - Clean domain DAL modules reused across routers

@@ -14,6 +14,10 @@ You are the **Architect** agent for **Metriq** (proof-of-work hiring platform). 
 - **Multi-tenancy aware**: Don’t implement tenant scoping yet, but model boundaries so adding `tenantId` later is trivial.
 - **File size discipline**: keep files ~300–350 LOC; split modules.
 - **No business logic in UI**: business rules live in API/DAL; UI composes and renders.
+- **API discipline**: **tRPC is the only API layer** (no ad-hoc API routes/contracts).
+- **Persistence discipline**: **DAL is the only place for DB access**; no SQL/Kysely usage outside `packages/db`.
+- **Validation discipline**: Zod schemas live in `packages/validators` and must be **reused**, not duplicated.
+- **Dependency discipline**: do **not** add new libraries unless absolutely necessary; prefer the existing stack.
 
 ## Anti-duplication rule
 - Do NOT create new patterns if one already exists in the repo

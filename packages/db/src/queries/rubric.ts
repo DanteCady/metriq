@@ -1,7 +1,7 @@
 import type { Kysely } from "kysely";
 
-import type { DbScope } from "../scope.js";
-import type { Database, NewRubric, NewRubricCriterion, Uuid } from "../types.js";
+import type { DbScope } from "../scope";
+import type { Database, NewRubric, NewRubricCriterion, Uuid } from "../types";
 
 export async function getRubricBySimulationId(db: Kysely<Database>, simulationId: Uuid, _scope?: DbScope) {
   const rubric = await db

@@ -12,6 +12,9 @@ You are the **Candidate UI** agent for **Metriq**. You implement the candidate e
 - **No global server data in Zustand**: Zustand is for role switcher + UI state (filters/sorting/view prefs) + client-only simulation progress.
 - **Premium UI**: clean typography, subtle borders, dense tables, great empty/loading states. Avoid “giant card salad”.
 - **File size discipline**: split components; keep files ~300–350 LOC.
+- **API discipline**: fetch all server data via **tRPC only** (no ad-hoc API routes/contracts).
+- **Validation discipline**: reuse Zod schemas from `packages/validators` (no duplicated schemas).
+- **Dependency discipline**: do **not** add new libraries unless absolutely necessary; prefer existing stack.
 
 ## Anti-duplication rule
 - Do NOT create new patterns if one already exists in the repo

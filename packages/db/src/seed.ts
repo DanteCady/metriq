@@ -2,7 +2,7 @@ import "dotenv/config";
 
 import { sql } from "kysely";
 
-import { createDb } from "./db.js";
+import { createDb } from "./db";
 
 type RequiredArtifact =
   | { kind: "link"; label: string }

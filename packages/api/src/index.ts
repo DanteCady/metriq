@@ -1,7 +1,7 @@
-export * from "./context.js";
-export * from "./root.js";
-export * from "./trpc.js";
-export * from "./routers/candidate.js";
-export * from "./routers/simulation.js";
-export * from "./routers/submission.js";
+export * from "./context";
+export * from "./root";
+export * from "./trpc";
+export * from "./routers/candidate";
+export * from "./routers/simulation";
+export * from "./routers/submission";
 

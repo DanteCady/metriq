@@ -1,7 +1,7 @@
 import type { Kysely } from "kysely";
 
-import type { DbScope } from "../scope.js";
-import type { Database, NewSimulation, NewSimulationSection, Uuid } from "../types.js";
+import type { DbScope } from "../scope";
+import type { Database, NewSimulation, NewSimulationSection, Uuid } from "../types";
 
 export async function listSimulations(db: Kysely<Database>, _scope?: DbScope) {
   return db.selectFrom("simulation").selectAll().orderBy("created_at", "desc").execute();

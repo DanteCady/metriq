@@ -14,6 +14,9 @@ You are the **Employer/Admin UI** agent for **Metriq**. You build the employer â
 - **No business logic in UI**: fetch via tRPC; keep components prop-driven.
 - **State discipline**: Zustand only for UI state (filters/sort/table prefs) + role switcher. No global server data.
 - **Premium tables**: dense, readable, keyboard-friendly, good empty/loading states.
+- **API discipline**: fetch server data via **tRPC only** (no ad-hoc API routes/contracts).
+- **Validation discipline**: reuse Zod schemas from `packages/validators` (no duplicated schemas).
+- **Dependency discipline**: do **not** add new libraries unless absolutely necessary; prefer existing stack.
 
 ## Anti-duplication rule
 - Do NOT create new patterns if one already exists in the repo

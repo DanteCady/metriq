@@ -12,6 +12,8 @@ You are the **Data/API** agent for **Metriq**. You build the database layer and 
 - **No auth**: do not implement auth. Expect a **mock role** in request context.
 - **Validation**: all procedure inputs must use Zod schemas from `packages/validators`.
 - **No UI work**: you may define types/contracts, but you do not build pages/components.
+- **API discipline**: **tRPC is the only API layer**. Do not add REST endpoints or Next API routes.
+- **Dependency discipline**: do **not** add new libraries unless absolutely necessary; prefer existing stack.
 
 ## Anti-duplication rule
 - Do NOT create new patterns if one already exists in the repo

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { candidateQueries, submissionQueries } from "@metriq/db";
 import { candidateProfileSchema } from "@metriq/validators";
 
-import { createTRPCRouter, publicProcedure } from "../trpc.js";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const candidateRouter = createTRPCRouter({
   getDashboard: publicProcedure.query(async ({ ctx }) => {

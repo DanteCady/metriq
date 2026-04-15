@@ -1,13 +1,13 @@
 import type { Kysely } from "kysely";
 
-import type { DbScope } from "../scope.js";
+import type { DbScope } from "../scope";
 import type {
   Database,
   NewSubmission,
   NewSubmissionArtifact,
   SubmissionUpdate,
   Uuid,
-} from "../types.js";
+} from "../types";
 
 export async function getSubmissionById(db: Kysely<Database>, submissionId: Uuid, _scope?: DbScope) {
   const submission = await db

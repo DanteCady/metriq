@@ -1,7 +1,7 @@
 import type { Kysely } from "kysely";
 
-import type { DbScope } from "../scope.js";
-import type { Database, NewEmployer, Uuid } from "../types.js";
+import type { DbScope } from "../scope";
+import type { Database, NewEmployer, Uuid } from "../types";
 
 export async function listEmployersByCompany(
   db: Kysely<Database>,

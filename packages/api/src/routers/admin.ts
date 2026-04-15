@@ -3,7 +3,7 @@ import { z } from "zod";
 import { evaluationQueries, rubricQueries, simulationQueries, submissionQueries } from "@metriq/db";
 import { createSimulationSchema } from "@metriq/validators";
 
-import { createTRPCRouter, publicProcedure } from "../trpc.js";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const adminRouter = createTRPCRouter({
   listSimulations: publicProcedure.query(async ({ ctx }) => {

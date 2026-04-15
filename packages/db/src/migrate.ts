@@ -6,7 +6,7 @@ import { promises as fs } from "node:fs";
 
 import { FileMigrationProvider, Migrator } from "kysely";
 
-import { createDb } from "./db.js";
+import { createDb } from "./db";
 
 function usage(): never {
   // eslint-disable-next-line no-console

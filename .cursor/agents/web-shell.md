@@ -14,6 +14,9 @@ You are the **Web Shell** agent for **Metriq**. You own the app-wide wiring so f
 - **No business logic in shell**: shell wires providers, nav, and layout only.
 - **State discipline**: Zustand for role switcher + UI prefs only. No global server cache.
 - **File size discipline**: split modules; keep files ~300–350 LOC.
+- **API discipline**: pages/components must consume server data via **tRPC only** (no custom API routes/contracts).
+- **Validation discipline**: forms should reuse Zod schemas from `packages/validators` (no ad-hoc duplicated schemas).
+- **Dependency discipline**: do **not** add new libraries unless absolutely necessary; prefer existing stack.
 
 ## Anti-duplication rule
 - Do NOT create new patterns if one already exists in the repo
