@@ -1,8 +1,13 @@
 import type { Kysely } from "kysely";
 
+import type { DbScope } from "../scope.js";
 import type { Database, NewEvaluation, NewScoreBreakdown, Uuid } from "../types.js";
 
-export async function getEvaluationBySubmissionId(db: Kysely<Database>, submissionId: Uuid) {
+export async function getEvaluationBySubmissionId(
+  db: Kysely<Database>,
+  submissionId: Uuid,
+  _scope?: DbScope,
+) {
   const evaluation = await db
     .selectFrom("evaluation")
     .selectAll()
@@ -32,11 +37,15 @@ export async function getEvaluationBySubmissionId(db: Kysely<Database>, submissi
   return { evaluation, breakdown };
 }
 
-export async function createEvaluation(db: Kysely<Database>, input: NewEvaluation) {
+export async function createEvaluation(db: Kysely<Database>, input: NewEvaluation, _scope?: DbScope) {
   return db.insertInto("evaluation").values(input).returningAll().executeTakeFirstOrThrow();
 }
 
-export async function createScoreBreakdownRow(db: Kysely<Database>, input: NewScoreBreakdown) {
+export async function createScoreBreakdownRow(
+  db: Kysely<Database>,
+  input: NewScoreBreakdown,
+  _scope?: DbScope,
+) {
   return db.insertInto("score_breakdown").values(input).returningAll().executeTakeFirstOrThrow();
 }
 

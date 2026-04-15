@@ -86,7 +86,7 @@ export type SubmissionArtifactTable = {
 export type EvaluationTable = {
   id: Generated<Uuid>;
   submission_id: Uuid;
-  overallScore: string;
+  overall_score: string;
   summary: string | null;
   evaluated_at: Timestamp;
   created_at: Generated<Timestamp>;
