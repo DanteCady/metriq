@@ -1,4 +1,5 @@
 export * from "./db.js";
+export * from "./scope.js";
 export * from "./types.js";
 export * as candidateQueries from "./queries/candidate.js";
 export * as companyQueries from "./queries/company.js";

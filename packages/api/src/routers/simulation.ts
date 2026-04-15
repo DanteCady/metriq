@@ -10,7 +10,7 @@ type Difficulty = "easy" | "medium" | "hard";
 
 export const simulationRouter = createTRPCRouter({
   list: publicProcedure.query(async ({ ctx }) => {
-    const rows = await simulationQueries.listSimulations(ctx.db);
+    const rows = await simulationQueries.listSimulations(ctx.db, ctx.scope);
     return rows.map((s) => ({
       id: s.id,
       title: s.title,
@@ -25,7 +25,7 @@ export const simulationRouter = createTRPCRouter({
   detail: publicProcedure
     .input(z.object({ simulationId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
-      const detail = await simulationQueries.getSimulationDetail(ctx.db, input.simulationId);
+      const detail = await simulationQueries.getSimulationDetail(ctx.db, input.simulationId, ctx.scope);
       if (!detail) return null;
 
       const s = detail.simulation;
@@ -51,16 +51,14 @@ export const simulationRouter = createTRPCRouter({
     .input(z.object({ simulationId: z.string().min(1), candidateId: z.string().min(1).optional() }))
     .mutation(async ({ ctx, input }) => {
       const candidateId =
-        input.candidateId ?? (await candidateQueries.listCandidates(ctx.db)).at(0)?.id ?? null;
+        input.candidateId ?? (await candidateQueries.listCandidates(ctx.db, ctx.scope)).at(0)?.id ?? null;
       if (!candidateId) throw new Error("No candidates exist to start a simulation.");
 
-      const submission = await submissionQueries.createSubmission(ctx.db, {
-        candidate_id: candidateId,
-        simulation_id: input.simulationId,
-        status: "draft",
-        started_at: new Date(),
-        submitted_at: null,
-      });
+      const submission = await simulationQueries.startSimulation(
+        ctx.db,
+        { candidateId, simulationId: input.simulationId },
+        ctx.scope,
+      );
 
       return { submissionId: submission.id };
     }),
@@ -73,7 +71,7 @@ export const simulationRouter = createTRPCRouter({
       difficulty: input.difficulty,
       estimated_minutes: input.estimatedMinutes,
       skills: input.skills.length > 0 ? input.skills : null,
-    });
+    }, ctx.scope);
   }),
 });
 

@@ -300,7 +300,7 @@ export async function seed() {
         .insertInto("evaluation")
         .values({
           submission_id: submittedEval.id,
-          overallScore: "4.15",
+          overall_score: "4.15",
           summary:
             "Strong data modeling instincts and thoughtful pagination. A bit light on error cases and consistency guarantees.",
           evaluated_at: daysAgo(8),

@@ -9,7 +9,7 @@ export const submissionRouter = createTRPCRouter({
   getSubmission: publicProcedure
     .input(z.object({ submissionId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
-      const res = await submissionQueries.getSubmissionById(ctx.db, input.submissionId);
+      const res = await submissionQueries.getSubmissionById(ctx.db, input.submissionId, ctx.scope);
       if (!res) return null;
 
       return {
@@ -29,7 +29,7 @@ export const submissionRouter = createTRPCRouter({
   byCandidateId: publicProcedure
     .input(z.object({ candidateId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
-      return submissionQueries.listSubmissionsByCandidateId(ctx.db, input.candidateId);
+      return submissionQueries.listSubmissionsByCandidateId(ctx.db, input.candidateId, ctx.scope);
     }),
 
   addArtifact: publicProcedure.input(upsertArtifactSchema).mutation(async ({ ctx, input }) => {
@@ -43,28 +43,26 @@ export const submissionRouter = createTRPCRouter({
       kind: input.type,
       label: input.label,
       content: input.content,
-    });
+    }, ctx.scope);
   }),
 
   removeArtifact: publicProcedure
     .input(z.object({ submissionId: z.string().min(1), artifactId: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      const sub = await submissionQueries.getSubmissionById(ctx.db, input.submissionId);
-      if (!sub) return null;
-      return submissionQueries.removeSubmissionArtifact(ctx.db, input.artifactId);
+      return submissionQueries.removeSubmissionArtifact(ctx.db, input.artifactId, ctx.scope);
     }),
 
   submit: publicProcedure.input(submitSubmissionSchema).mutation(async ({ ctx, input }) => {
     return submissionQueries.updateSubmission(ctx.db, input.submissionId, {
       status: "submitted",
       submitted_at: new Date(),
-    });
+    }, ctx.scope);
   }),
 
   getResult: publicProcedure
     .input(z.object({ submissionId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
-      const evalRes = await evaluationQueries.getEvaluationBySubmissionId(ctx.db, input.submissionId);
+      const evalRes = await evaluationQueries.getEvaluationBySubmissionId(ctx.db, input.submissionId, ctx.scope);
       if (!evalRes) throw new Error("No evaluation exists for this submission yet.");
 
       const criteria = evalRes.breakdown.map((b) => ({
@@ -76,7 +74,7 @@ export const submissionRouter = createTRPCRouter({
         weight: Number(b.criterion_weight),
       }));
 
-      const overallScore = Number(evalRes.evaluation.overallScore);
+      const overallScore = Number(evalRes.evaluation.overall_score);
       const maxScore = criteria.reduce((acc, c) => acc + (c.max ?? 0), 0);
 
       return {

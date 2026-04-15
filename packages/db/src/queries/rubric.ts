@@ -1,8 +1,9 @@
 import type { Kysely } from "kysely";
 
+import type { DbScope } from "../scope.js";
 import type { Database, NewRubric, NewRubricCriterion, Uuid } from "../types.js";
 
-export async function getRubricBySimulationId(db: Kysely<Database>, simulationId: Uuid) {
+export async function getRubricBySimulationId(db: Kysely<Database>, simulationId: Uuid, _scope?: DbScope) {
   const rubric = await db
     .selectFrom("rubric")
     .selectAll()
@@ -21,11 +22,15 @@ export async function getRubricBySimulationId(db: Kysely<Database>, simulationId
   return { rubric, criteria };
 }
 
-export async function createRubric(db: Kysely<Database>, input: NewRubric) {
+export async function createRubric(db: Kysely<Database>, input: NewRubric, _scope?: DbScope) {
   return db.insertInto("rubric").values(input).returningAll().executeTakeFirstOrThrow();
 }
 
-export async function createRubricCriterion(db: Kysely<Database>, input: NewRubricCriterion) {
+export async function createRubricCriterion(
+  db: Kysely<Database>,
+  input: NewRubricCriterion,
+  _scope?: DbScope,
+) {
   return db
     .insertInto("rubric_criterion")
     .values(input)

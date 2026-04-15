@@ -1,8 +1,13 @@
 import type { Kysely } from "kysely";
 
+import type { DbScope } from "../scope.js";
 import type { Database, NewEmployer, Uuid } from "../types.js";
 
-export async function listEmployersByCompany(db: Kysely<Database>, companyId: Uuid) {
+export async function listEmployersByCompany(
+  db: Kysely<Database>,
+  companyId: Uuid,
+  _scope?: DbScope,
+) {
   return db
     .selectFrom("employer")
     .selectAll()
@@ -11,7 +16,7 @@ export async function listEmployersByCompany(db: Kysely<Database>, companyId: Uu
     .execute();
 }
 
-export async function createEmployer(db: Kysely<Database>, input: NewEmployer) {
+export async function createEmployer(db: Kysely<Database>, input: NewEmployer, _scope?: DbScope) {
   return db.insertInto("employer").values(input).returningAll().executeTakeFirstOrThrow();
 }
 
