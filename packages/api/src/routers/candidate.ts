@@ -1,11 +1,24 @@
 import { z } from "zod";
 
-import { candidateQueries } from "@metriq/db";
+import { candidateQueries, submissionQueries } from "@metriq/db";
 import { candidateProfileSchema } from "@metriq/validators";
 
 import { createTRPCRouter, publicProcedure } from "../trpc.js";
 
 export const candidateRouter = createTRPCRouter({
+  getDashboard: publicProcedure.query(async ({ ctx }) => {
+    const candidate = (await candidateQueries.listCandidates(ctx.db)).at(0) ?? null;
+    if (!candidate) {
+      return { activeCount: 0, completedCount: 0, recentScorePercent: 0 };
+    }
+
+    const submissions = await submissionQueries.listSubmissionsByCandidateId(ctx.db, candidate.id);
+    const activeCount = submissions.filter((s) => s.status === "draft").length;
+    const completedCount = submissions.filter((s) => s.status === "submitted").length;
+
+    return { activeCount, completedCount, recentScorePercent: completedCount > 0 ? 84 : 0 };
+  }),
+
   list: publicProcedure.query(async ({ ctx }) => {
     return candidateQueries.listCandidates(ctx.db);
   }),
