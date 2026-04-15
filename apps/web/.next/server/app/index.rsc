@@ -1,0 +1,17 @@
+1:"$Sreact.fragment"
+2:I[9904,["417","static/chunks/417-f4683424d21aa9cb.js","177","static/chunks/app/layout-8b1aabe5c1e92a7c.js"],"Providers"]
+3:I[9686,[],""]
+4:I[2156,[],""]
+5:I[2450,["112","static/chunks/112-e266b12a73ed5bc5.js","450","static/chunks/450-077fce29d3c01e6c.js","974","static/chunks/app/page-bec428296ccd22f4.js"],"AppFrame"]
+6:I[15,[],"OutletBoundary"]
+8:I[9265,[],"AsyncMetadataOutlet"]
+a:I[15,[],"ViewportBoundary"]
+c:I[15,[],"MetadataBoundary"]
+d:"$Sreact.suspense"
+f:I[6638,[],""]
+:HL["/_next/static/css/b24a263354434021.css","style"]
+0:{"P":null,"b":"47B3yr8gfoRNE_NmzSmqN","p":"","c":["",""],"i":false,"f":[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/b24a263354434021.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","$L5",null,{"children":["$","div",null,{"className":"prose prose-slate max-w-none dark:prose-invert","children":[["$","h1",null,{"children":"Metriq MVP"}],["$","p",null,{"children":"This is the initial scaffold. Next we’ll add the role switcher, real routes per role, Kysely + Postgres data, and tRPC-backed screens."}]]}]}],null,["$","$L6",null,{"children":["$L7",["$","$L8",null,{"promise":"$@9"}]]}]]}],{},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$La",null,{"children":"$Lb"}],null],["$","$Lc",null,{"children":["$","div",null,{"hidden":true,"children":["$","$d",null,{"fallback":null,"children":"$Le"}]}]}]]}],false]],"m":"$undefined","G":["$f",[]],"s":false,"S":true}
+b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+7:null
+9:{"metadata":[["$","title","0",{"children":"Metriq"}],["$","meta","1",{"name":"description","content":"Proof-of-work hiring platform MVP"}]],"error":null,"digest":"$undefined"}
+e:"$9:metadata"

@@ -1,0 +1,12 @@
+{
+  "/api/trpc/[trpc]/route": "app/api/trpc/[trpc]/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/candidate/page": "app/candidate/page.js",
+  "/candidate/results/[submissionId]/page": "app/candidate/results/[submissionId]/page.js",
+  "/candidate/simulations/[simulationId]/page": "app/candidate/simulations/[simulationId]/page.js",
+  "/candidate/simulations/page": "app/candidate/simulations/page.js",
+  "/candidate/submissions/[submissionId]/page": "app/candidate/submissions/[submissionId]/page.js",
+  "/employer/page": "app/employer/page.js",
+  "/page": "app/page.js"
+}
