@@ -1,0 +1,26 @@
+{
+  "name": "@metriq/api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@metriq/db": "workspace:*",
+    "@metriq/validators": "workspace:*",
+    "@trpc/server": "^11.6.0",
+    "kysely": "^0.28.5",
+    "superjson": "^2.2.2",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ./tsconfig.json"
+  }
+}
+

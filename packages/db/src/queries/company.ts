@@ -1,0 +1,12 @@
+import type { Kysely } from "kysely";
+
+import type { Database, NewCompany } from "../types.js";
+
+export async function listCompanies(db: Kysely<Database>) {
+  return db.selectFrom("company").selectAll().orderBy("created_at", "desc").execute();
+}
+
+export async function createCompany(db: Kysely<Database>, input: NewCompany) {
+  return db.insertInto("company").values(input).returningAll().executeTakeFirstOrThrow();
+}
+

@@ -3,6 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@metriq/api/*": ["packages/api/src/*"],
+      "@metriq/db/*": ["packages/db/src/*"],
       "@metriq/ui/*": ["packages/ui/src/*"],
       "@metriq/types/*": ["packages/types/src/*"],
       "@metriq/validators/*": ["packages/validators/src/*"]

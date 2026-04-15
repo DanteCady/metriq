@@ -4,7 +4,7 @@ export const simulationTypeSchema = z.enum(["debug_task", "api_design", "pr_revi
 
 export const createSimulationSchema = z.object({
   title: z.string().min(4).max(140),
-  type: simulationTypeSchema,
+  simulationType: simulationTypeSchema,
   difficulty: z.enum(["easy", "medium", "hard"]),
   estimatedMinutes: z.number().int().min(10).max(600),
   skills: z.array(z.string().min(1).max(40)).max(50).default([]),
