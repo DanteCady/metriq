@@ -21,7 +21,7 @@ const columns: DataTableColumn<MockWorkspace>[] = [
     cell: (r) => (
       <Link
         href={deptPath(r.slug, "")}
-        className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+        className="text-sm font-medium text-foreground underline-offset-4 hover:underline"
       >
         Enter
       </Link>

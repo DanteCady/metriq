@@ -13,7 +13,7 @@ const columns: DataTableColumn<MockOrgSeatRow>[] = [
     key: "ws",
     header: "Workspace",
     cell: (r) => (
-      <Link href={deptPath(r.workspaceSlug, "")} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+      <Link href={deptPath(r.workspaceSlug, "")} className="text-sm font-medium text-foreground underline-offset-4 hover:underline">
         {r.workspaceSlug}
       </Link>
     ),

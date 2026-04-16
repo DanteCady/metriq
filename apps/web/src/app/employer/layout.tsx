@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import * as React from "react";
 
 import { AppFrame, type AppFrameNavGroup, type AppFrameNavItem } from "../../components/app-frame";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
+};
 
 const navItems: AppFrameNavItem[] = [
   { key: "org-home", label: "Overview", href: "/employer", icon: "layoutDashboard" },

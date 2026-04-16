@@ -17,19 +17,19 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
 
   return (
     <nav aria-label="Breadcrumbs" className={cn("min-w-0", className)}>
-      <ol className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600 dark:text-slate-300">
+      <ol className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
         {items.map((item, idx) => {
           const isLast = idx === items.length - 1;
           return (
             <li key={`${item.label}_${idx}`} className="flex min-w-0 items-center gap-2">
               {item.href && !isLast ? (
-                <a href={item.href} className="truncate hover:text-slate-900 dark:hover:text-slate-50">
+                <a href={item.href} className="truncate transition-colors hover:text-foreground">
                   {item.label}
                 </a>
               ) : (
-                <span className={cn("truncate", isLast && "text-slate-900 dark:text-slate-50")}>{item.label}</span>
+                <span className={cn("truncate", isLast && "font-medium text-foreground")}>{item.label}</span>
               )}
-              {!isLast ? <span className="select-none text-slate-400 dark:text-slate-600">/</span> : null}
+              {!isLast ? <span className="select-none text-muted-foreground/50">/</span> : null}
             </li>
           );
         })}

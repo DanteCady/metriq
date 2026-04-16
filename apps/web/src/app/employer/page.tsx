@@ -53,7 +53,7 @@ export default function EmployerOrgHomePage() {
         actions={
           <Link
             href={deptPath(DEFAULT_WORKSPACE_SLUG, "")}
-            className="inline-flex h-9 items-center justify-center rounded-md bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+            className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
           >
             Open default workspace
           </Link>

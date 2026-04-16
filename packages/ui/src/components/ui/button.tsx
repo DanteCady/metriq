@@ -19,15 +19,12 @@ export function Button({
       type={type}
       className={cn(
         "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        variant === "default" &&
-          "bg-indigo-600 text-white hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400",
-        variant === "secondary" &&
-          "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-50 dark:hover:bg-slate-800",
-        variant === "ghost" &&
-          "bg-transparent text-slate-900 hover:bg-slate-100 dark:text-slate-50 dark:hover:bg-slate-800",
-        variant === "destructive" &&
-          "bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "disabled:pointer-events-none disabled:opacity-50",
+        variant === "default" && "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+        variant === "secondary" && "border border-border bg-muted text-foreground hover:bg-muted/80",
+        variant === "ghost" && "text-foreground hover:bg-accent hover:text-accent-foreground",
+        variant === "destructive" && "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         size === "sm" && "h-8 px-3",
         size === "md" && "h-9 px-4",
         size === "lg" && "h-10 px-6",

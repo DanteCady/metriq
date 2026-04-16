@@ -215,11 +215,11 @@ export default function CandidateProofProfilePage() {
                   </div>
                   <div className="space-y-4 p-4">
                     {highlightForSelected ? (
-                      <div className="rounded-lg border border-indigo-100 bg-indigo-50/60 p-3 text-sm dark:border-indigo-900/40 dark:bg-indigo-950/30">
-                        <div className="text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">Highlight</div>
-                        <div className="mt-1 font-semibold text-indigo-950 dark:text-indigo-50">{highlightForSelected.title}</div>
+                      <div className="rounded-lg border border-border bg-muted/70 p-3 text-sm">
+                        <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Highlight</div>
+                        <div className="mt-1 font-semibold text-foreground">{highlightForSelected.title}</div>
                         {highlightForSelected.summary ? (
-                          <p className="mt-2 text-sm text-indigo-900/90 dark:text-indigo-100/90">{highlightForSelected.summary}</p>
+                          <p className="mt-2 text-sm text-muted-foreground">{highlightForSelected.summary}</p>
                         ) : null}
                       </div>
                     ) : null}

@@ -16,14 +16,11 @@ export type AppShellProps = {
 export function AppShell({ sidebar, sidebarAsideClassName, topbar, children, className }: AppShellProps) {
   return (
     <div
-      className={cn(
-        "flex min-h-dvh flex-col bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50",
-        className,
-      )}
+      className={cn("flex min-h-dvh flex-col bg-background text-foreground antialiased", className)}
     >
       {topbar ? (
         <header
-          className="sticky top-0 z-40 flex h-14 shrink-0 items-center border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90"
+          className="sticky top-0 z-40 flex h-14 shrink-0 items-center border-b border-border bg-card/80 backdrop-blur-md backdrop-saturate-150"
           style={{ minHeight: TOPBAR_H }}
         >
           {topbar}
@@ -32,14 +29,14 @@ export function AppShell({ sidebar, sidebarAsideClassName, topbar, children, cla
       <div className="relative flex min-h-0 w-full flex-1">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-16 focus:z-[60] focus:rounded-md focus:border focus:border-slate-200 focus:bg-white focus:px-3 focus:py-2 focus:text-sm font-medium text-slate-900 shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:border-slate-700 dark:focus:bg-slate-900 dark:text-slate-50"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-16 focus:z-[60] focus:rounded-md focus:border focus:border-border focus:bg-card focus:px-3 focus:py-2 focus:text-sm font-medium text-foreground shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
         >
           Skip to content
         </a>
         {sidebar ? (
           <aside
             className={cn(
-              "hidden shrink-0 border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 lg:block",
+              "hidden shrink-0 border-r border-border bg-card lg:block",
               sidebarAsideClassName ?? "w-64",
             )}
           >

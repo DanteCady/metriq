@@ -92,11 +92,11 @@ export default function DeptWorkspaceDashboardPage() {
               ))}
             </ul>
             <div className="mt-4 flex flex-wrap gap-2">
-              <Link href={base("/auditions")} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+              <Link href={base("/auditions")} className="text-sm font-medium text-foreground underline-offset-4 hover:underline">
                 Manage auditions
               </Link>
               <span className="text-slate-300 dark:text-slate-600">·</span>
-              <Link href={base("/analytics")} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+              <Link href={base("/analytics")} className="text-sm font-medium text-foreground underline-offset-4 hover:underline">
                 Open analytics
               </Link>
             </div>

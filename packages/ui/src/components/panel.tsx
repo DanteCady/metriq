@@ -45,7 +45,7 @@ export function Panel({
       )}
     >
       {title ? (
-        <div className={cn("border-b border-slate-200 dark:border-slate-800", pad)}>
+        <div className={cn("border-b border-border", pad)}>
           <SectionHeader
             title={title}
             description={description}
@@ -57,7 +57,7 @@ export function Panel({
       ) : null}
       <div className={cn(pad, !title && pad, contentClassName)}>{children}</div>
       {footer ? (
-        <div className={cn("border-t border-slate-200 dark:border-slate-800", pad)}>{footer}</div>
+        <div className={cn("border-t border-border", pad)}>{footer}</div>
       ) : null}
     </Surface>
   );
@@ -74,8 +74,8 @@ export function InsetPanel({ tone = "neutral", density = "tight", className, ...
   return (
     <div
       className={cn(
-        "rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/20",
-        tone === "emphasis" && "bg-white dark:bg-slate-950",
+        "rounded-lg border border-border bg-muted/50",
+        tone === "emphasis" && "bg-card",
         className,
       )}
     >

@@ -29,19 +29,22 @@ export function Modal({ open, title, description, children, onClose, footer, cla
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-foreground/25 backdrop-blur-sm dark:bg-foreground/35" onClick={onClose} />
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div
           role="dialog"
           aria-modal="true"
-          className={cn("w-full max-w-lg rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-950", className)}
+          className={cn(
+            "w-full max-w-lg rounded-lg border border-border bg-popover text-popover-foreground shadow-lg shadow-black/5 dark:shadow-black/40",
+            className,
+          )}
         >
           {(title || description) ? (
-            <div className="border-b border-slate-200 p-4 dark:border-slate-800">
+            <div className="border-b border-border p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  {title ? <div className="text-base font-semibold tracking-tight text-slate-900 dark:text-slate-50">{title}</div> : null}
-                  {description ? <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{description}</div> : null}
+                  {title ? <div className="text-base font-semibold tracking-tight text-foreground">{title}</div> : null}
+                  {description ? <div className="mt-1 text-sm text-muted-foreground">{description}</div> : null}
                 </div>
                 <Button variant="ghost" size="sm" onClick={onClose}>
                   Close
@@ -50,7 +53,7 @@ export function Modal({ open, title, description, children, onClose, footer, cla
             </div>
           ) : null}
           {children ? <div className="p-4">{children}</div> : null}
-          {footer ? <div className="border-t border-slate-200 p-4 dark:border-slate-800">{footer}</div> : null}
+          {footer ? <div className="border-t border-border p-4">{footer}</div> : null}
         </div>
       </div>
     </div>

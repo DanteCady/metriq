@@ -19,23 +19,21 @@ export type PageHeaderProps = {
 
 export function PageHeader({ title, description, actions, eyebrow, meta, aside }: PageHeaderProps) {
   return (
-    <header className="border-b border-slate-200 pb-5 dark:border-slate-800">
+    <header className="border-b border-border pb-5">
       <div className="flex flex-col gap-3">
         <div className="flex items-start justify-between gap-6">
           <div className="min-w-0">
             {eyebrow ? (
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                {eyebrow}
-              </div>
+              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{eyebrow}</div>
             ) : null}
-            <h1 className="truncate text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">{title}</h1>
-            {description ? <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{description}</p> : null}
+            <h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">{title}</h1>
+            {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
             {meta ? <div className="mt-3">{meta}</div> : null}
           </div>
           {actions || aside ? (
             <div className="shrink-0">
               <div className="flex items-start justify-end gap-3">
-                {aside ? <div className="pt-0.5 text-sm text-slate-600 dark:text-slate-300">{aside}</div> : null}
+                {aside ? <div className="pt-0.5 text-sm text-muted-foreground">{aside}</div> : null}
                 {actions ? <div>{actions}</div> : null}
               </div>
             </div>

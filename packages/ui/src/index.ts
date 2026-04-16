@@ -1,4 +1,6 @@
 export * from "./lib/cn";
+export * from "./lib/motion-presets";
+export * from "./components/motion";
 export * from "./components/app-shell";
 export * from "./components/page";
 export * from "./components/section-header";

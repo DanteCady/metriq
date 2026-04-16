@@ -31,7 +31,7 @@ export function SidebarNav({ title, items, activeKey, onSelect, footer, classNam
         collapsed ? (
           <div className="sr-only">{title}</div>
         ) : (
-          <div className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          <div className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             {title}
           </div>
         )
@@ -40,17 +40,17 @@ export function SidebarNav({ title, items, activeKey, onSelect, footer, classNam
         {items.map((item) => {
           const isActive = item.key === activeKey;
           const common = cn(
-            "flex w-full items-center gap-2 rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2",
+            "flex w-full items-center gap-2 rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             collapsed ? "justify-center px-2 py-2.5" : "px-2.5 py-2",
             item.disabled && "pointer-events-none opacity-50",
             isActive
-              ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-200"
-              : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800",
+              ? "bg-muted font-medium text-foreground shadow-sm ring-1 ring-border/60"
+              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
           );
 
           const content = (
             <>
-              {item.icon ? <span className="shrink-0 text-slate-500 dark:text-slate-400">{item.icon}</span> : null}
+              {item.icon ? <span className="shrink-0 text-muted-foreground">{item.icon}</span> : null}
               <span className={cn("min-w-0 flex-1 truncate", collapsed && "sr-only")}>{item.label}</span>
               {item.badge && !collapsed ? <span className="shrink-0">{item.badge}</span> : null}
             </>
@@ -89,7 +89,7 @@ export function SidebarNav({ title, items, activeKey, onSelect, footer, classNam
           );
         })}
       </ul>
-      {footer ? <div className="mt-3 border-t border-slate-200 pt-3 dark:border-slate-800">{footer}</div> : null}
+      {footer ? <div className="mt-3 border-t border-border pt-3">{footer}</div> : null}
     </Surface>
   );
 }

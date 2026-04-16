@@ -2,12 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  height: 100%;
+/* Neutral SaaS tokens — light canvas, elevated cards, monochrome chrome. */
+:root {
+  --background: 240 6% 96%;
+  --foreground: 240 10% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 4%;
+  --muted: 240 5% 94%;
+  --muted-foreground: 240 4% 42%;
+  --border: 240 6% 88%;
+  --input: 240 6% 88%;
+  --ring: 240 6% 10%;
+  --primary: 240 6% 10%;
+  --primary-foreground: 0 0% 98%;
+  --accent: 240 5% 92%;
+  --accent-foreground: 240 6% 10%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --radius: 0.5rem;
 }
 
-body {
-  @apply bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50;
+.dark {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 6% 7%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 6% 7%;
+  --popover-foreground: 0 0% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 64%;
+  --border: 240 4% 18%;
+  --input: 240 4% 18%;
+  --ring: 0 0% 83%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 6% 10%;
+  --accent: 240 4% 15%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 98%;
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-dvh bg-background text-foreground antialiased;
+  }
+}

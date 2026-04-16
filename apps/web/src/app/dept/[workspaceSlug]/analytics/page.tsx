@@ -37,9 +37,9 @@ function FunnelBarChart({ stages }: { stages: FunnelStage[] }) {
             <span>{s.label}</span>
             <span className="tabular-nums text-slate-900 dark:text-slate-50">{s.count}</span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+          <div className="h-2 overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-indigo-500 transition-[width] dark:bg-indigo-400"
+              className="h-full rounded-full bg-foreground/80 transition-[width] dark:bg-foreground/70"
               style={{ width: `${(s.count / max) * 100}%` }}
             />
           </div>
@@ -53,7 +53,7 @@ function DistributionRow({ row }: { row: RubricCriterionDistribution }) {
   const total = row.buckets.reduce((a, b) => a + b, 0) || 1;
   const labels = ["Strong", "", "", "", "Weak"];
   return (
-    <div className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
+    <div className="rounded-lg border border-border p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">{row.label}</div>
@@ -66,13 +66,21 @@ function DistributionRow({ row }: { row: RubricCriterionDistribution }) {
           </Badge>
         </div>
       </div>
-      <div className="mt-3 flex h-3 overflow-hidden rounded-md bg-slate-100 dark:bg-slate-800">
+      <div className="mt-3 flex h-3 overflow-hidden rounded-md bg-muted">
         {row.buckets.map((n, i) => (
           <div
             key={i}
             className={[
               "first:rounded-l-md last:rounded-r-md",
-              i === 0 ? "bg-emerald-500" : i === 1 ? "bg-indigo-400" : i === 2 ? "bg-slate-300 dark:bg-slate-600" : i === 3 ? "bg-amber-400" : "bg-rose-400",
+              i === 0
+                ? "bg-foreground"
+                : i === 1
+                  ? "bg-foreground/75"
+                  : i === 2
+                    ? "bg-foreground/45"
+                    : i === 3
+                      ? "bg-foreground/25"
+                      : "bg-foreground/12",
             ].join(" ")}
             style={{ width: `${(n / total) * 100}%` }}
             title={`${labels[i] || "Band"} · ${n}`}
@@ -118,9 +126,9 @@ export default function EmployerAnalyticsPage() {
 
         <Panel title="Signal quality" description="Operational read on whether scores stay anchored to evidence.">
           <p className="text-sm text-slate-600 dark:text-slate-300">{mockEmployerSignalQuality.note}</p>
-          <div className="mt-4 rounded-md border border-indigo-100 bg-indigo-50/80 p-4 text-sm text-indigo-950 dark:border-indigo-900/50 dark:bg-indigo-950/30 dark:text-indigo-100">
+          <div className="mt-4 rounded-md border border-border bg-muted/80 p-4 text-sm text-foreground">
             <div className="font-semibold">Recommended next step</div>
-            <p className="mt-1 text-indigo-900/90 dark:text-indigo-100/90">{mockEmployerSignalQuality.topAction}</p>
+            <p className="mt-1 text-muted-foreground">{mockEmployerSignalQuality.topAction}</p>
           </div>
         </Panel>
       </div>

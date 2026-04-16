@@ -24,7 +24,7 @@ import {
   Users,
 } from "lucide-react";
 
-import { AppShell, Button, Drawer, SidebarNav, type SidebarNavItem } from "@metriq/ui";
+import { AppShell, Button, Drawer, MainContentTransition, SidebarNav, type SidebarNavItem } from "@metriq/ui";
 
 import { workspaceLabel } from "../mocks/tenancy";
 
@@ -252,7 +252,9 @@ export function AppFrame({ children, navItems, navGroups, topRight, sidebarTitle
       }
       sidebar={sidebarInner}
     >
-      <div className="mx-auto w-full max-w-[1600px]">{children}</div>
+      <MainContentTransition routeKey={pathname} className="mx-auto w-full max-w-[1600px]">
+        {children}
+      </MainContentTransition>
       <Drawer
         open={mobileNavOpen}
         title={sidebarTitle}

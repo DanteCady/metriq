@@ -31,7 +31,7 @@ const ToastContext = React.createContext<ToastContextValue | null>(null);
 function toneClasses(tone: ToastTone) {
   if (tone === "success") return "border-emerald-200 bg-emerald-50 text-emerald-950 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-50";
   if (tone === "error") return "border-red-200 bg-red-50 text-red-950 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-50";
-  return "border-slate-200 bg-white text-slate-950 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50";
+  return "border-border bg-card text-card-foreground";
 }
 
 function randomId() {

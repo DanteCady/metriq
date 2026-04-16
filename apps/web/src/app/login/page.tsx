@@ -4,6 +4,8 @@ import * as React from "react";
 
 import { Button, PageHeader, Panel } from "@metriq/ui";
 
+import { ThemeToggle } from "../../components/theme-toggle";
+
 type Role = "candidate" | "employer" | "admin";
 
 function setRoleCookie(role: Role) {
@@ -13,7 +15,10 @@ function setRoleCookie(role: Role) {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-dvh bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
+    <div className="relative min-h-dvh bg-background text-foreground">
+      <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
+        <ThemeToggle />
+      </div>
       <div className="mx-auto w-full max-w-[720px] px-4 py-10 sm:px-6 lg:px-8">
         <PageHeader
           title="Sign in"
@@ -50,7 +55,7 @@ export default function LoginPage() {
                 Admin
               </Button>
             </div>
-            <div className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+            <div className="mt-3 text-xs text-muted-foreground">
               Cookie: <span className="font-mono">metriq.role</span>
             </div>
           </Panel>

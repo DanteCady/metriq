@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Badge, Button, PageHeader, Panel, StatCard } from "@metriq/ui";
+import { Badge, Button, PageHeader, Panel, StatCard, Stagger, StaggerItem } from "@metriq/ui";
 
 import { mockAuditions } from "../../mocks/candidate/auditions";
 import { demoListSubmissions } from "../../mocks/candidate/store";
@@ -43,26 +43,32 @@ export default function CandidateLanding() {
         }
       />
 
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
-        <StatCard label="Active auditions" value={activeCount} hint="Auditions currently in progress." />
-        <StatCard label="Draft submissions" value={draftCount} hint="Evidence packages you can still edit." />
-        <StatCard label="Submitted" value={submittedCount} hint="Ready for evaluation / results." />
-      </div>
+      <Stagger className="mt-6 grid gap-4 md:grid-cols-3">
+        <StaggerItem>
+          <StatCard label="Active auditions" value={activeCount} hint="Auditions currently in progress." />
+        </StaggerItem>
+        <StaggerItem>
+          <StatCard label="Draft submissions" value={draftCount} hint="Evidence packages you can still edit." />
+        </StaggerItem>
+        <StaggerItem>
+          <StatCard label="Submitted" value={submittedCount} hint="Ready for evaluation / results." />
+        </StaggerItem>
+      </Stagger>
 
       <div className="mt-6 grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="grid gap-4 lg:grid-cols-2">
           <Panel title="Next up" description="Jump back into the highest leverage work.">
             <div className="grid gap-2 text-sm text-slate-700 dark:text-slate-200">
-              <Link href="/candidate/auditions" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+              <Link href="/candidate/auditions" className="font-medium text-foreground underline-offset-4 hover:underline">
                 Audition inbox
               </Link>
-              <Link href="/candidate/submissions" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+              <Link href="/candidate/submissions" className="font-medium text-foreground underline-offset-4 hover:underline">
                 Submissions
               </Link>
-              <Link href="/candidate/results" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+              <Link href="/candidate/results" className="font-medium text-foreground underline-offset-4 hover:underline">
                 Results
               </Link>
-              <Link href="/candidate/simulations" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+              <Link href="/candidate/simulations" className="font-medium text-foreground underline-offset-4 hover:underline">
                 Simulations
               </Link>
             </div>

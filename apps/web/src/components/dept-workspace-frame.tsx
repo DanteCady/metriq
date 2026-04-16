@@ -52,7 +52,7 @@ export function DeptWorkspaceFrame({ workspaceSlug, children }: { workspaceSlug:
       navGroups={navGroups}
       sidebarTitle={title}
       topRight={
-        <Link href="/employer" className="text-xs font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+        <Link href="/employer" className="text-xs font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline">
           Organization
         </Link>
       }
