@@ -8,6 +8,7 @@ import { Badge, Breadcrumbs, Button, Modal, SearchInput, useToast } from "@metri
 
 import { DEFAULT_WORKSPACE_SLUG } from "../mocks/tenancy";
 import { ThemeToggle } from "./theme-toggle";
+import { Tooltip } from "./tooltip";
 
 export type ProductTopbarProps = {
   onOpenMobileNav: () => void;
@@ -159,16 +160,17 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
   return (
     <>
       <div className="flex h-14 w-full min-w-0 items-center gap-3 px-4 sm:gap-4 sm:px-6">
-        <Button
-          type="button"
-          className="shrink-0 lg:hidden"
-          variant="ghost"
-          size="sm"
-          onClick={onOpenMobileNav}
-          aria-label="Open navigation"
-        >
-          <Menu className="size-5 shrink-0" aria-hidden />
-        </Button>
+        <Tooltip label="Open navigation menu" className="shrink-0 lg:hidden">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={onOpenMobileNav}
+            aria-label="Open navigation"
+          >
+            <Menu className="size-5 shrink-0" aria-hidden />
+          </Button>
+        </Tooltip>
         <div className="min-w-0 flex-1 py-2">
           <Breadcrumbs items={breadcrumbItems} />
         </div>
@@ -176,45 +178,50 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
           Preview
         </Badge>
         <div className="flex shrink-0 items-center gap-1">
-          <ThemeToggle />
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            className="hidden border border-border px-2.5 sm:inline-flex"
-            onClick={openSearch}
-            title="Search and jump (preview)"
-            aria-label="Search and jump (preview)"
-          >
-            <Search className="size-4 shrink-0" aria-hidden />
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            className="relative hidden border border-border px-2.5 md:inline-flex"
-            onClick={() => setNotifOpen(true)}
-            title="Notifications (preview)"
-            aria-label="Notifications (preview)"
-          >
-            <Bell className="size-4 shrink-0" aria-hidden />
-            {unreadCount > 0 ? (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
-            ) : null}
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            className="hidden border border-border px-2.5 lg:inline-flex"
-            onClick={() => setQuickOpen(true)}
-            title="Quick actions (preview)"
-            aria-label="Quick actions (preview)"
-          >
-            <Sparkles className="size-4 shrink-0" aria-hidden />
-          </Button>
+          <Tooltip label="Color theme: switch light or dark">
+            <ThemeToggle />
+          </Tooltip>
+          <Tooltip label="Search and jump to a page (preview)">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              className="hidden border border-border px-2.5 sm:inline-flex"
+              onClick={openSearch}
+              aria-label="Search and jump (preview)"
+            >
+              <Search className="size-4 shrink-0" aria-hidden />
+            </Button>
+          </Tooltip>
+          <Tooltip label="Notifications (preview, local mock data)">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              className="relative hidden border border-border px-2.5 md:inline-flex"
+              onClick={() => setNotifOpen(true)}
+              aria-label="Notifications (preview)"
+            >
+              <Bell className="size-4 shrink-0" aria-hidden />
+              {unreadCount > 0 ? (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              ) : null}
+            </Button>
+          </Tooltip>
+          <Tooltip label="Quick actions and shortcuts (preview)">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              className="hidden border border-border px-2.5 lg:inline-flex"
+              onClick={() => setQuickOpen(true)}
+              aria-label="Quick actions (preview)"
+            >
+              <Sparkles className="size-4 shrink-0" aria-hidden />
+            </Button>
+          </Tooltip>
         </div>
         {topRight ? <div className="flex shrink-0 items-center gap-2 border-l border-border pl-3">{topRight}</div> : null}
       </div>

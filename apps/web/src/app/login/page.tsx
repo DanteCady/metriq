@@ -5,6 +5,7 @@ import * as React from "react";
 import { Button, PageHeader, Panel } from "@metriq/ui";
 
 import { ThemeToggle } from "../../components/theme-toggle";
+import { Tooltip } from "../../components/tooltip";
 
 type Role = "candidate" | "employer" | "admin";
 
@@ -17,7 +18,9 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-dvh bg-background text-foreground">
       <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
-        <ThemeToggle />
+        <Tooltip label="Color theme: switch light or dark" side="top">
+          <ThemeToggle />
+        </Tooltip>
       </div>
       <div className="mx-auto w-full max-w-[720px] px-4 py-10 sm:px-6 lg:px-8">
         <PageHeader
