@@ -1,37 +1,108 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
-import { AppFrame } from "../../components/app-frame";
-import { LoadingState, PageHeader, PageSection, StatCard } from "@metriq/ui";
+import { useRouter } from "next/navigation";
 
-import { trpc } from "../providers";
+import { Badge, Button, PageHeader, Panel, StatCard } from "@metriq/ui";
+
+import { mockAuditions } from "../../mocks/candidate/auditions";
+import { demoListSubmissions } from "../../mocks/candidate/store";
+import { mockUniverse } from "../../mocks/universe";
 
 export default function CandidateLanding() {
-  const dashboard = trpc.candidate.getDashboard.useQuery();
+  const router = useRouter();
+  const submissions = React.useMemo(() => demoListSubmissions(), []);
+
+  const activeCount = mockAuditions.filter((a) => a.status === "active").length;
+  const draftCount = submissions.filter((s) => s.status === "draft").length;
+  const submittedCount = submissions.filter((s) => s.status === "submitted").length;
+
+  const nextAudition = mockAuditions.find((a) => a.status === "active") ?? mockAuditions[0];
+  const nextAuditionBlurb = nextAudition
+    ? `${nextAudition.roleTitle} at ${nextAudition.companyName}. Estimated timebox ${nextAudition.estimatedMinutes} minutes — submit structured evidence for each stage.`
+    : "";
 
   return (
-    <AppFrame>
-      <PageHeader title="Candidate" description="Your dashboard" />
-      <div className="mt-6 grid gap-4">
-        {dashboard.isLoading ? <LoadingState /> : null}
-        {dashboard.data ? (
-          <div className="grid gap-4 sm:grid-cols-3">
-            <StatCard label="Active simulations" value={dashboard.data.activeCount} />
-            <StatCard label="Completed" value={dashboard.data.completedCount} />
-            <StatCard label="Recent score" value={`${dashboard.data.recentScorePercent}%`} />
+    <>
+      <PageHeader
+        title="Candidate dashboard"
+        description={`Your auditions and proof signals — preview data aligned with ${mockUniverse.orgName} hiring flows.`}
+        meta={
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="secondary">Preview data</Badge>
           </div>
-        ) : null}
-        <PageSection title="Next step" description="Browse simulations and start a submission.">
-          <div className="text-sm text-slate-600 dark:text-slate-300">
-            Head to{" "}
-            <Link className="underline" href="/candidate/simulations">
-              Simulations
-            </Link>
-            .
+        }
+        actions={
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={() => router.push("/candidate/auditions")}>Open auditions</Button>
+            <Button variant="secondary" onClick={() => router.push("/candidate/proof")}>
+              Proof profile
+            </Button>
           </div>
-        </PageSection>
+        }
+      />
+
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <StatCard label="Active auditions" value={activeCount} hint="Auditions currently in progress." />
+        <StatCard label="Draft submissions" value={draftCount} hint="Evidence packages you can still edit." />
+        <StatCard label="Submitted" value={submittedCount} hint="Ready for evaluation / results." />
       </div>
-    </AppFrame>
+
+      <div className="mt-6 grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Panel title="Next up" description="Jump back into the highest leverage work.">
+            <div className="grid gap-2 text-sm text-slate-700 dark:text-slate-200">
+              <Link href="/candidate/auditions" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+                Audition inbox
+              </Link>
+              <Link href="/candidate/submissions" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+                Submissions
+              </Link>
+              <Link href="/candidate/results" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+                Results
+              </Link>
+              <Link href="/candidate/simulations" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+                Simulations
+              </Link>
+            </div>
+          </Panel>
+
+          <Panel
+            title="Proof profile"
+            description="Curate evidence-backed highlights that employers can trust."
+            actions={
+              <Button size="sm" variant="secondary" onClick={() => router.push("/candidate/proof")}>
+                Open
+              </Button>
+            }
+          >
+            Turn submissions into durable capability signals — grouped by what you can do, not when you did it.
+          </Panel>
+        </div>
+
+        <Panel title="Activity" description="What to expect while reviewers at partner companies evaluate evidence.">
+          {nextAudition ? (
+            <div className="rounded-lg border border-slate-200 bg-slate-50/80 p-4 text-sm dark:border-slate-800 dark:bg-slate-900/40">
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Focused audition</div>
+              <div className="mt-1 font-semibold text-slate-900 dark:text-slate-50">{nextAudition.roleTitle}</div>
+              <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{nextAudition.companyName}</div>
+              <div className="mt-2 text-slate-600 dark:text-slate-300">{nextAuditionBlurb.slice(0, 160)}…</div>
+              <div className="mt-3">
+                <Button size="sm" onClick={() => router.push(`/candidate/auditions/${nextAudition.auditionId}`)}>
+                  Continue
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-slate-600 dark:text-slate-300">No auditions in this preview slice.</p>
+          )}
+          <ul className="mt-4 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
+            <li>Evaluators anchor scores to artifacts you submit — completeness beats polish.</li>
+            <li>Deadlines are shown per stage; submit early to leave room for iteration.</li>
+          </ul>
+        </Panel>
+      </div>
+    </>
   );
 }
-

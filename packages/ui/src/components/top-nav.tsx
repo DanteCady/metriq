@@ -28,10 +28,10 @@ export function TopNav({ brand, links = [], activeKey, onSelect, right, classNam
             {links.map((link) => {
               const isActive = link.key === activeKey;
               const common = cn(
-                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
+                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2",
                 link.disabled && "pointer-events-none opacity-50",
                 isActive
-                  ? "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-50"
+                  ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-200"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50",
               );
 

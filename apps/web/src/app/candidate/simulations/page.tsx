@@ -3,22 +3,18 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { AppFrame } from "../../../components/app-frame";
-import { EmptyState, LoadingState, PageHeader, SimulationCard } from "@metriq/ui";
+import { EmptyState, PageHeader, SimulationCard } from "@metriq/ui";
 
-import { trpc } from "../../providers";
+import { mockSimulations } from "../../../mocks/candidate/simulations";
 
 export default function CandidateSimulationsPage() {
-  const sims = trpc.simulation.list.useQuery();
-
   return (
-    <AppFrame>
+    <>
       <PageHeader title="Simulations" description="Browse and start a job simulation." />
       <div className="mt-6">
-        {sims.isLoading ? <LoadingState /> : null}
-        {sims.data?.length ? (
+        {mockSimulations.length ? (
           <div className="grid gap-4 md:grid-cols-2">
-            {sims.data.map((s) => (
+            {mockSimulations.map((s) => (
               <SimulationCard
                 key={s.id}
                 title={s.title}
@@ -37,7 +33,7 @@ export default function CandidateSimulationsPage() {
               />
             ))}
           </div>
-        ) : sims.data && sims.data.length === 0 ? (
+        ) : (
           <EmptyState
             title="No simulations yet"
             description="Once admin creates simulations, they’ll show up here."
@@ -46,16 +42,14 @@ export default function CandidateSimulationsPage() {
               window.location.href = "/candidate";
             }}
           />
-        ) : sims.isError ? (
-          <EmptyState title="Couldn’t load simulations" description={sims.error.message} actionLabel="Retry" onAction={() => sims.refetch()} />
-        ) : null}
+        )}
         <div className="mt-6 text-sm text-slate-600 dark:text-slate-300">
           <Link href="/candidate" className="underline">
             Back to dashboard
           </Link>
         </div>
       </div>
-    </AppFrame>
+    </>
   );
 }
 

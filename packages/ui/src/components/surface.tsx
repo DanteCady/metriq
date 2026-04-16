@@ -12,7 +12,10 @@ export function Surface<T extends React.ElementType = "div">({ as, className, ..
   const Comp = as ?? "div";
   return (
     <Comp
-      className={cn("rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950", className)}
+      className={cn(
+        "rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-200/40 dark:border-slate-800 dark:bg-slate-950 dark:shadow-black/20",
+        className,
+      )}
       {...props}
     />
   );

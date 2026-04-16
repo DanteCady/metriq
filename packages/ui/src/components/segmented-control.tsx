@@ -41,7 +41,7 @@ export function SegmentedControl<T extends string>({
               size === "sm" ? "px-2.5 py-1 text-xs" : "px-3 py-1.5 text-sm",
               opt.disabled && "pointer-events-none opacity-50",
               isActive
-                ? "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-50"
+                ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-200"
                 : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50",
             )}
             aria-pressed={isActive}

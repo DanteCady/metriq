@@ -3,19 +3,17 @@
 import * as React from "react";
 import { useParams, useRouter } from "next/navigation";
 
-import { AppFrame } from "../../../../components/app-frame";
 import {
   Button,
   DataTable,
   EmptyState,
-  LoadingState,
   Modal,
   PageHeader,
   PageSection,
   SubmissionArtifactViewer,
 } from "@metriq/ui";
 
-import { trpc } from "../../../providers";
+import { demoAddArtifact, demoGetSubmission, demoRemoveArtifact, demoSubmit } from "../../../../mocks/candidate/store";
 
 type ArtifactType = "text" | "link";
 
@@ -24,23 +22,24 @@ export default function CandidateSubmissionPage() {
   const router = useRouter();
   const submissionId = params?.submissionId ?? "";
 
-  const sub = trpc.submission.getSubmission.useQuery({ submissionId }, { enabled: Boolean(submissionId) });
-  const addArtifact = trpc.submission.addArtifact.useMutation();
-  const removeArtifact = trpc.submission.removeArtifact.useMutation();
-  const submit = trpc.submission.submit.useMutation();
+  const [sub, setSub] = React.useState(() => demoGetSubmission(submissionId || "sub_demo_active"));
 
   const [open, setOpen] = React.useState(false);
   const [type, setType] = React.useState<ArtifactType>("text");
   const [label, setLabel] = React.useState("");
   const [content, setContent] = React.useState("");
 
-  const canEdit = sub.data?.status === "draft";
+  React.useEffect(() => {
+    setSub(demoGetSubmission(submissionId || "sub_demo_active"));
+  }, [submissionId]);
+
+  const canEdit = sub.status === "draft";
 
   return (
-    <AppFrame>
+    <>
       <PageHeader
         title="Submission"
-        description={sub.data ? `Status: ${sub.data.status}` : "Loading submission…"}
+        description={`Status: ${sub.status}`}
         actions={
           <div className="flex items-center gap-2">
             <Button variant="secondary" onClick={() => setOpen(true)} disabled={!canEdit}>
@@ -48,64 +47,63 @@ export default function CandidateSubmissionPage() {
             </Button>
             <Button
               onClick={async () => {
-                await submit.mutateAsync({ submissionId });
+                setSub(demoSubmit(submissionId || "sub_demo_active"));
                 router.push(`/candidate/results/${submissionId}`);
               }}
-              disabled={!sub.data || !canEdit || submit.isPending}
+              disabled={!canEdit}
             >
-              {submit.isPending ? "Submitting…" : "Submit"}
+              Submit
             </Button>
           </div>
         }
       />
 
       <div className="mt-6 grid gap-4">
-        {sub.isLoading ? <LoadingState /> : null}
-        {sub.isError ? <EmptyState title="Couldn’t load submission" description={sub.error.message} actionLabel="Retry" onAction={() => sub.refetch()} /> : null}
+        <PageSection title="Artifacts" description="Add links or text write-ups as your submission evidence.">
+          {sub.artifacts.length === 0 ? (
+            <EmptyState title="No artifacts yet" description="Add at least one artifact before submitting." />
+          ) : (
+            <div className="grid gap-3">
+              {sub.artifacts.map((a) => (
+                <div key={a.id} className="space-y-2">
+                  <SubmissionArtifactViewer type={a.type} label={a.label} value={a.content} />
+                  {canEdit ? (
+                    <div className="flex justify-end">
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={async () => {
+                          setSub(demoRemoveArtifact(submissionId || "sub_demo_active", a.id));
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          )}
+        </PageSection>
 
-        {sub.data ? (
-          <PageSection title="Artifacts" description="Add links or text write-ups as your submission evidence.">
-            {sub.data.artifacts.length === 0 ? (
-              <EmptyState title="No artifacts yet" description="Add at least one artifact before submitting." />
-            ) : (
-              <div className="grid gap-3">
-                {sub.data.artifacts.map((a) => (
-                  <div key={a.id} className="space-y-2">
-                    <SubmissionArtifactViewer type={a.type} label={a.label} value={a.content} />
-                    {canEdit ? (
-                      <div className="flex justify-end">
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={async () => {
-                            await removeArtifact.mutateAsync({ submissionId, artifactId: a.id });
-                            await sub.refetch();
-                          }}
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-            )}
-          </PageSection>
-        ) : null}
+        <PageSection title="Debug panel" description="Useful while wiring end-to-end contracts.">
+          <DataTable
+            rows={sub.artifacts}
+            getRowKey={(r) => r.id}
+            columns={[
+              { key: "label", header: "Label", cell: (r) => r.label },
+              { key: "type", header: "Type", cell: (r) => r.type },
+              { key: "len", header: "Chars", cell: (r) => String(r.content.length), className: "text-right", headerClassName: "text-right" },
+            ]}
+            emptyState={{ title: "No artifacts", description: "Add artifacts to see them here." }}
+          />
+        </PageSection>
 
-        {sub.data ? (
-          <PageSection title="Debug panel" description="Useful while wiring end-to-end contracts.">
-            <DataTable
-              rows={sub.data.artifacts}
-              getRowKey={(r) => r.id}
-              columns={[
-                { key: "label", header: "Label", cell: (r) => r.label },
-                { key: "type", header: "Type", cell: (r) => r.type },
-                { key: "len", header: "Chars", cell: (r) => String(r.content.length), className: "text-right", headerClassName: "text-right" },
-              ]}
-              emptyState={{ title: "No artifacts", description: "Add artifacts to see them here." }}
-            />
-          </PageSection>
+        {sub.status !== "draft" ? (
+          <EmptyState
+            title="Submission is locked"
+            description="This submission has been submitted. In v1, editing is disabled after submit."
+          />
         ) : null}
       </div>
 
@@ -121,20 +119,20 @@ export default function CandidateSubmissionPage() {
             </Button>
             <Button
               onClick={async () => {
-                await addArtifact.mutateAsync({
-                  submissionId,
-                  type,
-                  label: label.trim(),
-                  content: content.trim(),
-                });
+                setSub(
+                  demoAddArtifact(submissionId || "sub_demo_active", {
+                    type,
+                    label: label.trim(),
+                    content: content.trim(),
+                  }),
+                );
                 setLabel("");
                 setContent("");
                 setOpen(false);
-                await sub.refetch();
               }}
-              disabled={!label.trim() || !content.trim() || addArtifact.isPending}
+              disabled={!label.trim() || !content.trim()}
             >
-              {addArtifact.isPending ? "Saving…" : "Save"}
+              Save
             </Button>
           </div>
         }
@@ -171,7 +169,7 @@ export default function CandidateSubmissionPage() {
           </label>
         </div>
       </Modal>
-    </AppFrame>
+    </>
   );
 }
 

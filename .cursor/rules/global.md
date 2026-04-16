@@ -9,6 +9,13 @@
 - tRPC is the only API layer
 - Zod schemas must be reused, not duplicated
 
+## Product direction rules (proof-of-work first)
+- Metriq is a **proof-of-work hiring** platform centered on **auditions** and **observable work** (not resumes/degrees, not generic assessments).
+- Employers build: `role` → `audition` → `audition_stage` → `block` (lab/test/simulator/work sample) → `rubric` → `evaluation` → compare candidates.
+- Candidates build a `proof_profile` from `submission` + `artifact` + `evaluation`.
+- Do not scaffold generic dashboard CRUD pages unless the screen has clear product intent in these flows.
+- Prefer “evidence-first” UX: artifacts + rubric breakdowns over vanity metrics.
+
 ## Git workflow rules
 - Make small, focused commits per feature or phase
 - Do NOT bundle unrelated changes into one commit

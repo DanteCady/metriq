@@ -1,7 +1,11 @@
 import * as React from "react";
 
 import { cn } from "../lib/cn";
+import { ErrorState, type ErrorStateProps } from "./error-state";
+import { LoadingState } from "./loading-state";
+import { Panel } from "./panel";
 import { ScoreBadge } from "./ui/score-badge";
+import { ScoreBar } from "./ui/score-bar";
 
 export type EvaluationCriterionScore = {
   key: string;
@@ -10,19 +14,42 @@ export type EvaluationCriterionScore = {
   max?: number;
   description?: string;
   weight?: number;
+  notes?: React.ReactNode;
 };
 
 export type EvaluationBreakdownProps = {
   criteria: EvaluationCriterionScore[];
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  isLoading?: boolean;
+  error?: Pick<ErrorStateProps, "title" | "description" | "actionLabel" | "onAction">;
+  empty?: React.ReactNode;
   className?: string;
 };
 
-export function EvaluationBreakdown({ criteria, className }: EvaluationBreakdownProps) {
+export function EvaluationBreakdown({
+  criteria,
+  title = "Score breakdown",
+  description,
+  isLoading,
+  error,
+  empty,
+  className,
+}: EvaluationBreakdownProps) {
+  if (error) {
+    return <ErrorState {...error} className={className} />;
+  }
+
+  if (isLoading) {
+    return <LoadingState className={className} />;
+  }
+
+  if (criteria.length === 0 && empty) {
+    return <div className={className}>{empty}</div>;
+  }
+
   return (
-    <div className={cn("rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950", className)}>
-      <div className="border-b border-slate-200 px-4 py-3 dark:border-slate-800">
-        <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">Score breakdown</div>
-      </div>
+    <Panel title={title} description={description} density="tight" className={cn(className)} contentClassName="p-0">
       <div className="divide-y divide-slate-200 dark:divide-slate-800">
         {criteria.map((c) => (
           <div key={c.key} className="flex items-start justify-between gap-4 px-4 py-3">
@@ -34,6 +61,10 @@ export function EvaluationBreakdown({ criteria, className }: EvaluationBreakdown
                 ) : null}
               </div>
               {c.description ? <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{c.description}</div> : null}
+              <div className="mt-2">
+                <ScoreBar value={c.score} max={c.max ?? 100} tone="neutral" />
+              </div>
+              {c.notes ? <div className="mt-2 text-sm text-slate-700 dark:text-slate-200">{c.notes}</div> : null}
             </div>
             <div className="shrink-0">
               <ScoreBadge score={c.score} max={c.max ?? 100} format="fraction" />
@@ -41,7 +72,7 @@ export function EvaluationBreakdown({ criteria, className }: EvaluationBreakdown
           </div>
         ))}
       </div>
-    </div>
+    </Panel>
   );
 }
 

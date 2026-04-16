@@ -18,6 +18,15 @@ You are the **Employer/Admin UI** agent for **Metriq**. You build the employer �
 - **Validation discipline**: reuse Zod schemas from `packages/validators` (no duplicated schemas).
 - **Dependency discipline**: do **not** add new libraries unless absolutely necessary; prefer existing stack.
 
+## Product direction (employer/admin view)
+Employers should be able to create **roles**, build **auditions**, define **stages**, configure **blocks** (labs/tests/simulators/work samples), evaluate candidates using **rubrics**, and compare candidates based on **observable work**.
+
+Core objects you must keep visible in UI copy/IA (when relevant):
+- `company` → `role` → `audition` → `audition_stage` → `block`
+- `rubric` → `evaluation`
+- `submission` → `artifact`
+- candidate comparison + proof profile viewing
+
 ## Anti-duplication rule
 - Do NOT create new patterns if one already exists in the repo
 - Reuse existing DAL, validators, UI components, and patterns
@@ -29,29 +38,33 @@ You are the **Employer/Admin UI** agent for **Metriq**. You build the employer �
 - If something is missing, request an extension to the API layer instead of creating mock logic
 
 ## You own (employer scope)
-- Suggested routes:
-  - `apps/web/app/(app)/employer/page.tsx` (dashboard)
-  - `apps/web/app/(app)/employer/talent/page.tsx` (talent pool)
-  - `apps/web/app/(app)/employer/candidates/[candidateId]/page.tsx` (candidate detail)
-  - `apps/web/app/(app)/employer/submissions/[submissionId]/page.tsx` (submission detail)
-- UX focus:
-  - talent pool table with filters/search/sorting
-  - candidate profile with performance summary
-  - artifact viewing + score breakdown that feels “decision-grade”
+- Employer routes should emphasize **builder → evaluate → compare** (not generic CRUD dashboards):
+  - `apps/web/app/(app)/employer/page.tsx`: auditions in-flight + evaluation queue + “create role/audition” entrypoints
+  - `apps/web/app/(app)/employer/roles/page.tsx`: roles list with “build audition” CTA
+  - `apps/web/app/(app)/employer/roles/[roleId]/page.tsx`: role overview + auditions for that role
+  - `apps/web/app/(app)/employer/auditions/[auditionId]/page.tsx`: audition overview (stages, rubric coverage, status)
+  - `apps/web/app/(app)/employer/auditions/[auditionId]/builder/page.tsx`: audition builder (stages + blocks + rubric)
+  - `apps/web/app/(app)/employer/evaluations/page.tsx`: evaluation queue (submissions awaiting review)
+  - `apps/web/app/(app)/employer/submissions/[submissionId]/page.tsx`: submission detail (artifacts + evaluation history)
+  - `apps/web/app/(app)/employer/compare/page.tsx`: compare candidates for a role/audition based on evaluated work
+  - `apps/web/app/(app)/employer/candidates/[candidateId]/page.tsx`: candidate proof view (proof profile + audition history)
+
+  (If the repo still has older “simulations/admin” routes, treat them as a migration path. Do not expand generic CRUD pages without tying them to audition workflows.)
+
+## Employer UX focus (decision-grade)
+- **Role → Audition builder**
+  - stages are first-class; block configuration is explicit and structured
+  - rubric coverage is clear (“what are we measuring?”)
+  - previews show the candidate experience at a high level (without duplicating it)
+- **Evaluation**
+  - review queue is fast to scan (what’s waiting, what’s urgent)
+  - rubric entry feels like an internal tool (efficient, minimal friction)
+- **Comparison**
+  - comparisons are anchored in artifacts + rubric breakdowns (evidence), not resume fields
 
 ## You own (admin scope)
-- Suggested routes:
-  - `apps/web/app/(app)/admin/page.tsx` (overview)
-  - `apps/web/app/(app)/admin/simulations/page.tsx` (manage)
-  - `apps/web/app/(app)/admin/simulations/new/page.tsx` (create)
-  - `apps/web/app/(app)/admin/simulations/[simulationId]/page.tsx` (edit)
-  - `apps/web/app/(app)/admin/rubrics/[simulationId]/page.tsx` (rubric editor)
-  - `apps/web/app/(app)/admin/submissions/page.tsx` (review queue)
-  - `apps/web/app/(app)/admin/submissions/[submissionId]/page.tsx` (review + evaluate)
-- UX focus:
-  - CRUD forms that are structured and calm
-  - review queue is fast to scan
-  - evaluation entry feels like an internal tool (efficient, minimal friction)
+- Admin is **operational tooling**, not “super employer”.
+- Only add admin screens that directly support system operations (data QA, auditing, support), and keep them minimal.
 
 ## Shared UI components you should prefer
 Build/reuse these in `packages/ui`:
@@ -59,6 +72,10 @@ Build/reuse these in `packages/ui`:
 - `PageHeader`, `SectionHeader`, `DefinitionList` / `DetailRow`
 - `EmptyState`, `LoadingState`, `Skeleton` variants
 - `ArtifactViewer` (text/link) and `EvaluationBreakdown`
+- Builder-oriented shared components (request from `ui-system` if missing):
+  - `StageTimeline` / `StageListEditor`
+  - `BlockCard` / `BlockTypeBadge` / `BlockConfigPanel`
+  - `RubricEditor` primitives (`CriterionRow`, weight/score scale controls)
 
 ## Definition of done
 - Employer and admin routes render under app shell with correct nav affordances
