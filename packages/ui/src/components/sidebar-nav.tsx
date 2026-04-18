@@ -1,11 +1,19 @@
+"use client";
+
 import * as React from "react";
 
 import { cn } from "../lib/cn";
 import { Surface } from "./surface";
+import { SidebarCollapsedTooltip } from "./sidebar-collapsed-tooltip";
 
 export type SidebarNavItem = {
   key: string;
   label: string;
+  /**
+   * When the rail is collapsed, shown in the hover tooltip (e.g. `Work · Dashboard`).
+   * Defaults to `label` if omitted.
+   */
+  tooltip?: string;
   href?: string;
   icon?: React.ReactNode;
   badge?: React.ReactNode;
@@ -19,7 +27,7 @@ export type SidebarNavProps = {
   onSelect?: (key: string) => void;
   footer?: React.ReactNode;
   className?: string;
-  /** Icon-only rail: labels use `sr-only`; links get `title` for hover tooltips. */
+  /** Icon-only rail: labels use `sr-only`; tooltips show on hover/focus. */
   collapsed?: boolean;
 };
 
@@ -58,41 +66,40 @@ export function SidebarNav({ title, items, activeKey, onSelect, footer, classNam
             </>
           );
 
-          const tip = collapsed ? item.label : undefined;
+          const tip = item.tooltip ?? item.label;
 
-          return (
-            <li key={item.key}>
-              {item.href ? (
-                <a
-                  href={item.href}
-                  title={tip}
-                  className={common}
-                  aria-current={isActive ? "page" : undefined}
-                  onClick={(e) => {
-                    if (!onSelect) return;
-                    e.preventDefault();
-                    onSelect(item.key);
-                  }}
-                >
-                  {content}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  title={tip}
-                  className={common}
-                  aria-current={isActive ? "page" : undefined}
-                  onClick={() => onSelect?.(item.key)}
-                >
-                  {content}
-                </button>
-              )}
-            </li>
-          );
+          const trigger =
+            item.href ? (
+              <a
+                href={item.href}
+                className={common}
+                aria-current={isActive ? "page" : undefined}
+                onClick={(e) => {
+                  if (!onSelect) return;
+                  e.preventDefault();
+                  onSelect(item.key);
+                }}
+              >
+                {content}
+              </a>
+            ) : (
+              <button
+                type="button"
+                className={common}
+                aria-current={isActive ? "page" : undefined}
+                onClick={() => onSelect?.(item.key)}
+              >
+                {content}
+              </button>
+            );
+
+          const wrapped =
+            collapsed && tip ? <SidebarCollapsedTooltip label={tip}>{trigger}</SidebarCollapsedTooltip> : trigger;
+
+          return <li key={item.key}>{wrapped}</li>;
         })}
       </ul>
       {footer ? <div className="mt-3 border-t border-border pt-3">{footer}</div> : null}
     </Surface>
   );
 }
-

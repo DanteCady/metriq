@@ -170,10 +170,11 @@ function buildBreadcrumbs(pathname: string): { label: string; href?: string }[] 
   return items;
 }
 
-function toSidebarItems(items: AppFrameNavItem[]): SidebarNavItem[] {
+function toSidebarItems(items: AppFrameNavItem[], groupTitle?: string): SidebarNavItem[] {
   return items.map((i) => ({
     key: i.key,
     label: i.label,
+    tooltip: groupTitle ? `${groupTitle} · ${i.label}` : i.label,
     href: i.href,
     disabled: i.disabled,
     icon: <NavIcon name={i.icon} />,
@@ -217,7 +218,7 @@ export function AppFrame({ children, navItems, navGroups, topRight, sidebarTitle
           <SidebarNav
             key={group.title ?? `nav-${idx}`}
             title={group.title}
-            items={toSidebarItems(group.items)}
+            items={toSidebarItems(group.items, group.title)}
             activeKey={activeKey}
             collapsed={sidebarCollapsed}
             className="border-border shadow-sm"
@@ -268,7 +269,7 @@ export function AppFrame({ children, navItems, navGroups, topRight, sidebarTitle
             <SidebarNav
               key={`drawer-${group.title ?? idx}`}
               title={group.title}
-              items={toSidebarItems(group.items)}
+              items={toSidebarItems(group.items, group.title)}
               activeKey={activeKey}
               onSelect={(key) => {
                 const item = flatItems.find((i) => i.key === key);
