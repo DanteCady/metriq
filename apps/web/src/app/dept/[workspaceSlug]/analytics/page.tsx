@@ -11,7 +11,7 @@ const funnelColumns: DataTableColumn<FunnelStage>[] = [
     key: "count",
     header: "Candidates",
     align: "right",
-    cell: (r) => <span className="font-medium tabular-nums text-slate-900 dark:text-slate-50">{r.count}</span>,
+    cell: (r) => <span className="font-medium tabular-nums text-foreground">{r.count}</span>,
   },
   {
     key: "pct",
@@ -33,9 +33,9 @@ function FunnelBarChart({ stages }: { stages: FunnelStage[] }) {
     <div className="grid gap-3">
       {stages.map((s) => (
         <div key={s.key} className="grid gap-1">
-          <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>{s.label}</span>
-            <span className="tabular-nums text-slate-900 dark:text-slate-50">{s.count}</span>
+            <span className="tabular-nums text-foreground">{s.count}</span>
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-muted">
             <div
@@ -56,8 +56,8 @@ function DistributionRow({ row }: { row: RubricCriterionDistribution }) {
     <div className="rounded-lg border border-border p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">{row.label}</div>
-          <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{row.auditionTitle}</div>
+          <div className="text-sm font-semibold text-foreground">{row.label}</div>
+          <div className="mt-0.5 text-xs text-muted-foreground">{row.auditionTitle}</div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline">{Math.round(row.evidenceLinkedPct * 100)}% evidence-linked</Badge>
@@ -87,7 +87,7 @@ function DistributionRow({ row }: { row: RubricCriterionDistribution }) {
           />
         ))}
       </div>
-      <div className="mt-2 flex justify-between text-[10px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+      <div className="mt-2 flex justify-between text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
         <span>Stronger signal</span>
         <span>Weaker signal</span>
       </div>
@@ -125,7 +125,7 @@ export default function EmployerAnalyticsPage() {
         </Panel>
 
         <Panel title="Signal quality" description="Operational read on whether scores stay anchored to evidence.">
-          <p className="text-sm text-slate-600 dark:text-slate-300">{mockEmployerSignalQuality.note}</p>
+          <p className="text-sm text-muted-foreground">{mockEmployerSignalQuality.note}</p>
           <div className="mt-4 rounded-md border border-border bg-muted/80 p-4 text-sm text-foreground">
             <div className="font-semibold">Recommended next step</div>
             <p className="mt-1 text-muted-foreground">{mockEmployerSignalQuality.topAction}</p>

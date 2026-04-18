@@ -18,8 +18,8 @@ export function DefinitionList({ items, columns = 1, className }: DefinitionList
     <dl className={cn(columns === 2 ? "grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2" : "space-y-4", className)}>
       {items.map((it, idx) => (
         <div key={idx}>
-          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{it.term}</dt>
-          <dd className="mt-1 text-sm text-slate-900 dark:text-slate-50">{it.description}</dd>
+          <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{it.term}</dt>
+          <dd className="mt-1 text-sm text-foreground">{it.description}</dd>
         </div>
       ))}
     </dl>

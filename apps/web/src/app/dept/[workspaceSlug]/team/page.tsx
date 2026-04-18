@@ -9,8 +9,8 @@ const memberColumns: DataTableColumn<TeamMemberRow>[] = [
     header: "Member",
     cell: (r) => (
       <div>
-        <div className="font-medium text-slate-900 dark:text-slate-50">{r.name}</div>
-        <div className="text-xs text-slate-500 dark:text-slate-400">{r.email}</div>
+        <div className="font-medium text-foreground">{r.name}</div>
+        <div className="text-xs text-muted-foreground">{r.email}</div>
       </div>
     ),
   },
@@ -23,14 +23,14 @@ const memberColumns: DataTableColumn<TeamMemberRow>[] = [
     key: "reviews",
     header: "Reviews (30d)",
     align: "right",
-    cell: (r) => <span className="tabular-nums text-slate-900 dark:text-slate-50">{r.reviewsCompleted30d}</span>,
+    cell: (r) => <span className="tabular-nums text-foreground">{r.reviewsCompleted30d}</span>,
   },
   {
     key: "last",
     header: "Last active",
     align: "right",
     cell: (r) => (
-      <span className="text-sm text-slate-600 dark:text-slate-300">
+      <span className="text-sm text-muted-foreground">
         {new Date(r.lastActiveAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
       </span>
     ),
@@ -76,19 +76,19 @@ export default function EmployerTeamPage() {
           <Panel title="Invite people" description="Grant access with the right role — invites are email-based in production.">
             <div className="grid gap-3">
               <label className="grid gap-1 text-sm">
-                <span className="text-slate-600 dark:text-slate-300">Work email</span>
+                <span className="text-muted-foreground">Work email</span>
                 <input
                   readOnly
-                  className="h-9 cursor-not-allowed rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400"
+                  className="h-9 cursor-not-allowed rounded-md border border-border bg-muted px-3 text-sm text-muted-foreground"
                   placeholder="name@company.com"
                   title="Invites are disabled in this preview build."
                 />
               </label>
               <label className="grid gap-1 text-sm">
-                <span className="text-slate-600 dark:text-slate-300">Role</span>
+                <span className="text-muted-foreground">Role</span>
                 <select
                   disabled
-                  className="h-9 cursor-not-allowed rounded-md border border-slate-200 bg-slate-50 px-3 text-sm dark:border-slate-800 dark:bg-slate-900"
+                  className="h-9 cursor-not-allowed rounded-md border border-border bg-muted px-3 text-sm"
                   title="Invites are disabled in this preview build."
                   defaultValue="Reviewer"
                 >
@@ -116,14 +116,14 @@ export default function EmployerTeamPage() {
             <div className="overflow-x-auto text-sm">
               <table className="w-full min-w-[320px] border-separate border-spacing-0 text-left">
                 <thead>
-                  <tr className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                    <th className="border-b border-slate-200 py-2 pr-3 dark:border-slate-800">Capability</th>
-                    <th className="border-b border-slate-200 px-2 py-2 text-center dark:border-slate-800">Reviewer</th>
-                    <th className="border-b border-slate-200 px-2 py-2 text-center dark:border-slate-800">Hiring mgr</th>
-                    <th className="border-b border-slate-200 px-2 py-2 text-center dark:border-slate-800">Admin</th>
+                  <tr className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <th className="border-b border-border py-2 pr-3">Capability</th>
+                    <th className="border-b border-border px-2 py-2 text-center">Reviewer</th>
+                    <th className="border-b border-border px-2 py-2 text-center">Hiring mgr</th>
+                    <th className="border-b border-border px-2 py-2 text-center">Admin</th>
                   </tr>
                 </thead>
-                <tbody className="text-slate-700 dark:text-slate-200">
+                <tbody className="text-foreground">
                   {(
                     [
                       ["Score submissions", "Yes", "Yes", "Yes"],
@@ -133,10 +133,10 @@ export default function EmployerTeamPage() {
                     ] as const
                   ).map(([cap, r, h, a]) => (
                     <tr key={cap}>
-                      <td className="border-b border-slate-100 py-2.5 pr-3 dark:border-slate-800/80">{cap}</td>
-                      <td className="border-b border-slate-100 px-2 py-2.5 text-center dark:border-slate-800/80">{r}</td>
-                      <td className="border-b border-slate-100 px-2 py-2.5 text-center dark:border-slate-800/80">{h}</td>
-                      <td className="border-b border-slate-100 px-2 py-2.5 text-center dark:border-slate-800/80">{a}</td>
+                      <td className="border-b border-border py-2.5 pr-3">{cap}</td>
+                      <td className="border-b border-border px-2 py-2.5 text-center">{r}</td>
+                      <td className="border-b border-border px-2 py-2.5 text-center">{h}</td>
+                      <td className="border-b border-border px-2 py-2.5 text-center">{a}</td>
                     </tr>
                   ))}
                 </tbody>

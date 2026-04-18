@@ -2,12 +2,15 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { EmptyState, PageHeader, SimulationCard } from "@metriq/ui";
 
 import { mockSimulations } from "../../../mocks/candidate/simulations";
 
 export default function CandidateSimulationsPage() {
+  const router = useRouter();
+
   return (
     <>
       <PageHeader title="Simulations" description="Browse and start a job simulation." />
@@ -22,13 +25,9 @@ export default function CandidateSimulationsPage() {
                 difficulty={s.difficulty === "easy" ? "Easy" : s.difficulty === "medium" ? "Medium" : "Hard"}
                 estimatedMinutes={s.estimatedMinutes}
                 skills={s.skills}
-                primaryActionLabel="View"
+                primaryActionLabel="Open simulation"
                 onPrimaryAction={() => {
-                  window.location.href = `/candidate/simulations/${s.id}`;
-                }}
-                secondaryActionLabel="Open"
-                onSecondaryAction={() => {
-                  window.open(`/candidate/simulations/${s.id}`, "_self");
+                  router.push(`/candidate/simulations/${s.id}`);
                 }}
               />
             ))}
@@ -43,8 +42,8 @@ export default function CandidateSimulationsPage() {
             }}
           />
         )}
-        <div className="mt-6 text-sm text-slate-600 dark:text-slate-300">
-          <Link href="/candidate" className="underline">
+        <div className="mt-6 text-sm">
+          <Link href="/candidate" className="font-medium text-primary hover:underline">
             Back to dashboard
           </Link>
         </div>

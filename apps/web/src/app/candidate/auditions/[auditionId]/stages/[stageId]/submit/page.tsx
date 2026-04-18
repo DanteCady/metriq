@@ -99,15 +99,15 @@ export default function CandidateArtifactSubmissionPage() {
             <div className="grid gap-4">
               <Panel title="Required artifacts" description="These must be present before you can submit." density="tight">
                 {required.length === 0 ? (
-                  <div className="text-sm text-slate-600 dark:text-slate-300">No required artifacts are defined for this stage yet.</div>
+                  <div className="text-sm text-muted-foreground">No required artifacts are defined for this stage yet.</div>
                 ) : (
                   <ul className="grid gap-2">
                     {required.map((r) => {
                       const present = !missing.includes(r);
                       return (
-                        <li key={r} className="flex items-start justify-between gap-3 rounded-md border border-slate-200 p-3 dark:border-slate-800">
-                          <div className="text-sm text-slate-900 dark:text-slate-50">{r}</div>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">{present ? "Added" : "Missing"}</div>
+                        <li key={r} className="flex items-start justify-between gap-3 rounded-md border border-border p-3">
+                          <div className="text-sm text-foreground">{r}</div>
+                          <div className="text-xs text-muted-foreground">{present ? "Added" : "Missing"}</div>
                         </li>
                       );
                     })}
@@ -149,8 +149,8 @@ export default function CandidateArtifactSubmissionPage() {
 
             <div className="grid gap-4">
               <Panel title="Submission meaning" description="Submitting locks your stage evidence for evaluation." density="tight">
-                <div className="grid gap-2 text-sm text-slate-700 dark:text-slate-200">
-                  <div className="rounded-md border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/20">
+                <div className="grid gap-2 text-sm text-foreground">
+                  <div className="rounded-md border border-border bg-muted/60 p-3">
                     Once submitted, this stage is treated as final for evaluation. If you need to clarify something, add it as artifact context before submitting.
                   </div>
                   <Button
@@ -202,9 +202,9 @@ export default function CandidateArtifactSubmissionPage() {
       >
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="text-slate-600 dark:text-slate-300">Deliverable label</span>
+            <span className="text-muted-foreground">Deliverable label</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-3 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-3 text-sm"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
             >
@@ -216,10 +216,10 @@ export default function CandidateArtifactSubmissionPage() {
             </select>
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="text-slate-600 dark:text-slate-300">Artifact content</span>
+            <span className="text-muted-foreground">Artifact content</span>
             <Textarea value={value} onChange={(e) => setValue(e.target.value)} placeholder="Paste a URL or write a short, structured response…" />
           </label>
-          <div className="text-xs text-slate-500 dark:text-slate-400">
+          <div className="text-xs text-muted-foreground">
             Tip: include 1–3 sentences of context (what it is, where to look, constraints/assumptions).
           </div>
         </div>

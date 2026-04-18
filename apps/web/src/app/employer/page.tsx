@@ -13,8 +13,8 @@ const wsColumns: DataTableColumn<WsRow>[] = [
     header: "Workspace",
     cell: (r) => (
       <div>
-        <div className="font-medium text-slate-900 dark:text-slate-50">{r.name}</div>
-        <div className="font-mono text-xs text-slate-500 dark:text-slate-400">{r.slug}</div>
+        <div className="font-medium text-foreground">{r.name}</div>
+        <div className="font-mono text-xs text-muted-foreground">{r.slug}</div>
       </div>
     ),
   },
@@ -31,7 +31,7 @@ const wsColumns: DataTableColumn<WsRow>[] = [
     cell: (r) => (
       <Link
         href={deptPath(r.slug, "")}
-        className="inline-flex h-8 items-center justify-center rounded-md bg-slate-100 px-3 text-sm font-medium text-slate-900 hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-50 dark:hover:bg-slate-800"
+        className="inline-flex h-8 items-center justify-center rounded-md bg-muted px-3 text-sm font-medium text-foreground hover:bg-muted/80 dark:hover:bg-muted/70"
       >
         Open
       </Link>
@@ -79,15 +79,15 @@ export default function EmployerOrgHomePage() {
         <Panel title="Seat allocation" description="How purchased seats are spread across workspaces (mock).">
           <ul className="space-y-2 text-sm">
             {mockOrgSeatPool.allocatedByWorkspace.map((row) => (
-              <li key={row.slug} className="flex items-center justify-between rounded-md border border-slate-100 px-3 py-2 dark:border-slate-800/80">
-                <span className="text-slate-800 dark:text-slate-100">{row.name}</span>
-                <span className="tabular-nums text-slate-600 dark:text-slate-300">
+              <li key={row.slug} className="flex items-center justify-between rounded-md border border-border px-3 py-2">
+                <span className="text-foreground">{row.name}</span>
+                <span className="tabular-nums text-muted-foreground">
                   {row.seatsUsed} / {row.seatLimit}
                 </span>
               </li>
             ))}
           </ul>
-          <div className="mt-4 text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-4 text-xs text-muted-foreground">
             Next: connect Better Auth organization + SSO plugins; enforce seat limits per workspace at sign-in and invite time.
           </div>
         </Panel>

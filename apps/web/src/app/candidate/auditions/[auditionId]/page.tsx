@@ -92,18 +92,18 @@ export default function CandidateAuditionOverviewPage() {
 
             <div className="grid gap-4">
               <PageSection title="Rubric (summary)" description="How your evidence is evaluated. Scores are tied to evidence and rationale.">
-                <div className="grid gap-3 text-sm text-slate-700 dark:text-slate-200">
-                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/20">
+                <div className="grid gap-3 text-sm text-foreground">
+                  <div className="rounded-lg border border-border bg-muted/60 p-4">
                     <div className="font-medium">Scoring scale</div>
-                    <div className="mt-1 text-slate-600 dark:text-slate-300">1–4 per criterion (Not yet → Strongly demonstrated).</div>
+                    <div className="mt-1 text-muted-foreground">1–4 per criterion (Not yet → Strongly demonstrated).</div>
                   </div>
-                  <div className="rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+                  <div className="rounded-lg border border-border bg-card p-4">
                     <div className="font-medium">Criteria</div>
                     <div className="mt-3 grid gap-2">
                       {mockAuditionDetail.rubricSummary.criteria.map((c) => (
-                        <div key={c.key} className="rounded-md border border-slate-200 p-3 text-sm dark:border-slate-800">
-                          <div className="font-medium text-slate-900 dark:text-slate-50">{c.label}</div>
-                          <div className="mt-1 text-slate-600 dark:text-slate-300">{c.intent}</div>
+                        <div key={c.key} className="rounded-md border border-border p-3 text-sm">
+                          <div className="font-medium text-foreground">{c.label}</div>
+                          <div className="mt-1 text-muted-foreground">{c.intent}</div>
                         </div>
                       ))}
                     </div>

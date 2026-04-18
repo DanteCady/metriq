@@ -36,7 +36,7 @@ export default function CandidateAuditionInboxPage() {
         title="Audition inbox"
         description="Pick up where you left off. Every audition is structured work that produces evaluable evidence."
         actions={
-          <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+          <div className="text-xs font-medium text-muted-foreground">
             Audition-first candidate flow
           </div>
         }

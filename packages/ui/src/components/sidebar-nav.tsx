@@ -40,17 +40,19 @@ export function SidebarNav({ title, items, activeKey, onSelect, footer, classNam
         {items.map((item) => {
           const isActive = item.key === activeKey;
           const common = cn(
-            "flex w-full items-center gap-2 rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            "relative flex w-full items-center gap-2 rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             collapsed ? "justify-center px-2 py-2.5" : "px-2.5 py-2",
             item.disabled && "pointer-events-none opacity-50",
             isActive
-              ? "bg-muted font-medium text-foreground shadow-sm ring-1 ring-border/60"
+              ? "bg-primary/[0.08] font-medium text-foreground shadow-sm ring-1 ring-primary/15 before:pointer-events-none before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:rounded-r-full before:bg-primary"
               : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
           );
 
           const content = (
             <>
-              {item.icon ? <span className="shrink-0 text-muted-foreground">{item.icon}</span> : null}
+              {item.icon ? (
+                <span className={cn("shrink-0", isActive ? "text-primary" : "text-muted-foreground")}>{item.icon}</span>
+              ) : null}
               <span className={cn("min-w-0 flex-1 truncate", collapsed && "sr-only")}>{item.label}</span>
               {item.badge && !collapsed ? <span className="shrink-0">{item.badge}</span> : null}
             </>

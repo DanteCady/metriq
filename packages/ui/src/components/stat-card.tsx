@@ -16,11 +16,11 @@ export function StatCard({ label, value, hint, icon, className }: StatCardProps)
     <Surface className={cn("p-5", className)}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</div>
-          <div className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">{value}</div>
-          {hint ? <div className="mt-2 text-sm text-slate-600 dark:text-slate-300">{hint}</div> : null}
+          <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+          <div className="mt-2 text-2xl font-semibold tracking-tight text-foreground">{value}</div>
+          {hint ? <div className="mt-2 text-sm text-muted-foreground">{hint}</div> : null}
         </div>
-        {icon ? <div className="shrink-0 text-slate-500 dark:text-slate-400">{icon}</div> : null}
+        {icon ? <div className="shrink-0 text-muted-foreground">{icon}</div> : null}
       </div>
     </Surface>
   );

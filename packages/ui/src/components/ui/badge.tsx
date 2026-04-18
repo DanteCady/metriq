@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "../../lib/cn";
 
 export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
-  variant?: "default" | "secondary" | "outline" | "success" | "warning" | "destructive";
+  variant?: "default" | "secondary" | "outline" | "success" | "warning" | "destructive" | "info";
 };
 
 export function Badge({ className, variant = "default", ...props }: BadgeProps) {
@@ -14,9 +14,14 @@ export function Badge({ className, variant = "default", ...props }: BadgeProps) 
         variant === "default" && "border-border bg-muted text-foreground",
         variant === "secondary" && "border-border bg-card text-muted-foreground",
         variant === "outline" && "border-border bg-transparent text-muted-foreground",
-        variant === "success" && "border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-200",
-        variant === "warning" && "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200",
-        variant === "destructive" && "border-red-200 bg-red-50 text-red-900 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-200",
+        variant === "success" &&
+          "border-success/30 bg-success/10 text-success dark:border-success/40 dark:bg-success/[0.15] dark:text-success",
+        variant === "warning" &&
+          "border-warning/35 bg-warning/12 text-warning dark:border-warning/40 dark:bg-warning/[0.14] dark:text-warning",
+        variant === "destructive" &&
+          "border-destructive/30 bg-destructive/10 text-destructive dark:border-destructive/45 dark:bg-destructive/[0.15] dark:text-destructive",
+        variant === "info" &&
+          "border-info/30 bg-info/10 text-info dark:border-info/40 dark:bg-info/[0.15] dark:text-info",
         className,
       )}
       {...props}

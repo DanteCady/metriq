@@ -21,7 +21,7 @@ export default function CandidateResultsPage() {
       />
       <div className="mt-6 grid gap-4">
         <PageSection title="Summary">
-          <div className="text-sm text-slate-700 dark:text-slate-200">{mockEvaluation.summary}</div>
+          <div className="text-sm text-foreground">{mockEvaluation.summary}</div>
         </PageSection>
         <EvaluationBreakdown
           criteria={mockEvaluation.criteria.map((c) => ({
@@ -29,7 +29,7 @@ export default function CandidateResultsPage() {
             label: c.label,
             score: c.score,
             max: c.max,
-            notes: <span className="text-sm text-slate-600 dark:text-slate-300">{c.rationale}</span>,
+            notes: <span className="text-sm text-muted-foreground">{c.rationale}</span>,
           }))}
         />
       </div>

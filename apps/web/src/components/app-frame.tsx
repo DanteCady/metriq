@@ -219,11 +219,11 @@ export function AppFrame({ children, navItems, navGroups, topRight, sidebarTitle
             items={toSidebarItems(group.items)}
             activeKey={activeKey}
             collapsed={sidebarCollapsed}
-            className="border-slate-200 shadow-sm dark:border-slate-800"
+            className="border-border shadow-sm"
           />
         ))}
       </div>
-      <div className="shrink-0 border-t border-slate-200 pt-2 dark:border-slate-800">
+      <div className="shrink-0 border-t border-border pt-2">
         <Button
           type="button"
           variant="ghost"

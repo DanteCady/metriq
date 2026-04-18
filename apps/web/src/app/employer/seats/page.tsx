@@ -6,8 +6,8 @@ import { deptPath } from "../../../lib/dept-path";
 import { mockOrgSeatAssignments, mockOrgSeatPool, type MockOrgSeatRow } from "../../../mocks/tenancy";
 
 const columns: DataTableColumn<MockOrgSeatRow>[] = [
-  { key: "name", header: "Person", cell: (r) => <span className="font-medium text-slate-900 dark:text-slate-50">{r.name}</span> },
-  { key: "email", header: "Email", cell: (r) => <span className="text-sm text-slate-600 dark:text-slate-300">{r.email}</span> },
+  { key: "name", header: "Person", cell: (r) => <span className="font-medium text-foreground">{r.name}</span> },
+  { key: "email", header: "Email", cell: (r) => <span className="text-sm text-muted-foreground">{r.email}</span> },
   { key: "role", header: "Role", cell: (r) => <Badge variant="outline">{r.role}</Badge> },
   {
     key: "ws",

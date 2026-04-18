@@ -157,8 +157,8 @@ function QuestionnaireEditor({
   return (
     <div className="grid gap-6">
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">Opening text (optional)</h3>
-        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Shown before the first question.</p>
+        <h3 className="text-sm font-semibold text-foreground">Opening text (optional)</h3>
+        <p className="mt-1 text-xs text-muted-foreground">Shown before the first question.</p>
         {instructions.length === 0 ? (
           <Button
             type="button"
@@ -182,7 +182,7 @@ function QuestionnaireEditor({
             Add opening text
           </Button>
         ) : (
-          <div className="mt-3 rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+          <div className="mt-3 rounded-lg border border-border bg-card p-4">
             {instructions.map((b) => (
               <div key={b.id}>
                 <AuditionBlockEditor block={b} onChange={(nb) => patchBlock(b.id, () => nb)} />
@@ -204,8 +204,8 @@ function QuestionnaireEditor({
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">Questions</h3>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Candidates answer in order.</p>
+            <h3 className="text-sm font-semibold text-foreground">Questions</h3>
+            <p className="mt-1 text-xs text-muted-foreground">Candidates answer in order.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button type="button" variant="secondary" size="sm" onClick={() => addQuestion("single_choice")}>
@@ -221,9 +221,9 @@ function QuestionnaireEditor({
         </div>
         <div className="mt-4 grid gap-4">
           {questions.map((b, qi) => (
-            <div key={b.id} className="rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+            <div key={b.id} className="rounded-lg border border-border bg-card p-4">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                <span className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Question {qi + 1}
                 </span>
                 <div className="flex flex-wrap gap-1">
@@ -239,7 +239,7 @@ function QuestionnaireEditor({
                 </div>
               </div>
               <label className="grid gap-1 text-sm">
-                <span className="font-medium text-slate-800 dark:text-slate-200">Label (outline)</span>
+                <span className="font-medium text-foreground">Label (outline)</span>
                 <Input value={b.title} onChange={(e) => patchBlock(b.id, (cur) => ({ ...cur, title: e.target.value } as AssessmentBlock))} />
               </label>
               <div className="mt-3">
@@ -248,7 +248,7 @@ function QuestionnaireEditor({
             </div>
           ))}
           {questions.length === 0 ? (
-            <p className="text-sm text-slate-600 dark:text-slate-400">Add at least one question.</p>
+            <p className="text-sm text-muted-foreground">Add at least one question.</p>
           ) : null}
         </div>
       </div>
@@ -285,9 +285,9 @@ function InstructionPrimaryEditor({
   return (
     <div className="grid gap-6">
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">Candidate instructions</h3>
-        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Context and rules before the task.</p>
-        <div className="mt-3 rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+        <h3 className="text-sm font-semibold text-foreground">Candidate instructions</h3>
+        <p className="mt-1 text-xs text-muted-foreground">Context and rules before the task.</p>
+        <div className="mt-3 rounded-lg border border-border bg-card p-4">
           {instructions.length ? (
             instructions.map((b) => (
               <AuditionBlockEditor key={b.id} block={b} onChange={(nb) => patch(b.id, () => nb)} />
@@ -317,10 +317,10 @@ function InstructionPrimaryEditor({
         </div>
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">Task</h3>
-        <div className="mt-3 rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+        <h3 className="text-sm font-semibold text-foreground">Task</h3>
+        <div className="mt-3 rounded-lg border border-border bg-card p-4">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Task title (outline)</span>
+            <span className="font-medium text-foreground">Task title (outline)</span>
             <Input value={primary.title} onChange={(e) => patch(primary.id, (cur) => ({ ...cur, title: e.target.value } as AssessmentBlock))} />
           </label>
           <div className="mt-3">
@@ -346,7 +346,7 @@ function MixedSegmentResolver({
         <label className="grid gap-1 text-sm">
           <span className="font-medium">Activity type</span>
           <select
-            className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+            className="h-9 rounded-md border border-border bg-card px-2 text-sm"
             value={pick}
             onChange={(e) => setPick(e.target.value as SegmentKind)}
           >
@@ -381,7 +381,7 @@ function SegmentBodyEditor({ stage, onChange }: { stage: AssessmentStage; onChan
   if (eff === "drag_drop") return <InstructionPrimaryEditor stage={stage} onChange={onChange} primaryKind="ordering" />;
   return (
     <Panel title="Empty activity" description="Add questions or pick an activity type from the flow list.">
-      <p className="text-sm text-slate-600 dark:text-slate-400">This segment has no task blocks yet.</p>
+      <p className="text-sm text-muted-foreground">This segment has no task blocks yet.</p>
     </Panel>
   );
 }
@@ -523,7 +523,7 @@ export function AuditionCreationWizard({
             { value: "review", label: "Review" },
           ]}
         />
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-muted-foreground">
           In-session tasks only—no file uploads or external-only links in v1.
         </p>
       </div>
@@ -532,7 +532,7 @@ export function AuditionCreationWizard({
         <Panel title="Audition basics" description="Role container. Next, build the candidate flow as ordered activities.">
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="grid gap-1 text-sm sm:col-span-2">
-              <span className="font-medium text-slate-800 dark:text-slate-200">Audition title</span>
+              <span className="font-medium text-foreground">Audition title</span>
               <Input
                 value={draft.title}
                 onChange={(e) => onDraftChange({ ...draft, title: e.target.value })}
@@ -540,9 +540,9 @@ export function AuditionCreationWizard({
               />
             </label>
             <label className="grid gap-1 text-sm">
-              <span className="font-medium text-slate-800 dark:text-slate-200">Level</span>
+              <span className="font-medium text-foreground">Level</span>
               <select
-                className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+                className="h-9 rounded-md border border-border bg-card px-2 text-sm"
                 value={draft.level}
                 onChange={(e) => onDraftChange({ ...draft, level: e.target.value as EmployerAudition["level"] })}
               >
@@ -554,7 +554,7 @@ export function AuditionCreationWizard({
               </select>
             </label>
             <label className="grid gap-1 text-sm">
-              <span className="font-medium text-slate-800 dark:text-slate-200">Overall time budget (minutes)</span>
+              <span className="font-medium text-foreground">Overall time budget (minutes)</span>
               <Input
                 type="number"
                 min={5}
@@ -562,18 +562,18 @@ export function AuditionCreationWizard({
                 value={draft.timeboxMinutes}
                 onChange={(e) => onDraftChange({ ...draft, timeboxMinutes: Number(e.target.value) || 0 })}
               />
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-muted-foreground">
                 Sum of activity times right now: {stageSum} min. Set overall to match or allow buffer.
               </span>
             </label>
             <div className="grid gap-2 sm:col-span-2">
-              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Scenario template</span>
+              <span className="text-sm font-medium text-foreground">Scenario template</span>
               <SegmentedControl
                 value={draft.template}
                 onValueChange={(v) => onDraftChange({ ...draft, template: v as AuditionTemplate })}
                 options={TEMPLATES.map((t) => ({ value: t.value, label: t.label }))}
               />
-              <p className="text-sm text-slate-600 dark:text-slate-400">{TEMPLATES.find((t) => t.value === draft.template)?.description}</p>
+              <p className="text-sm text-muted-foreground">{TEMPLATES.find((t) => t.value === draft.template)?.description}</p>
             </div>
             <div className="sm:col-span-2">
               <Button type="button" onClick={() => setStep("flow")}>
@@ -606,12 +606,12 @@ export function AuditionCreationWizard({
                           "w-full rounded-lg border p-3 text-left transition-colors",
                           selectedSegmentId === s.id && Boolean(selectedSegmentId)
                             ? "border-indigo-500 bg-indigo-50/80 ring-2 ring-indigo-500/20 dark:border-indigo-400 dark:bg-indigo-950/30"
-                            : "border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950",
+                            : "border-border bg-card",
                         )}
                       >
-                        <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Step {idx + 1}</div>
-                        <div className="font-medium text-slate-900 dark:text-slate-50">{s.title || "Untitled"}</div>
-                        <div className="mt-1 text-xs text-slate-600 dark:text-slate-400">{activityLabel(s)} · {s.timeboxMinutes} min</div>
+                        <div className="text-xs font-medium text-muted-foreground">Step {idx + 1}</div>
+                        <div className="font-medium text-foreground">{s.title || "Untitled"}</div>
+                        <div className="mt-1 text-xs text-muted-foreground">{activityLabel(s)} · {s.timeboxMinutes} min</div>
                       </button>
                       <div className="mt-1 flex flex-wrap gap-1 pl-1">
                         <Button type="button" variant="ghost" size="sm" disabled={idx === 0} onClick={() => moveStage(s.id, "up")}>
@@ -642,7 +642,7 @@ export function AuditionCreationWizard({
                 <Button type="button" variant="secondary" className="mt-3 w-full" onClick={() => setAddOpen(true)}>
                   Add activity
                 </Button>
-                <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Total activity time: {stageSum} min</p>
+                <p className="mt-3 text-xs text-muted-foreground">Total activity time: {stageSum} min</p>
               </>
             )}
           </Panel>
@@ -650,7 +650,7 @@ export function AuditionCreationWizard({
           <div className="min-h-[280px]">
             {!selected ? (
               <Panel title="Configure activity" description="Select an activity from the list or add one.">
-                <p className="text-sm text-slate-600 dark:text-slate-400">Nothing selected.</p>
+                <p className="text-sm text-muted-foreground">Nothing selected.</p>
               </Panel>
             ) : (
               <Panel
@@ -658,10 +658,10 @@ export function AuditionCreationWizard({
                 description={activityLabel(selected)}
                 actions={
                   <div className="flex flex-wrap items-center gap-2">
-                    <label className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400">
+                    <label className="flex items-center gap-1 text-xs text-muted-foreground">
                       Type
                       <select
-                        className="h-8 rounded-md border border-slate-200 bg-white px-2 text-xs dark:border-slate-800 dark:bg-slate-950"
+                        className="h-8 rounded-md border border-border bg-card px-2 text-xs"
                         value={typeSelectValue}
                         onChange={(e) => {
                           const v = e.target.value as SegmentKind | "__mixed__";
@@ -687,14 +687,14 @@ export function AuditionCreationWizard({
               >
                 <div className="mb-6 grid gap-3 sm:grid-cols-2">
                   <label className="grid gap-1 text-sm">
-                    <span className="font-medium text-slate-800 dark:text-slate-200">Activity title</span>
+                    <span className="font-medium text-foreground">Activity title</span>
                     <Input
                       value={selected.title}
                       onChange={(e) => updateStage(selected.id, { ...selected, title: e.target.value })}
                     />
                   </label>
                   <label className="grid gap-1 text-sm">
-                    <span className="font-medium text-slate-800 dark:text-slate-200">Activity time (minutes)</span>
+                    <span className="font-medium text-foreground">Activity time (minutes)</span>
                     <Input
                       type="number"
                       min={1}
@@ -718,20 +718,20 @@ export function AuditionCreationWizard({
           <Panel title="Review" description="Confirm order and content before saving.">
             <ol className="list-decimal space-y-3 pl-5 text-sm">
               {draft.stages.map((s, i) => (
-                <li key={s.id} className="text-slate-800 dark:text-slate-200">
+                <li key={s.id} className="text-foreground">
                   <div className="font-medium">
                     {i + 1}. {s.title || activityLabel(s)}
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400">{activityLabel(s)} · {s.timeboxMinutes} min</div>
-                  <div className="mt-1 text-slate-600 dark:text-slate-400">{segmentPreviewLine(s)}</div>
+                  <div className="text-xs text-muted-foreground">{activityLabel(s)} · {s.timeboxMinutes} min</div>
+                  <div className="mt-1 text-muted-foreground">{segmentPreviewLine(s)}</div>
                   <Button type="button" variant="ghost" size="sm" className="mt-1 h-8 px-2 text-xs" onClick={() => jumpToIssue({ message: "", stageId: s.id })}>
                     Edit in flow
                   </Button>
                 </li>
               ))}
             </ol>
-            {draft.stages.length === 0 ? <p className="text-sm text-slate-600 dark:text-slate-400">No activities yet.</p> : null}
-            <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">
+            {draft.stages.length === 0 ? <p className="text-sm text-muted-foreground">No activities yet.</p> : null}
+            <p className="mt-4 text-sm text-muted-foreground">
               Overall budget {draft.timeboxMinutes} min · Activities total {stageSum} min
             </p>
           </Panel>
@@ -759,21 +759,21 @@ export function AuditionCreationWizard({
 
       {addOpen ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" role="dialog" aria-modal="true" aria-labelledby="add-activity-title">
-          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-950">
-            <h2 id="add-activity-title" className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-xl">
+            <h2 id="add-activity-title" className="text-lg font-semibold text-foreground">
               Add activity
             </h2>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">Pick one type. You can add more activities afterward.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Pick one type. You can add more activities afterward.</p>
             <div className="mt-4 grid gap-2">
               {ACTIVITY_CHOICES.map((c) => (
                 <button
                   key={c.kind}
                   type="button"
-                  className="rounded-lg border border-slate-200 p-3 text-left transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:border-slate-800 dark:hover:border-indigo-500 dark:hover:bg-indigo-950/20"
+                  className="rounded-lg border border-border p-3 text-left transition hover:border-primary hover:bg-accent/80 dark:hover:bg-accent/30"
                   onClick={() => addStage(c.kind)}
                 >
-                  <div className="font-medium text-slate-900 dark:text-slate-50">{c.title}</div>
-                  <div className="mt-1 text-xs text-slate-600 dark:text-slate-400">{c.body}</div>
+                  <div className="font-medium text-foreground">{c.title}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{c.body}</div>
                 </button>
               ))}
             </div>

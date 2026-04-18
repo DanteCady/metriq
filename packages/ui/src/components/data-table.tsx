@@ -22,7 +22,7 @@ export type DataTableToolbarProps = {
 
 export function DataTableToolbar({ left, right, className }: DataTableToolbarProps) {
   return (
-    <div className={cn("flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-800", className)}>
+    <div className={cn("flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3", className)}>
       <div className="min-w-0">{left}</div>
       {right ? <div className="shrink-0">{right}</div> : null}
     </div>
@@ -76,7 +76,7 @@ export function DataTable<T>({
                 <th
                   key={c.key}
                   className={cn(
-                    "border-b border-slate-200 bg-slate-50 px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300",
+                    "border-b border-border bg-muted px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground",
                     c.align === "right" && "text-right",
                     c.align === "center" && "text-center",
                     c.headerClassName,
@@ -90,7 +90,7 @@ export function DataTable<T>({
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-10 text-center text-sm text-slate-600 dark:text-slate-300">
+                <td colSpan={columns.length} className="px-4 py-10 text-center text-sm text-muted-foreground">
                   Loading…
                 </td>
               </tr>
@@ -99,9 +99,8 @@ export function DataTable<T>({
                 <tr
                   key={getRowKey(row, idx)}
                   className={cn(
-                    "group",
-                    clickable && "cursor-pointer",
-                    clickable && "hover:bg-slate-50 dark:hover:bg-slate-900/30",
+                    "group transition-colors",
+                    clickable ? "cursor-pointer hover:bg-muted/70" : "hover:bg-muted/40",
                   )}
                   onClick={clickable ? () => onRowClick?.(row, idx) : undefined}
                 >
@@ -109,7 +108,7 @@ export function DataTable<T>({
                     <td
                       key={c.key}
                       className={cn(
-                        "border-b border-slate-200 px-4 text-sm text-slate-700 dark:border-slate-800 dark:text-slate-200",
+                        "border-b border-border px-4 text-sm text-foreground",
                         cellY,
                         c.align === "right" && "text-right tabular-nums",
                         c.align === "center" && "text-center",

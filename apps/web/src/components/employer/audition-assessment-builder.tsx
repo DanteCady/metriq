@@ -47,7 +47,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
       return (
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Briefing body</span>
+            <span className="font-medium text-foreground">Briefing body</span>
             <Textarea
               value={block.config.body}
               onChange={(e) => onChange({ ...block, config: { ...block.config, body: e.target.value } })}
@@ -55,7 +55,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
               className="font-mono text-sm"
             />
           </label>
-          <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+          <label className="flex items-center gap-2 text-sm text-muted-foreground">
             <input
               type="checkbox"
               checked={Boolean(block.config.requireAck)}
@@ -69,7 +69,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
       return (
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Prompt</span>
+            <span className="font-medium text-foreground">Prompt</span>
             <Textarea
               value={block.config.prompt}
               onChange={(e) => onChange({ ...block, config: { ...block.config, prompt: e.target.value } })}
@@ -78,7 +78,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
           </label>
           <div className="grid gap-2 sm:grid-cols-2">
             <label className="grid gap-1 text-sm">
-              <span className="font-medium text-slate-800 dark:text-slate-200">Min words (optional)</span>
+              <span className="font-medium text-foreground">Min words (optional)</span>
               <Input
                 type="number"
                 min={0}
@@ -95,7 +95,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
               />
             </label>
             <label className="grid gap-1 text-sm">
-              <span className="font-medium text-slate-800 dark:text-slate-200">Max words</span>
+              <span className="font-medium text-foreground">Max words</span>
               <Input
                 type="number"
                 min={1}
@@ -110,7 +110,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             </label>
           </div>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Placeholder (optional)</span>
+            <span className="font-medium text-foreground">Placeholder (optional)</span>
             <Input
               value={block.config.placeholder ?? ""}
               onChange={(e) => onChange({ ...block, config: { ...block.config, placeholder: e.target.value } })}
@@ -122,7 +122,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
       return (
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Prompt</span>
+            <span className="font-medium text-foreground">Prompt</span>
             <Textarea
               value={block.config.prompt}
               onChange={(e) => onChange({ ...block, config: { ...block.config, prompt: e.target.value } })}
@@ -130,7 +130,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <div className="grid gap-2">
-            <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Options</span>
+            <span className="text-sm font-medium text-foreground">Options</span>
             {block.config.options.map((opt, idx) => (
               <div key={idx} className="flex gap-2">
                 <Input
@@ -175,9 +175,9 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             </Button>
           </div>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Correct option</span>
+            <span className="font-medium text-foreground">Correct option</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-2 text-sm"
               value={block.config.correctIndex}
               onChange={(e) => onChange({ ...block, config: { ...block.config, correctIndex: Number(e.target.value) } })}
             >
@@ -188,7 +188,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
               ))}
             </select>
           </label>
-          <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+          <label className="flex items-center gap-2 text-sm text-muted-foreground">
             <input
               type="checkbox"
               checked={Boolean(block.config.shuffle)}
@@ -202,7 +202,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
       return (
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Prompt</span>
+            <span className="font-medium text-foreground">Prompt</span>
             <Textarea
               value={block.config.prompt}
               onChange={(e) => onChange({ ...block, config: { ...block.config, prompt: e.target.value } })}
@@ -210,7 +210,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <div className="grid gap-2">
-            <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Options (check all correct)</span>
+            <span className="text-sm font-medium text-foreground">Options (check all correct)</span>
             {block.config.options.map((opt, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <input
@@ -276,7 +276,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
       return (
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Prompt</span>
+            <span className="font-medium text-foreground">Prompt</span>
             <Textarea
               value={block.config.prompt}
               onChange={(e) => onChange({ ...block, config: { ...block.config, prompt: e.target.value } })}
@@ -284,7 +284,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <div className="grid gap-2">
-            <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Ordered items (top = first)</span>
+            <span className="text-sm font-medium text-foreground">Ordered items (top = first)</span>
             {block.config.items.map((item, idx) => (
               <div key={idx} className="flex gap-2">
                 <Input
@@ -332,7 +332,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
       return (
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Prompt</span>
+            <span className="font-medium text-foreground">Prompt</span>
             <Textarea
               value={block.config.prompt}
               onChange={(e) => onChange({ ...block, config: { ...block.config, prompt: e.target.value } })}
@@ -340,9 +340,9 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Language</span>
+            <span className="font-medium text-foreground">Language</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-2 text-sm"
               value={block.config.language}
               onChange={(e) => onChange({ ...block, config: { ...block.config, language: e.target.value } })}
             >
@@ -354,7 +354,7 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             </select>
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Starter code (optional)</span>
+            <span className="font-medium text-foreground">Starter code (optional)</span>
             <Textarea
               value={block.config.starter ?? ""}
               onChange={(e) => onChange({ ...block, config: { ...block.config, starter: e.target.value } })}
@@ -370,14 +370,14 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
         onChange({ ...block, config: normalizeLabConfig({ ...cfg, ...patch }) });
       return (
         <div className="grid gap-3">
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+          <p className="text-sm text-muted-foreground">
             Define the virtual environment and what the candidate must prove inside it. Metriq will provision from this
             spec when lab runners ship; today this is authoring-only.
           </p>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Base stack / image</span>
+            <span className="font-medium text-foreground">Base stack / image</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-2 text-sm"
               value={cfg.stackPreset}
               onChange={(e) => setCfg({ stackPreset: e.target.value as LabStackPreset })}
             >
@@ -389,8 +389,8 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             </select>
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">What is in the environment</span>
-            <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
+            <span className="font-medium text-foreground">What is in the environment</span>
+            <span className="text-xs font-normal text-muted-foreground">
               Runtimes, CLIs, repos, datasets, ports, and anything the candidate can use.
             </span>
             <Textarea
@@ -401,8 +401,8 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">What you are testing the candidate on</span>
-            <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
+            <span className="font-medium text-foreground">What you are testing the candidate on</span>
+            <span className="text-xs font-normal text-muted-foreground">
               Concrete outcomes, commands, or behaviors they must demonstrate in this VM.
             </span>
             <Textarea
@@ -413,8 +413,8 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Provisioning notes (optional)</span>
-            <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
+            <span className="font-medium text-foreground">Provisioning notes (optional)</span>
+            <span className="text-xs font-normal text-muted-foreground">
               Boot script, env vars, seed commands — until automation runs these, they guide implementation.
             </span>
             <Textarea
@@ -425,9 +425,9 @@ export function AuditionBlockEditor({ block, onChange }: { block: AssessmentBloc
             />
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Runner (preview)</span>
+            <span className="font-medium text-foreground">Runner (preview)</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-2 text-sm"
               value={cfg.runner}
               onChange={(e) =>
                 setCfg({
@@ -511,7 +511,7 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
       <Panel title="Audition basics" description="The role or opening this assessment belongs to.">
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="grid gap-1 text-sm sm:col-span-2">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Audition title</span>
+            <span className="font-medium text-foreground">Audition title</span>
             <Input
               value={draft.title}
               onChange={(e) => onDraftChange({ ...draft, title: e.target.value })}
@@ -519,9 +519,9 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
             />
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Level</span>
+            <span className="font-medium text-foreground">Level</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-2 text-sm"
               value={draft.level}
               onChange={(e) => onDraftChange({ ...draft, level: e.target.value as EmployerAudition["level"] })}
             >
@@ -533,7 +533,7 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
             </select>
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Overall timebox (minutes)</span>
+            <span className="font-medium text-foreground">Overall timebox (minutes)</span>
             <Input
               type="number"
               min={5}
@@ -543,7 +543,7 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
             />
           </label>
           <div className="grid gap-2 sm:col-span-2">
-            <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Starting template</span>
+            <span className="text-sm font-medium text-foreground">Starting template</span>
             <SegmentedControl
               value={draft.template}
               onValueChange={(v) => {
@@ -552,7 +552,7 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
               }}
               options={TEMPLATES.map((t) => ({ value: t.value, label: t.label }))}
             />
-            <p className="text-sm text-slate-600 dark:text-slate-400">{TEMPLATES.find((t) => t.value === draft.template)?.description}</p>
+            <p className="text-sm text-muted-foreground">{TEMPLATES.find((t) => t.value === draft.template)?.description}</p>
             <Button
               type="button"
               variant="secondary"
@@ -570,7 +570,7 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
         title="Build the assessment"
         description="This is what candidates do inside Metriq: each stage is a timed segment. Add blocks (instructions, writing, choices, code, lab stub) in order. Proof-aligned — no file uploads or external-only links in v1."
       >
-        <ol className="mb-4 list-decimal space-y-1 pl-5 text-sm text-slate-600 dark:text-slate-400">
+        <ol className="mb-4 list-decimal space-y-1 pl-5 text-sm text-muted-foreground">
           <li>Choose a stage on the left (or add one).</li>
           <li>Add blocks and fill in the content for each block on the right.</li>
           <li>Click a block card to edit its details below the card.</li>
@@ -578,16 +578,16 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
 
         <div className="grid gap-6 lg:grid-cols-[minmax(220px,280px)_1fr]">
           <div className="flex flex-col gap-2">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Stages</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Stages</div>
             <div className="flex flex-col gap-2">
               {draft.stages.map((s, idx) => (
                 <div
                   key={s.id}
                   className={cn(
-                    "rounded-lg border bg-white p-3 transition-colors dark:bg-slate-950",
+                    "rounded-lg border border-border bg-card p-3 transition-colors",
                     selectedStageId === s.id
                       ? "border-indigo-500 ring-2 ring-indigo-500/25 dark:border-indigo-400"
-                      : "border-slate-200 dark:border-slate-800",
+                      : "border-border",
                   )}
                 >
                   <button
@@ -595,13 +595,13 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
                     className="w-full text-left"
                     onClick={() => selectStage(s.id)}
                   >
-                    <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Stage {idx + 1}</div>
-                    <div className="font-medium text-slate-900 dark:text-slate-50">{s.title || "Untitled"}</div>
-                    <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                    <div className="text-xs font-medium text-muted-foreground">Stage {idx + 1}</div>
+                    <div className="font-medium text-foreground">{s.title || "Untitled"}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">
                       {s.blocks.length} block{s.blocks.length === 1 ? "" : "s"} · {s.timeboxMinutes} min
                     </div>
                   </button>
-                  <div className="mt-2 flex flex-wrap gap-1 border-t border-slate-100 pt-2 dark:border-slate-800">
+                  <div className="mt-2 flex flex-wrap gap-1 border-t border-border pt-2">
                     <Button type="button" variant="ghost" size="sm" disabled={idx === 0} onClick={() => moveStage(s.id, "up")}>
                       Up
                     </Button>
@@ -642,21 +642,21 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
             </Button>
           </div>
 
-          <div className="min-h-[320px] rounded-lg border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-900/30">
+          <div className="min-h-[320px] rounded-lg border border-border bg-muted/40 p-4">
             {!stage ? (
-              <p className="text-sm text-slate-600 dark:text-slate-400">Add a stage to begin.</p>
+              <p className="text-sm text-muted-foreground">Add a stage to begin.</p>
             ) : (
               <div className="grid gap-5">
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">Stage settings</h3>
-                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Shown to candidates as this segment’s heading and time limit.</p>
+                  <h3 className="text-sm font-semibold text-foreground">Stage settings</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">Shown to candidates as this segment’s heading and time limit.</p>
                   <div className="mt-3 grid gap-3 sm:grid-cols-2">
                     <label className="grid gap-1 text-sm">
-                      <span className="font-medium text-slate-800 dark:text-slate-200">Stage title</span>
+                      <span className="font-medium text-foreground">Stage title</span>
                       <Input value={stage.title} onChange={(e) => updateStage(stage.id, { ...stage, title: e.target.value })} />
                     </label>
                     <label className="grid gap-1 text-sm">
-                      <span className="font-medium text-slate-800 dark:text-slate-200">Stage timebox (min)</span>
+                      <span className="font-medium text-foreground">Stage timebox (min)</span>
                       <Input
                         type="number"
                         min={1}
@@ -669,13 +669,13 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">Blocks in this stage</h3>
-                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Each block is one step (read, write, answer, code, etc.). Candidates complete them top to bottom.</p>
+                  <h3 className="text-sm font-semibold text-foreground">Blocks in this stage</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">Each block is one step (read, write, answer, code, etc.). Candidates complete them top to bottom.</p>
                   <div className="mt-3 flex flex-wrap items-end gap-2">
                     <label className="grid gap-1 text-sm">
-                      <span className="font-medium text-slate-800 dark:text-slate-200">Block type to add</span>
+                      <span className="font-medium text-foreground">Block type to add</span>
                       <select
-                        className="h-9 min-w-[11rem] rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+                        className="h-9 min-w-[11rem] rounded-md border border-border bg-card px-2 text-sm"
                         value={addKind}
                         onChange={(e) => setAddKind(e.target.value as AssessmentBlockKind)}
                       >
@@ -749,16 +749,16 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
                       >
                         <div onClick={(e) => e.stopPropagation()}>
                           <label className="grid gap-1 text-sm">
-                            <span className="text-slate-600 dark:text-slate-400">Block label (shown in outline)</span>
+                            <span className="text-muted-foreground">Block label (shown in outline)</span>
                             <Input
                               value={b.title}
                               onChange={(e) => patchBlock(stage, b.id, (cur) => ({ ...cur, title: e.target.value } as AssessmentBlock))}
                             />
                           </label>
                           <label className="mt-2 grid gap-1 text-sm">
-                            <span className="text-slate-600 dark:text-slate-400">Block type</span>
+                            <span className="text-muted-foreground">Block type</span>
                             <select
-                              className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm dark:border-slate-800 dark:bg-slate-950"
+                              className="h-9 rounded-md border border-border bg-card px-2 text-sm"
                               value={b.kind}
                               onChange={(e) => {
                                 const kind = e.target.value as AssessmentBlockKind;
@@ -778,12 +778,12 @@ export function AuditionAssessmentBuilder({ draft, onDraftChange }: AuditionAsse
                           </label>
                         </div>
                         {selectedBlockId === b.id ? (
-                          <div className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-800" onClick={(e) => e.stopPropagation()}>
+                          <div className="mt-4 border-t border-border pt-4" onClick={(e) => e.stopPropagation()}>
                             <p className="mb-3 text-xs font-medium uppercase tracking-wide text-indigo-700 dark:text-indigo-300">Block content</p>
                             <AuditionBlockEditor block={b} onChange={(nb) => patchBlock(stage, b.id, () => nb)} />
                           </div>
                         ) : (
-                          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Click this card to edit prompts and options.</p>
+                          <p className="mt-3 text-xs text-muted-foreground">Click this card to edit prompts and options.</p>
                         )}
                       </BlockCard>
                     </div>

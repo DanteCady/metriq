@@ -21,10 +21,10 @@ export function EmptyState({
   className,
 }: EmptyStateProps) {
   return (
-    <div className={cn("rounded-lg border border-dashed border-slate-300 p-8 text-center dark:border-slate-700", className)}>
+    <div className={cn("rounded-lg border border-dashed border-border p-8 text-center", className)}>
       <div className="mx-auto max-w-md">
         <div className="text-sm font-semibold">{title}</div>
-        {description ? <div className="mt-2 text-sm text-slate-600 dark:text-slate-300">{description}</div> : null}
+        {description ? <div className="mt-2 text-sm text-muted-foreground">{description}</div> : null}
         {actionLabel && onAction ? (
           <div className="mt-4 flex justify-center">
             <Button variant={actionVariant} onClick={onAction}>

@@ -15,9 +15,9 @@ export function ProgressBar({ value, max = 100, label, className }: ProgressBarP
 
   return (
     <div className={cn("w-full", className)}>
-      {label ? <div className="mb-1 flex items-center justify-between text-xs text-slate-600 dark:text-slate-300">{label}</div> : null}
-      <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800" role="progressbar" aria-valuenow={clamped} aria-valuemin={0} aria-valuemax={max}>
-        <div className="h-full rounded-full bg-slate-900 dark:bg-slate-50" style={{ width: `${pct}%` }} />
+      {label ? <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">{label}</div> : null}
+      <div className="h-2 w-full overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={clamped} aria-valuemin={0} aria-valuemax={max}>
+        <div className="h-full rounded-full bg-foreground" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

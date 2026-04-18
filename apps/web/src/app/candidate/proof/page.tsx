@@ -64,7 +64,11 @@ export default function CandidateProofProfilePage() {
     title: a.label,
     subtitle: a.type === "link" ? a.content : "Text artifact",
     meta: a.type === "link" ? "Link" : "Write-up",
-    status: highlights.some((h) => h.artifactId === a.id) ? <Badge variant="secondary">Highlighted</Badge> : <Badge variant="outline">Library</Badge>,
+    status: highlights.some((h) => h.artifactId === a.id) ? (
+      <Badge variant="success">Highlighted</Badge>
+    ) : (
+      <Badge variant="info">Library</Badge>
+    ),
   }));
 
   const selected = artifacts.find((a) => a.id === selectedArtifactId) ?? artifacts[0] ?? null;
@@ -112,16 +116,16 @@ export default function CandidateProofProfilePage() {
                 ) : (
                   <div className="grid gap-3">
                     {grouped.map(([cap, hs]) => (
-                      <div key={cap} className="rounded-md border border-slate-200 p-3 dark:border-slate-800">
+                      <div key={cap} className="rounded-md border border-border p-3">
                         <div className="flex items-center justify-between gap-3">
-                          <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">{cap}</div>
+                          <div className="text-sm font-semibold text-foreground">{cap}</div>
                           <Badge variant="outline">{hs.length}</Badge>
                         </div>
                         <ul className="mt-2 grid gap-2">
                           {hs.map((h) => (
-                            <li key={h.id} className="flex flex-col gap-1 rounded-md bg-slate-50/80 p-2 dark:bg-slate-900/50">
+                            <li key={h.id} className="flex flex-col gap-1 rounded-md bg-muted/70 p-2">
                               <div className="flex items-start justify-between gap-3">
-                                <div className="text-sm font-medium text-slate-900 dark:text-slate-50">{h.title}</div>
+                                <div className="text-sm font-medium text-foreground">{h.title}</div>
                                 <Button
                                   size="sm"
                                   variant="ghost"
@@ -136,7 +140,7 @@ export default function CandidateProofProfilePage() {
                                   Remove
                                 </Button>
                               </div>
-                              {h.summary ? <div className="text-xs text-slate-600 dark:text-slate-300">{h.summary}</div> : null}
+                              {h.summary ? <div className="text-xs text-muted-foreground">{h.summary}</div> : null}
                             </li>
                           ))}
                         </ul>
@@ -185,31 +189,32 @@ export default function CandidateProofProfilePage() {
 
             <div className="grid gap-4">
               <Panel title="Employer preview" description="What hiring teams see when they open a capability card tied to evidence." density="tight">
-                <div className="overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50/80 shadow-sm dark:border-slate-800 dark:from-slate-950 dark:to-slate-950/80">
-                  <div className="border-b border-slate-200/80 bg-white/90 px-4 py-4 dark:border-slate-800 dark:bg-slate-950/90">
+                <div className="overflow-hidden rounded-xl border border-border bg-gradient-to-b from-card to-muted/60 shadow-sm dark:to-muted/40">
+                  <div className="border-b border-border bg-card/90 px-4 py-4">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <div className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Proof preview</div>
-                        <div className="mt-1 truncate text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-50">
+                        <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Proof preview</div>
+                        <div className="mt-1 truncate text-lg font-semibold tracking-tight text-foreground">
                           {mockUniverse.candidateNames[0]}
                         </div>
-                        <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                        <div className="mt-0.5 text-xs text-muted-foreground">
                           Shared with {mockUniverse.orgName} · Evidence-linked profile
                         </div>
                       </div>
                       <div className="flex shrink-0 flex-wrap gap-2">
-                        <Badge variant="secondary">Verified audition</Badge>
-                        <Badge variant="outline">Capability signal</Badge>
+                        <Badge variant="success">Verified audition</Badge>
+                        <Badge variant="info">Capability signal</Badge>
                       </div>
                     </div>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {["Execution", "Reasoning", "Communication"].map((tag) => (
-                        <span
+                        <Badge
                           key={tag}
-                          className="rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                          variant="outline"
+                          className="border-primary/25 bg-primary/[0.06] font-medium text-foreground dark:bg-primary/[0.1]"
                         >
                           {tag}
-                        </span>
+                        </Badge>
                       ))}
                     </div>
                   </div>
@@ -226,7 +231,7 @@ export default function CandidateProofProfilePage() {
                     {selected ? (
                       <ArtifactViewer kind={selected.type} label={selected.label} value={selected.content} />
                     ) : (
-                      <div className="text-sm text-slate-600 dark:text-slate-300">Select an artifact.</div>
+                      <div className="text-sm text-muted-foreground">Select an artifact.</div>
                     )}
                   </div>
                 </div>
@@ -235,9 +240,9 @@ export default function CandidateProofProfilePage() {
               <Panel title="Create highlight" description="Turn evidence into a reusable proof card." density="tight">
                 <div className="grid gap-3">
                   <label className="grid gap-1 text-sm">
-                    <span className="text-slate-600 dark:text-slate-300">Capability</span>
+                    <span className="text-muted-foreground">Capability</span>
                     <select
-                      className="h-9 rounded-md border border-slate-200 bg-white px-3 text-sm dark:border-slate-800 dark:bg-slate-950"
+                      className="h-9 rounded-md border border-border bg-card px-3 text-sm"
                       value={capability}
                       onChange={(e) => setCapability(e.target.value)}
                     >
@@ -248,19 +253,20 @@ export default function CandidateProofProfilePage() {
                     </select>
                   </label>
                   <label className="grid gap-1 text-sm">
-                    <span className="text-slate-600 dark:text-slate-300">Highlight title</span>
+                    <span className="text-muted-foreground">Highlight title</span>
                     <input
-                      className="h-9 rounded-md border border-slate-200 bg-white px-3 text-sm dark:border-slate-800 dark:bg-slate-950"
+                      className="h-9 rounded-md border border-border bg-card px-3 text-sm"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="e.g. Shipped a clear root-cause write-up + fix plan"
                     />
                   </label>
                   <label className="grid gap-1 text-sm">
-                    <span className="text-slate-600 dark:text-slate-300">Proof card summary</span>
+                    <span className="text-muted-foreground">Proof card summary</span>
                     <Textarea value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Problem → approach → outcome → trade-offs. Keep it crisp." />
                   </label>
                   <Button
+                    className="w-full"
                     onClick={() => {
                       if (!selected) return;
                       const next: MockProofHighlight = {
@@ -282,7 +288,7 @@ export default function CandidateProofProfilePage() {
                   >
                     Add highlight
                   </Button>
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
+                  <div className="text-xs text-muted-foreground">
                     Highlights are stored in this browser for the demo environment.
                   </div>
                 </div>

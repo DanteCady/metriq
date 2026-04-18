@@ -13,7 +13,7 @@ type RubRow = (typeof mockAdminRubricTemplates)[0];
 type ModRow = (typeof mockAdminModerationQueue)[0];
 
 const simColumns: DataTableColumn<SimRow>[] = [
-  { key: "name", header: "Simulation", cell: (r) => <span className="font-medium text-slate-900 dark:text-slate-50">{r.name}</span> },
+  { key: "name", header: "Simulation", cell: (r) => <span className="font-medium text-foreground">{r.name}</span> },
   { key: "ver", header: "Version", cell: (r) => <span className="font-mono text-xs">{r.version}</span> },
   {
     key: "status",
@@ -29,14 +29,14 @@ const simColumns: DataTableColumn<SimRow>[] = [
 ];
 
 const rubColumns: DataTableColumn<RubRow>[] = [
-  { key: "name", header: "Template", cell: (r) => <span className="font-medium text-slate-900 dark:text-slate-50">{r.name}</span> },
+  { key: "name", header: "Template", cell: (r) => <span className="font-medium text-foreground">{r.name}</span> },
   { key: "crit", header: "Criteria", align: "right", cell: (r) => <span className="tabular-nums">{r.criteria}</span> },
-  { key: "org", header: "Owner", cell: (r) => <span className="text-sm text-slate-600 dark:text-slate-300">{r.org}</span> },
+  { key: "org", header: "Owner", cell: (r) => <span className="text-sm text-muted-foreground">{r.org}</span> },
 ];
 
 const modColumns: DataTableColumn<ModRow>[] = [
   { key: "type", header: "Type", cell: (r) => r.type },
-  { key: "subj", header: "Subject", cell: (r) => <span className="text-sm text-slate-700 dark:text-slate-200">{r.subject}</span> },
+  { key: "subj", header: "Subject", cell: (r) => <span className="text-sm text-foreground">{r.subject}</span> },
   {
     key: "pri",
     header: "",
@@ -89,12 +89,12 @@ export default function AdminLanding() {
         <Panel title="Recent audit activity" description="High-sensitivity actions across the control plane.">
           <ul className="space-y-3 text-sm">
             {mockAdminAuditTail.map((e) => (
-              <li key={e.id} className="rounded-md border border-slate-100 p-3 dark:border-slate-800/80">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
+              <li key={e.id} className="rounded-md border border-border p-3">
+                <div className="text-xs text-muted-foreground">
                   {new Date(e.at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
                 </div>
-                <div className="font-medium text-slate-900 dark:text-slate-50">{e.actor}</div>
-                <div className="text-slate-600 dark:text-slate-300">{e.action}</div>
+                <div className="font-medium text-foreground">{e.actor}</div>
+                <div className="text-muted-foreground">{e.action}</div>
               </li>
             ))}
           </ul>

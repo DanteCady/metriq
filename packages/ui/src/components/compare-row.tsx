@@ -17,8 +17,8 @@ export function CompareRow({ label, description, children, className }: CompareR
   return (
     <div className={cn("flex items-start gap-4", className)}>
       <div className="w-[260px] shrink-0">
-        <div className="text-sm font-medium text-slate-900 dark:text-slate-50">{label}</div>
-        {description ? <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{description}</div> : null}
+        <div className="text-sm font-medium text-foreground">{label}</div>
+        {description ? <div className="mt-1 text-sm text-muted-foreground">{description}</div> : null}
       </div>
       <div className="min-w-0 flex-1">{children}</div>
     </div>

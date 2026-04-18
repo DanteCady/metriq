@@ -111,7 +111,7 @@ export default function DeptAuditionInvitesPage() {
       <PageHeader
         title="Invite candidates"
         description={`${meta.title} · ${meta.status}${meta.isLocalDraft ? " · local draft" : ""}`}
-        eyebrow={<Link href={deptPath(slug, "/auditions")} className="text-slate-600 underline dark:text-slate-300">Auditions</Link>}
+        eyebrow={<Link href={deptPath(slug, "/auditions")} className="text-muted-foreground underline">Auditions</Link>}
         actions={
           <div className="flex flex-wrap gap-2">
             {meta.isLocalDraft ? (
@@ -133,16 +133,16 @@ export default function DeptAuditionInvitesPage() {
         >
           <div className="grid gap-3 sm:flex sm:items-end">
             <label className="grid min-w-0 flex-1 gap-1 text-sm">
-              <span className="font-medium text-slate-800 dark:text-slate-200">Link</span>
+              <span className="font-medium text-foreground">Link</span>
               <Input readOnly value={inviteUrl || "…"} className="font-mono text-xs sm:text-sm" />
             </label>
             <Button type="button" onClick={() => void copyText("Invite link", inviteUrl)} disabled={!inviteUrl}>
               Copy link
             </Button>
           </div>
-          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-            Query params <code className="rounded bg-slate-100 px-1 dark:bg-slate-900">invite</code> and{" "}
-            <code className="rounded bg-slate-100 px-1 dark:bg-slate-900">workspace</code> are the contract for deep-linking; the candidate app
+          <p className="mt-3 text-xs text-muted-foreground">
+            Query params <code className="rounded bg-muted px-1">invite</code> and{" "}
+            <code className="rounded bg-muted px-1">workspace</code> are the contract for deep-linking; the candidate app
             does not consume them yet in this preview build.
           </p>
         </Panel>
@@ -152,8 +152,8 @@ export default function DeptAuditionInvitesPage() {
           description="Paste addresses to prepare a batch. Outbound email and per-recipient tokens are not wired in this preview — copy the template and send from your mail client, or export later when delivery ships."
         >
           <label className="grid gap-1 text-sm">
-            <span className="font-medium text-slate-800 dark:text-slate-200">Email addresses</span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">Comma or newline separated.</span>
+            <span className="font-medium text-foreground">Email addresses</span>
+            <span className="text-xs text-muted-foreground">Comma or newline separated.</span>
             <Textarea
               value={emailList}
               onChange={(e) => setEmailList(e.target.value)}
@@ -183,11 +183,11 @@ export default function DeptAuditionInvitesPage() {
 
         {showSampleHistory ? (
           <Panel title="Recent invites" description="Illustrative rows for published mock auditions. Real tracking arrives with persistence.">
-            <ul className="divide-y divide-slate-200 dark:divide-slate-800">
+            <ul className="divide-y divide-border">
               {SAMPLE_SENT_INVITES.map((row) => (
                 <li key={row.to} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
-                  <span className="font-medium text-slate-900 dark:text-slate-50">{row.to}</span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                  <span className="font-medium text-foreground">{row.to}</span>
+                  <span className="text-xs text-muted-foreground">
                     {row.sentAt} · {row.status}
                   </span>
                 </li>
@@ -199,7 +199,7 @@ export default function DeptAuditionInvitesPage() {
             title="Invite history"
             description="After you publish and connect delivery, sent invites, opens, and completions will appear here."
           >
-            <p className="text-sm text-slate-600 dark:text-slate-300">
+            <p className="text-sm text-muted-foreground">
               {meta.isLocalDraft
                 ? "Local drafts are not shareable as real invites until publish + backend exist. You can still copy the preview link to align with your hiring ops."
                 : "No invite history in this preview for this audition."}

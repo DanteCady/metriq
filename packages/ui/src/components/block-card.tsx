@@ -23,10 +23,10 @@ export function BlockCard({ title, description, typeLabel, status, icon, meta, a
       density="tight"
       title={
         <div className="flex items-center gap-2">
-          {icon ? <div className="shrink-0 text-slate-500 dark:text-slate-400">{icon}</div> : null}
+          {icon ? <div className="shrink-0 text-muted-foreground">{icon}</div> : null}
           <span className="truncate">{title}</span>
           {typeLabel ? <Badge variant="outline">{typeLabel}</Badge> : null}
-          {status ? <span className="text-xs text-slate-500 dark:text-slate-400">{status}</span> : null}
+          {status ? <span className="text-xs text-muted-foreground">{status}</span> : null}
         </div>
       }
       description={description}

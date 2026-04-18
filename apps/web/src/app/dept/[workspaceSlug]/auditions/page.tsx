@@ -63,7 +63,7 @@ export default function DeptAuditionsPage() {
         <Toolbar
           left={
             <ToolbarGroup>
-              <div className="text-sm text-slate-600 dark:text-slate-300">All auditions</div>
+              <div className="text-sm text-muted-foreground">All auditions</div>
             </ToolbarGroup>
           }
           right={null}
@@ -79,8 +79,8 @@ export default function DeptAuditionsPage() {
                 header: "Audition",
                 cell: (r) => (
                   <div className="grid">
-                    <div className="font-medium text-slate-900 dark:text-slate-50">{r.title}</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-300">{r.template}</div>
+                    <div className="font-medium text-foreground">{r.title}</div>
+                    <div className="text-sm text-muted-foreground">{r.template}</div>
                   </div>
                 ),
               },
@@ -129,7 +129,7 @@ export default function DeptAuditionsPage() {
               onAction: () => router.push(base("/auditions/new")),
             }}
           />
-          <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
+          <div className="mt-3 text-sm text-muted-foreground">
             Tip: start from{" "}
             <Link className="underline" href={base("/auditions/new")}>
               New audition

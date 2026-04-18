@@ -22,11 +22,11 @@ export function ScoreBar({ value, max = 100, label, hint, threshold, tone = "aut
 
   const barTone =
     tone === "neutral"
-      ? "bg-slate-900 dark:bg-slate-50"
+      ? "bg-foreground"
       : pct >= 85
         ? "bg-emerald-600 dark:bg-emerald-500"
         : pct >= 70
-          ? "bg-slate-900 dark:bg-slate-50"
+          ? "bg-foreground"
           : pct >= 50
             ? "bg-amber-600 dark:bg-amber-500"
             : "bg-red-600 dark:bg-red-500";
@@ -36,13 +36,13 @@ export function ScoreBar({ value, max = 100, label, hint, threshold, tone = "aut
   return (
     <div className={cn("w-full", className)}>
       {(label || hint) ? (
-        <div className="mb-1 flex items-center justify-between gap-3 text-xs text-slate-600 dark:text-slate-300">
-          <div className="min-w-0 truncate font-medium text-slate-700 dark:text-slate-200">{label}</div>
-          {hint ? <div className="shrink-0 tabular-nums text-slate-500 dark:text-slate-400">{hint}</div> : null}
+        <div className="mb-1 flex items-center justify-between gap-3 text-xs text-muted-foreground">
+          <div className="min-w-0 truncate font-medium text-foreground">{label}</div>
+          {hint ? <div className="shrink-0 tabular-nums text-muted-foreground">{hint}</div> : null}
         </div>
       ) : null}
       <div
-        className="relative h-2.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
+        className="relative h-2.5 w-full overflow-hidden rounded-full bg-muted"
         role="progressbar"
         aria-valuenow={clamped}
         aria-valuemin={0}
@@ -51,7 +51,7 @@ export function ScoreBar({ value, max = 100, label, hint, threshold, tone = "aut
         <div className={cn("h-full rounded-full", barTone)} style={{ width: `${pct}%` }} />
         {thresholdPct !== null ? (
           <div
-            className="pointer-events-none absolute inset-y-0 w-px bg-slate-400/70 dark:bg-slate-500/70"
+            className="pointer-events-none absolute inset-y-0 w-px bg-border"
             style={{ left: `${Math.min(Math.max(thresholdPct, 0), 100)}%` }}
           />
         ) : null}

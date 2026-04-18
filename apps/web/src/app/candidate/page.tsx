@@ -58,7 +58,7 @@ export default function CandidateLanding() {
       <div className="mt-6 grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="grid gap-4 lg:grid-cols-2">
           <Panel title="Next up" description="Jump back into the highest leverage work.">
-            <div className="grid gap-2 text-sm text-slate-700 dark:text-slate-200">
+            <div className="grid gap-2 text-sm text-foreground">
               <Link href="/candidate/auditions" className="font-medium text-foreground underline-offset-4 hover:underline">
                 Audition inbox
               </Link>
@@ -89,11 +89,11 @@ export default function CandidateLanding() {
 
         <Panel title="Activity" description="What to expect while reviewers at partner companies evaluate evidence.">
           {nextAudition ? (
-            <div className="rounded-lg border border-slate-200 bg-slate-50/80 p-4 text-sm dark:border-slate-800 dark:bg-slate-900/40">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Focused audition</div>
-              <div className="mt-1 font-semibold text-slate-900 dark:text-slate-50">{nextAudition.roleTitle}</div>
-              <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{nextAudition.companyName}</div>
-              <div className="mt-2 text-slate-600 dark:text-slate-300">{nextAuditionBlurb.slice(0, 160)}…</div>
+            <div className="rounded-lg border border-border bg-muted/70 p-4 text-sm">
+              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Focused audition</div>
+              <div className="mt-1 font-semibold text-foreground">{nextAudition.roleTitle}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">{nextAudition.companyName}</div>
+              <div className="mt-2 text-muted-foreground">{nextAuditionBlurb.slice(0, 160)}…</div>
               <div className="mt-3">
                 <Button size="sm" onClick={() => router.push(`/candidate/auditions/${nextAudition.auditionId}`)}>
                   Continue
@@ -101,9 +101,9 @@ export default function CandidateLanding() {
               </div>
             </div>
           ) : (
-            <p className="text-sm text-slate-600 dark:text-slate-300">No auditions in this preview slice.</p>
+            <p className="text-sm text-muted-foreground">No auditions in this preview slice.</p>
           )}
-          <ul className="mt-4 space-y-2 border-t border-slate-200 pt-4 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
+          <ul className="mt-4 space-y-2 border-t border-border pt-4 text-xs text-muted-foreground">
             <li>Evaluators anchor scores to artifacts you submit — completeness beats polish.</li>
             <li>Deadlines are shown per stage; submit early to leave room for iteration.</li>
           </ul>

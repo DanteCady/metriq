@@ -6,7 +6,7 @@ import { deptPath } from "../../../lib/dept-path";
 import { mockWorkspaces, type MockWorkspace } from "../../../mocks/tenancy";
 
 const columns: DataTableColumn<MockWorkspace>[] = [
-  { key: "name", header: "Name", cell: (r) => <span className="font-medium text-slate-900 dark:text-slate-50">{r.name}</span> },
+  { key: "name", header: "Name", cell: (r) => <span className="font-medium text-foreground">{r.name}</span> },
   { key: "slug", header: "Slug", cell: (r) => <span className="font-mono text-xs">{r.slug}</span> },
   { key: "seats", header: "Seats", align: "right", cell: (r) => `${r.seatsUsed} / ${r.seatLimit}` },
   {

@@ -16,7 +16,7 @@ export default async function DeptReviewQueuePage({ params }: { params: Promise<
         <Toolbar
           left={
             <ToolbarGroup>
-              <div className="text-sm text-slate-600 dark:text-slate-300">Queue</div>
+              <div className="text-sm text-muted-foreground">Queue</div>
             </ToolbarGroup>
           }
           right={null}
@@ -32,8 +32,8 @@ export default async function DeptReviewQueuePage({ params }: { params: Promise<
                 header: "Candidate",
                 cell: (r) => (
                   <div className="grid">
-                    <div className="font-medium text-slate-900 dark:text-slate-50">{r.candidateName}</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-300">{r.auditionTitle}</div>
+                    <div className="font-medium text-foreground">{r.candidateName}</div>
+                    <div className="text-sm text-muted-foreground">{r.auditionTitle}</div>
                   </div>
                 ),
               },

@@ -10,7 +10,7 @@ export type SkeletonProps = {
 export function Skeleton({ className, style }: SkeletonProps) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-slate-200/70 dark:bg-slate-800/60", className)}
+      className={cn("animate-pulse rounded-md bg-muted-foreground/15 dark:bg-muted-foreground/20", className)}
       style={style}
       aria-hidden="true"
     />

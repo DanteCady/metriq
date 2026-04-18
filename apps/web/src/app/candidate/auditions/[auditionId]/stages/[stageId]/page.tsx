@@ -86,12 +86,12 @@ export default function CandidateStageWorkspacePage() {
                 density="tight"
                 contentClassName="space-y-3"
               >
-                <div className="text-sm text-slate-700 dark:text-slate-200">{stage.objective}</div>
+                <div className="text-sm text-foreground">{stage.objective}</div>
               </Panel>
 
               <BlockCard title="Work block" typeLabel="work sample" description="Respond to the prompt with complete, evaluable evidence.">
-                <div className="text-sm text-slate-700 dark:text-slate-200 whitespace-pre-wrap">{stage.objective}</div>
-                <div className="text-sm text-slate-600 dark:text-slate-300">
+                <div className="text-sm text-foreground whitespace-pre-wrap">{stage.objective}</div>
+                <div className="text-sm text-muted-foreground">
                   You’ll submit artifacts on the next screen (links and/or write-ups).
                 </div>
               </BlockCard>
@@ -99,13 +99,13 @@ export default function CandidateStageWorkspacePage() {
 
             <div className="grid gap-4">
               <Panel title="Constraints" description="Keep these visible while you work." density="tight">
-                <div className="grid gap-2 text-sm text-slate-700 dark:text-slate-200">
+                <div className="grid gap-2 text-sm text-foreground">
                   {stage.constraints.map((c) => (
-                    <div key={c} className="rounded-md border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/20">
+                    <div key={c} className="rounded-md border border-border bg-muted/60 p-3">
                       {c}
                     </div>
                   ))}
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
+                  <div className="text-xs text-muted-foreground">
                     Product principle: clarity beats cleverness. If you make assumptions, state them in your artifact context.
                   </div>
                 </div>
@@ -113,15 +113,15 @@ export default function CandidateStageWorkspacePage() {
 
               <Panel title="Deliverables checklist" description="Required items for this stage." density="tight">
                 {deliverables.length === 0 ? (
-                  <div className="text-sm text-slate-600 dark:text-slate-300">No structured deliverables available for this stage yet.</div>
+                  <div className="text-sm text-muted-foreground">No structured deliverables available for this stage yet.</div>
                 ) : (
                   <ul className="grid gap-2">
                     {deliverables.map((d) => {
                       const present = stageArtifacts.some((a) => a.label.toLowerCase().includes(d.toLowerCase()));
                       return (
-                        <li key={d} className="flex items-start justify-between gap-3 rounded-md border border-slate-200 p-3 dark:border-slate-800">
-                          <div className="text-sm text-slate-900 dark:text-slate-50">{d}</div>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">{present ? "Added" : "Missing"}</div>
+                        <li key={d} className="flex items-start justify-between gap-3 rounded-md border border-border p-3">
+                          <div className="text-sm text-foreground">{d}</div>
+                          <div className="text-xs text-muted-foreground">{present ? "Added" : "Missing"}</div>
                         </li>
                       );
                     })}
@@ -130,7 +130,7 @@ export default function CandidateStageWorkspacePage() {
                 <div className="mt-3 text-sm">
                   <Link
                     href={`/candidate/auditions/${auditionId}/stages/${stageId}/submit?submissionId=${encodeURIComponent(submissionId)}`}
-                    className="underline text-slate-700 dark:text-slate-200"
+                    className="underline text-foreground"
                   >
                     Go to artifact submission
                   </Link>

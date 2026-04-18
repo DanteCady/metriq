@@ -49,19 +49,19 @@ export function CompareGrid({
       <div className="overflow-x-auto">
         <div className="min-w-full">
           <div
-            className="grid border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40"
+            className="grid border-b border-border bg-muted"
             style={{ gridTemplateColumns: template }}
           >
-            <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+            <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Attribute
             </div>
             {columns.map((c) => (
               <div key={c.key} className="px-4 py-2">
-                <div className="truncate text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+                <div className="truncate text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   {c.header}
                 </div>
-                {c.subheader ? <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{c.subheader}</div> : null}
-                {c.meta ? <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{c.meta}</div> : null}
+                {c.subheader ? <div className="mt-1 text-xs text-muted-foreground">{c.subheader}</div> : null}
+                {c.meta ? <div className="mt-1 text-xs text-muted-foreground">{c.meta}</div> : null}
               </div>
             ))}
           </div>
@@ -69,16 +69,16 @@ export function CompareGrid({
           {rows.map((r) => (
             <div
               key={r.key}
-              className={cn("grid border-b border-slate-200 dark:border-slate-800", "hover:bg-slate-50 dark:hover:bg-slate-900/30")}
+              className={cn("grid border-b border-border", "hover:bg-muted/70")}
               style={{ gridTemplateColumns: template }}
             >
               <div className="px-4 py-3">
-                <div className="text-sm font-medium text-slate-900 dark:text-slate-50">{r.label}</div>
-                {r.description ? <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{r.description}</div> : null}
+                <div className="text-sm font-medium text-foreground">{r.label}</div>
+                {r.description ? <div className="mt-1 text-sm text-muted-foreground">{r.description}</div> : null}
               </div>
               {columns.map((c) => (
                 <div key={c.key} className="px-4 py-3">
-                  <div className="text-sm text-slate-700 dark:text-slate-200">{r.renderCell(c.key)}</div>
+                  <div className="text-sm text-foreground">{r.renderCell(c.key)}</div>
                 </div>
               ))}
             </div>

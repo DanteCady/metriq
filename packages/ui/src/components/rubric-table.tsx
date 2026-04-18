@@ -55,16 +55,16 @@ export function RubricTable({
         <table className="min-w-full border-separate border-spacing-0">
           <thead>
             <tr>
-              <th className="border-b border-slate-200 bg-slate-50 px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300">
+              <th className="border-b border-border bg-muted px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Criterion
               </th>
-              <th className="border-b border-slate-200 bg-slate-50 px-4 py-2 text-right text-xs font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300">
+              <th className="border-b border-border bg-muted px-4 py-2 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Weight
               </th>
-              <th className="border-b border-slate-200 bg-slate-50 px-4 py-2 text-right text-xs font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300">
+              <th className="border-b border-border bg-muted px-4 py-2 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Score
               </th>
-              <th className="border-b border-slate-200 bg-slate-50 px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300">
+              <th className="border-b border-border bg-muted px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Notes
               </th>
             </tr>
@@ -72,7 +72,7 @@ export function RubricTable({
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={4} className="px-4 py-10 text-center text-sm text-slate-600 dark:text-slate-300">
+                <td colSpan={4} className="px-4 py-10 text-center text-sm text-muted-foreground">
                   Loading…
                 </td>
               </tr>
@@ -84,25 +84,25 @@ export function RubricTable({
                   className={cn(
                     "group",
                     clickable && "cursor-pointer",
-                    clickable && "hover:bg-slate-50 dark:hover:bg-slate-900/30",
+                    clickable && "hover:bg-muted/70",
                   )}
                 >
-                  <td className="border-b border-slate-200 px-4 py-2.5 text-sm text-slate-700 dark:border-slate-800 dark:text-slate-200">
+                  <td className="border-b border-border px-4 py-2.5 text-sm text-foreground">
                     <div className="min-w-0">
-                      <div className="truncate font-medium text-slate-900 dark:text-slate-50">{r.criterion}</div>
+                      <div className="truncate font-medium text-foreground">{r.criterion}</div>
                       {r.description ? (
-                        <div className="mt-1 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">{r.description}</div>
+                        <div className="mt-1 line-clamp-2 text-sm text-muted-foreground">{r.description}</div>
                       ) : null}
                     </div>
                   </td>
-                  <td className="border-b border-slate-200 px-4 py-2.5 text-right text-sm tabular-nums text-slate-700 dark:border-slate-800 dark:text-slate-200">
+                  <td className="border-b border-border px-4 py-2.5 text-right text-sm tabular-nums text-foreground">
                     {fmtWeight(r.weight) ?? "—"}
                   </td>
-                  <td className="border-b border-slate-200 px-4 py-2.5 text-right dark:border-slate-800">
-                    {typeof r.score === "number" ? <ScoreBadge score={r.score} max={r.max ?? 100} format="fraction" size="sm" /> : <span className="text-sm text-slate-500 dark:text-slate-400">—</span>}
+                  <td className="border-b border-border px-4 py-2.5 text-right">
+                    {typeof r.score === "number" ? <ScoreBadge score={r.score} max={r.max ?? 100} format="fraction" size="sm" /> : <span className="text-sm text-muted-foreground">—</span>}
                   </td>
-                  <td className="border-b border-slate-200 px-4 py-2.5 text-sm text-slate-700 dark:border-slate-800 dark:text-slate-200">
-                    {r.notes ?? <span className="text-slate-500 dark:text-slate-400">—</span>}
+                  <td className="border-b border-border px-4 py-2.5 text-sm text-foreground">
+                    {r.notes ?? <span className="text-muted-foreground">—</span>}
                   </td>
                 </tr>
               ))

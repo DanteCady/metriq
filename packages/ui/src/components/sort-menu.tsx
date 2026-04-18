@@ -17,14 +17,14 @@ export type SortMenuProps<T extends string> = {
 
 export function SortMenu<T extends string>({ label = "Sort", value, options, onValueChange, className }: SortMenuProps<T>) {
   return (
-    <label className={cn("flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300", className)}>
+    <label className={cn("flex items-center gap-2 text-sm text-muted-foreground", className)}>
       <span className="shrink-0">{label}</span>
       <select
         value={value}
         onChange={(e) => onValueChange(e.target.value as T)}
         className={cn(
-          "h-9 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-900 shadow-sm",
-          "focus:outline-none focus:ring-2 focus:ring-slate-400/60 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
+          "h-9 rounded-md border border-border bg-card px-3 text-sm text-foreground shadow-sm",
+          "focus:outline-none focus:ring-2 focus:ring-ring dark:border-border dark:bg-card dark:text-foreground",
         )}
       >
         {options.map((opt) => (

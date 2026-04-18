@@ -25,23 +25,23 @@ export function SectionHeader({ title, description, meta, actions, density = "de
       <div className="min-w-0">
         <div
           className={cn(
-            "text-sm font-semibold text-slate-900 dark:text-slate-50",
+            "text-sm font-semibold text-foreground",
             density === "compact" && "text-sm",
           )}
         >
           {title}
         </div>
         {description ? (
-          <div className={cn("mt-1 text-sm text-slate-600 dark:text-slate-300", density === "compact" && "text-sm")}>
+          <div className={cn("mt-1 text-sm text-muted-foreground", density === "compact" && "text-sm")}>
             {description}
           </div>
         ) : null}
         {meta && meta.length > 0 ? (
-          <dl className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+          <dl className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
             {meta.map((m) => (
               <div key={m.label} className="flex items-center gap-1">
                 <dt className="font-medium">{m.label}</dt>
-                <dd className="text-slate-700 dark:text-slate-200">{m.value}</dd>
+                <dd className="text-foreground">{m.value}</dd>
               </div>
             ))}
           </dl>

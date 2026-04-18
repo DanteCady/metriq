@@ -46,9 +46,21 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive) / <alpha-value>)",
           foreground: "hsl(var(--destructive-foreground) / <alpha-value>)",
         },
+        success: {
+          DEFAULT: "hsl(var(--success) / <alpha-value>)",
+          foreground: "hsl(var(--success-foreground) / <alpha-value>)",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning) / <alpha-value>)",
+          foreground: "hsl(var(--warning-foreground) / <alpha-value>)",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info) / <alpha-value>)",
+          foreground: "hsl(var(--info-foreground) / <alpha-value>)",
+        },
       },
       boxShadow: {
-        card: "0 1px 0 hsl(var(--foreground) / 0.04), 0 1px 2px hsl(var(--foreground) / 0.06)",
+        card: "0 1px 0 hsl(var(--primary) / 0.05), 0 1px 3px hsl(222 47% 11% / 0.06), 0 8px 24px hsl(222 47% 11% / 0.04)",
         "card-dark": "0 1px 0 hsl(0 0% 100% / 0.06), 0 1px 2px hsl(0 0% 0% / 0.35)",
       },
     },

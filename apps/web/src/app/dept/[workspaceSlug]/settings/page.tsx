@@ -10,8 +10,8 @@ const integrationColumns: DataTableColumn<IntegrationRow>[] = [
     header: "Integration",
     cell: (r) => (
       <div>
-        <div className="font-medium text-slate-900 dark:text-slate-50">{r.name}</div>
-        <div className="text-xs text-slate-500 dark:text-slate-400">{r.detail}</div>
+        <div className="font-medium text-foreground">{r.name}</div>
+        <div className="text-xs text-muted-foreground">{r.detail}</div>
       </div>
     ),
   },
@@ -36,8 +36,8 @@ const integrationColumns: DataTableColumn<IntegrationRow>[] = [
 ];
 
 const webhookColumns: DataTableColumn<(typeof mockEmployerWebhooks)[0]>[] = [
-  { key: "url", header: "Endpoint", cell: (r) => <span className="font-mono text-xs text-slate-700 dark:text-slate-200">{r.url}</span> },
-  { key: "events", header: "Events", cell: (r) => <span className="text-xs text-slate-600 dark:text-slate-300">{r.events}</span> },
+  { key: "url", header: "Endpoint", cell: (r) => <span className="font-mono text-xs text-foreground">{r.url}</span> },
+  { key: "events", header: "Events", cell: (r) => <span className="text-xs text-muted-foreground">{r.events}</span> },
   {
     key: "last",
     header: "Last delivery",
@@ -80,7 +80,7 @@ export default function EmployerSettingsPage() {
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <Panel title="Organization" description="Company profile and workspace metadata.">
           <DefinitionList items={orgItems} columns={2} />
-          <div className="mt-6 flex flex-wrap gap-2 border-t border-slate-200 pt-4 dark:border-slate-800">
+          <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4">
             <Button type="button" disabled title="Editing organization settings is disabled in this preview build.">
               Save changes
             </Button>
@@ -93,12 +93,12 @@ export default function EmployerSettingsPage() {
         <Panel title="Recent audit activity" description="Immutable log of sensitive changes (subset).">
           <ul className="space-y-3 text-sm">
             {mockEmployerAuditEvents.map((e) => (
-              <li key={e.id} className="flex flex-col gap-0.5 rounded-md border border-slate-100 p-3 dark:border-slate-800/80">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
+              <li key={e.id} className="flex flex-col gap-0.5 rounded-md border border-border p-3">
+                <div className="text-xs text-muted-foreground">
                   {new Date(e.at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
                 </div>
-                <div className="font-medium text-slate-900 dark:text-slate-50">{e.actor}</div>
-                <div className="text-slate-600 dark:text-slate-300">{e.action}</div>
+                <div className="font-medium text-foreground">{e.actor}</div>
+                <div className="text-muted-foreground">{e.action}</div>
               </li>
             ))}
           </ul>

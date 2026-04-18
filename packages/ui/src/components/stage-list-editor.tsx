@@ -67,26 +67,26 @@ export function StageListEditor({
       className={className}
       contentClassName="p-0"
     >
-      <div className="divide-y divide-slate-200 dark:divide-slate-800">
+      <div className="divide-y divide-border">
         {isLoading ? (
-          <div className="px-4 py-10 text-center text-sm text-slate-600 dark:text-slate-300">Loading…</div>
+          <div className="px-4 py-10 text-center text-sm text-muted-foreground">Loading…</div>
         ) : (
           stages.map((s, idx) => {
             const isFirst = idx === 0;
             const isLast = idx === stages.length - 1;
             return (
               <div key={s.id} className="flex items-start gap-3 px-4 py-3">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-700 dark:border-slate-800 dark:bg-slate-900/30 dark:text-slate-200">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-xs font-semibold text-foreground">
                   {idx + 1}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <div className="truncate text-sm font-medium text-slate-900 dark:text-slate-50">{s.title}</div>
+                    <div className="truncate text-sm font-medium text-foreground">{s.title}</div>
                     {s.typeLabel ? <Badge variant="outline">{s.typeLabel}</Badge> : null}
-                    {s.status ? <div className="text-xs text-slate-500 dark:text-slate-400">{s.status}</div> : null}
+                    {s.status ? <div className="text-xs text-muted-foreground">{s.status}</div> : null}
                   </div>
-                  {s.description ? <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{s.description}</div> : null}
-                  {s.meta ? <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">{s.meta}</div> : null}
+                  {s.description ? <div className="mt-1 text-sm text-muted-foreground">{s.description}</div> : null}
+                  {s.meta ? <div className="mt-2 text-xs text-muted-foreground">{s.meta}</div> : null}
                 </div>
                 {(onMoveStage || onEditStage || onRemoveStage) ? (
                   <div className="shrink-0">

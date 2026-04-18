@@ -139,9 +139,9 @@ export default function CandidateSubmissionPage() {
       >
         <div className="grid gap-3">
           <label className="grid gap-1 text-sm">
-            <span className="text-slate-600 dark:text-slate-300">Type</span>
+            <span className="text-muted-foreground">Type</span>
             <select
-              className="h-9 rounded-md border border-slate-200 bg-white px-3 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-3 text-sm"
               value={type}
               onChange={(e) => setType(e.target.value as ArtifactType)}
             >
@@ -150,18 +150,18 @@ export default function CandidateSubmissionPage() {
             </select>
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="text-slate-600 dark:text-slate-300">Label</span>
+            <span className="text-muted-foreground">Label</span>
             <input
-              className="h-9 rounded-md border border-slate-200 bg-white px-3 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="h-9 rounded-md border border-border bg-card px-3 text-sm"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               placeholder="e.g. Root cause write-up"
             />
           </label>
           <label className="grid gap-1 text-sm">
-            <span className="text-slate-600 dark:text-slate-300">{type === "link" ? "URL" : "Content"}</span>
+            <span className="text-muted-foreground">{type === "link" ? "URL" : "Content"}</span>
             <textarea
-              className="min-h-[140px] rounded-md border border-slate-200 bg-white p-3 text-sm dark:border-slate-800 dark:bg-slate-950"
+              className="min-h-[140px] rounded-md border border-border bg-card p-3 text-sm"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder={type === "link" ? "https://…" : "Write your artifact…"}

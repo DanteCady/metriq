@@ -25,7 +25,7 @@ export default function CandidateSettingsPage() {
               { term: "Time zone", description: mockUniverse.timezone },
             ]}
           />
-          <div className="mt-6 border-t border-slate-200 pt-4 dark:border-slate-800">
+          <div className="mt-6 border-t border-border pt-4">
             <Button type="button" disabled title="Profile editing is disabled in this preview build.">
               Edit profile
             </Button>
@@ -39,8 +39,8 @@ export default function CandidateSettingsPage() {
               { label: "Reviewer feedback published", on: true },
               { label: "Product updates", on: false },
             ].map((row) => (
-              <li key={row.label} className="flex items-center justify-between gap-3 rounded-md border border-slate-100 px-3 py-2 dark:border-slate-800/80">
-                <span className="text-slate-800 dark:text-slate-100">{row.label}</span>
+              <li key={row.label} className="flex items-center justify-between gap-3 rounded-md border border-border px-3 py-2">
+                <span className="text-foreground">{row.label}</span>
                 <Button type="button" size="sm" variant={row.on ? "default" : "secondary"} disabled title="Notification toggles are disabled in this preview build.">
                   {row.on ? "On" : "Off"}
                 </Button>
@@ -50,7 +50,7 @@ export default function CandidateSettingsPage() {
         </Panel>
 
         <Panel title="Privacy" description="Control what appears on your proof profile and exports.">
-          <p className="text-sm text-slate-600 dark:text-slate-300">
+          <p className="text-sm text-muted-foreground">
             Proof highlights are curated by you. Employers only see cards you attach to shared auditions or explicit exports.
           </p>
           <div className="mt-4">

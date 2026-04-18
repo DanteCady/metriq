@@ -23,7 +23,7 @@ export default function DeptSubmissionReviewPage() {
     weight: r.weight,
     score: r.score,
     max: r.max,
-    notes: <span className="text-slate-600 dark:text-slate-300">Evidence: {detail.artifacts[0]?.label ?? "—"}</span>,
+    notes: <span className="text-muted-foreground">Evidence: {detail.artifacts[0]?.label ?? "—"}</span>,
   }));
 
   const decisionBadge =
@@ -62,7 +62,7 @@ export default function DeptSubmissionReviewPage() {
         }
       />
 
-      <div className="mt-4 rounded-lg border border-slate-200 bg-white p-4 text-sm dark:border-slate-800 dark:bg-slate-950">
+      <div className="mt-4 rounded-lg border border-border bg-card p-4 text-sm">
         <DefinitionList
           columns={2}
           items={[
@@ -80,7 +80,7 @@ export default function DeptSubmissionReviewPage() {
         <Panel title="Evidence" description="Artifacts, links, and write-ups submitted for this stage." density="tight">
           <div className="grid gap-6">
             {detail.artifacts.map((a) => (
-              <div key={a.id} className="rounded-lg border border-slate-100 p-3 dark:border-slate-800/80">
+              <div key={a.id} className="rounded-lg border border-border p-3">
                 <ArtifactViewer kind={a.type} label={a.label} value={a.content} />
               </div>
             ))}
@@ -93,8 +93,8 @@ export default function DeptSubmissionReviewPage() {
             rows={rubricRows}
           />
           <Panel title="Decision" description="Shortlist, reject, or request follow-up once review is complete." density="tight">
-            <p className="text-sm text-slate-600 dark:text-slate-300">{detail.decision.notes}</p>
-            <div className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-sm text-muted-foreground">{detail.decision.notes}</p>
+            <div className="mt-3 text-xs text-muted-foreground">
               Last activity:{" "}
               {new Date(detail.decision.lastActivityAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
             </div>

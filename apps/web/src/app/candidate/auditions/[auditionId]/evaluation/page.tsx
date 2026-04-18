@@ -54,11 +54,11 @@ export default function CandidateEvaluationDetailPage() {
               <Panel title="Rubric breakdown" description="Criterion → score. Rationale/evidence will attach here." density="tight">
                 <div className="grid gap-3">
                   {mockEvaluation.criteria.map((c) => (
-                    <div key={c.key} className="rounded-md border border-slate-200 p-3 dark:border-slate-800">
+                    <div key={c.key} className="rounded-md border border-border p-3">
                       <div className="flex items-center justify-between gap-3">
                         <div className="min-w-0">
-                          <div className="truncate text-sm font-medium text-slate-900 dark:text-slate-50">{c.label}</div>
-                          <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">{c.rationale}</div>
+                          <div className="truncate text-sm font-medium text-foreground">{c.label}</div>
+                          <div className="mt-1 text-sm text-muted-foreground">{c.rationale}</div>
                         </div>
                         <ScoreBadge score={c.score} max={c.max} format="fraction" size="sm" />
                       </div>
@@ -82,7 +82,7 @@ export default function CandidateEvaluationDetailPage() {
                 {selected ? (
                   <ArtifactViewer kind={selected.type} label={selected.label} value={selected.content} />
                 ) : (
-                  <div className="text-sm text-slate-600 dark:text-slate-300">Select an artifact to preview it.</div>
+                  <div className="text-sm text-muted-foreground">Select an artifact to preview it.</div>
                 )}
               </Panel>
             </div>

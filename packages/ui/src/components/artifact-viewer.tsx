@@ -33,11 +33,11 @@ export function ArtifactViewer({ kind, label, value, href, actions, className }:
   const json = kind === "json" ? tryFormatJson(value) : null;
 
   return (
-    <div className={cn("rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950", className)}>
-      <div className="flex items-start justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-800">
+    <div className={cn("rounded-lg border border-border bg-card", className)}>
+      <div className="flex items-start justify-between gap-3 border-b border-border px-4 py-3">
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-slate-900 dark:text-slate-50">{label ?? "Artifact"}</div>
-          <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <div className="text-sm font-semibold text-foreground">{label ?? "Artifact"}</div>
+          <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             <Badge variant="outline">{kind}</Badge>
             {kind === "link" ? <span className="truncate">{openUrl}</span> : null}
           </div>
@@ -62,15 +62,15 @@ export function ArtifactViewer({ kind, label, value, href, actions, className }:
 
       <div className="p-4">
         {kind === "text" ? (
-          <pre className="max-h-[420px] overflow-auto rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-800 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-100">
+          <pre className="max-h-[420px] overflow-auto rounded-md border border-border bg-muted/50 p-3 text-sm text-foreground">
             <code>{value}</code>
           </pre>
         ) : kind === "json" ? (
-          <pre className="max-h-[420px] overflow-auto rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-800 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-100">
+          <pre className="max-h-[420px] overflow-auto rounded-md border border-border bg-muted/50 p-3 text-sm text-foreground">
             <code>{json ?? value}</code>
           </pre>
         ) : (
-          <div className="break-all rounded-md border border-slate-200 bg-slate-50 p-3 text-sm text-slate-800 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-100">
+          <div className="break-all rounded-md border border-border bg-muted/50 p-3 text-sm text-foreground">
             {value}
           </div>
         )}

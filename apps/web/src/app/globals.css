@@ -2,46 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Neutral SaaS tokens — light canvas, elevated cards, monochrome chrome. */
+/*
+  Light theme: cool canvas + indigo primary (evidence / trust).
+  HSL tokens without hsl() — consumed as hsl(var(--name) / <alpha>).
+*/
 :root {
-  --background: 240 6% 96%;
-  --foreground: 240 10% 4%;
+  /* Canvas: soft blue-gray (not flat neutral gray) */
+  --background: 220 32% 97%;
+  --foreground: 222 47% 11%;
+
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 4%;
+  --card-foreground: 222 47% 11%;
+
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 4%;
-  --muted: 240 5% 94%;
-  --muted-foreground: 240 4% 42%;
-  --border: 240 6% 88%;
-  --input: 240 6% 88%;
-  --ring: 240 6% 10%;
-  --primary: 240 6% 10%;
-  --primary-foreground: 0 0% 98%;
-  --accent: 240 5% 92%;
-  --accent-foreground: 240 6% 10%;
+  --popover-foreground: 222 47% 11%;
+
+  --muted: 220 24% 94%;
+  --muted-foreground: 220 9% 42%;
+
+  --border: 220 16% 88%;
+  --input: 220 16% 88%;
+
+  /* Focus rings align with primary */
+  --ring: 239 76% 58%;
+
+  /* Brand primary — indigo CTAs, links, key chrome */
+  --primary: 239 62% 48%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Hover / subtle fills */
+  --accent: 239 70% 96%;
+  --accent-foreground: 239 45% 28%;
+
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 98%;
+
+  /* Semantic surfaces (badges, callouts, pipeline) */
+  --success: 152 65% 38%;
+  --success-foreground: 0 0% 100%;
+  --warning: 32 95% 44%;
+  --warning-foreground: 222 47% 11%;
+  --info: 221 83% 53%;
+  --info-foreground: 0 0% 100%;
+
   --radius: 0.5rem;
 }
 
 .dark {
-  --background: 240 10% 4%;
-  --foreground: 0 0% 98%;
-  --card: 240 6% 7%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 6% 7%;
-  --popover-foreground: 0 0% 98%;
-  --muted: 240 4% 16%;
+  --background: 240 11% 5%;
+  --foreground: 210 40% 98%;
+  --card: 240 8% 8%;
+  --card-foreground: 210 40% 98%;
+  --popover: 240 8% 8%;
+  --popover-foreground: 210 40% 98%;
+  --muted: 240 5% 16%;
   --muted-foreground: 240 5% 64%;
-  --border: 240 4% 18%;
-  --input: 240 4% 18%;
-  --ring: 0 0% 83%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 6% 10%;
-  --accent: 240 4% 15%;
-  --accent-foreground: 0 0% 98%;
+  --border: 240 5% 18%;
+  --input: 240 5% 18%;
+  --ring: 239 76% 64%;
+  --primary: 239 76% 64%;
+  --primary-foreground: 240 11% 6%;
+  --accent: 240 6% 14%;
+  --accent-foreground: 210 40% 98%;
   --destructive: 0 62% 45%;
   --destructive-foreground: 0 0% 98%;
+  --success: 152 55% 45%;
+  --success-foreground: 240 11% 6%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 240 11% 6%;
+  --info: 217 91% 60%;
+  --info-foreground: 240 11% 6%;
 }
 
 @layer base {
@@ -53,7 +83,15 @@
     @apply scroll-smooth;
   }
 
-  body {
+  /* Light: subtle depth so the shell is not a single flat fill */
+  html:not(.dark) body {
+    @apply min-h-dvh text-foreground antialiased;
+    background-color: hsl(var(--background));
+    background-image: radial-gradient(120% 80% at 50% -30%, hsl(239 62% 48% / 0.07), transparent 52%),
+      radial-gradient(90% 55% at 100% 0%, hsl(221 83% 53% / 0.05), transparent 45%);
+  }
+
+  html.dark body {
     @apply min-h-dvh bg-background text-foreground antialiased;
   }
 }
