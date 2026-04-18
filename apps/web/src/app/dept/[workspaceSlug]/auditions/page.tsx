@@ -1,29 +1,59 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 import { Badge, Button, DataTable, PageHeader, Panel, Toolbar, ToolbarGroup } from "@metriq/ui";
 
 import { deptPath } from "../../../../lib/dept-path";
+import { listDrafts, type AuditionDraft } from "../../../../lib/audition-draft";
+import type { EmployerAudition } from "../../../../mocks/employer/auditions";
 import { mockEmployerAuditions } from "../../../../mocks/employer/auditions";
+
+function draftToRow(d: AuditionDraft): EmployerAudition {
+  return {
+    id: d.id,
+    title: d.title.trim() || "Untitled draft",
+    level: d.level,
+    template: d.template,
+    status: "draft",
+    timeboxMinutes: d.timeboxMinutes,
+    createdAt: d.updatedAt,
+  };
+}
+
+function isLocalDraftRow(id: string): boolean {
+  return id.startsWith("local_");
+}
 
 export default function DeptAuditionsPage() {
   const params = useParams<{ workspaceSlug: string }>();
+  const pathname = usePathname();
+  const router = useRouter();
   const slug = params?.workspaceSlug ?? "";
   const base = (p: string) => deptPath(slug, p);
+
+  /** Empty until mount — `listDrafts` reads localStorage and must not run during SSR (hydration mismatch). */
+  const [draftRows, setDraftRows] = React.useState<EmployerAudition[]>([]);
+
+  React.useEffect(() => {
+    if (!slug) {
+      setDraftRows([]);
+      return;
+    }
+    setDraftRows(listDrafts(slug).map(draftToRow));
+  }, [slug, pathname]);
+
+  const rows = React.useMemo(() => [...draftRows, ...mockEmployerAuditions], [draftRows]);
 
   return (
     <>
       <PageHeader
         title="Auditions"
-        description="Create evidence-first assessments (work samples, debugging incidents, PR reviews, design docs) — fully customizable."
+        description="Create proof-aligned assessments (in-session text, choices, ordering, code, lab stubs). Local drafts are stored in this browser until API persistence lands."
         actions={
-          <Button
-            onClick={() => {
-              window.location.href = base("/auditions/new");
-            }}
-          >
+          <Button type="button" onClick={() => router.push(base("/auditions/new"))}>
             New audition
           </Button>
         }
@@ -39,9 +69,9 @@ export default function DeptAuditionsPage() {
           right={null}
         />
 
-        <Panel title="Audition list" description="Published and draft auditions.">
+        <Panel title="Audition list" description="Published and draft auditions. Edit is enabled for drafts saved on this device.">
           <DataTable
-            rows={mockEmployerAuditions}
+            rows={rows}
             getRowKey={(r) => r.id}
             columns={[
               {
@@ -62,6 +92,7 @@ export default function DeptAuditionsPage() {
                 cell: (r) => (
                   <Badge variant={r.status === "published" ? "success" : r.status === "draft" ? "outline" : "secondary"}>
                     {r.status}
+                    {isLocalDraftRow(r.id) ? " · local" : null}
                   </Badge>
                 ),
               },
@@ -72,16 +103,20 @@ export default function DeptAuditionsPage() {
                 className: "text-right",
                 cell: (r) => (
                   <div className="flex justify-end gap-2">
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      disabled
-                      title="Audition editor is not available in this preview build."
-                    >
-                      Edit
-                    </Button>
-                    <Button size="sm" onClick={() => (window.location.href = base("/pipeline"))}>
+                    {isLocalDraftRow(r.id) ? (
+                      <Button size="sm" variant="secondary" type="button" onClick={() => router.push(base(`/auditions/${r.id}/edit`))}>
+                        Edit
+                      </Button>
+                    ) : (
+                      <Button size="sm" variant="secondary" type="button" disabled title="Mock auditions have no editor in this preview build.">
+                        Edit
+                      </Button>
+                    )}
+                    <Button size="sm" type="button" onClick={() => router.push(base("/pipeline"))}>
                       Pipeline
+                    </Button>
+                    <Button size="sm" variant="secondary" type="button" onClick={() => router.push(base(`/auditions/${r.id}/invites`))}>
+                      Invites
                     </Button>
                   </div>
                 ),
@@ -89,19 +124,17 @@ export default function DeptAuditionsPage() {
             ]}
             emptyState={{
               title: "No auditions yet",
-              description: "Create your first audition from a template, then customize stages, deliverables, and rubric.",
+              description: "Create your first audition and build a proof-aligned assessment.",
               actionLabel: "Create audition",
-              onAction: () => {
-                window.location.href = base("/auditions/new");
-              },
+              onAction: () => router.push(base("/auditions/new")),
             }}
           />
           <div className="mt-3 text-sm text-slate-600 dark:text-slate-300">
             Tip: start from{" "}
             <Link className="underline" href={base("/auditions/new")}>
-              a template
-            </Link>
-            , then customize everything.
+              New audition
+            </Link>{" "}
+            to open the assessment builder.
           </div>
         </Panel>
       </div>
