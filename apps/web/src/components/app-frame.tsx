@@ -141,6 +141,7 @@ const SEGMENT_LABELS: Record<string, string> = {
 
 function segmentLabel(segment: string, index: number, parts: string[]): string {
   if (parts[0] === "dept" && index === 1) return workspaceLabel(segment);
+  if (parts[0] === "candidate" && segment === "settings") return "Profile";
   if (SEGMENT_LABELS[segment]) return SEGMENT_LABELS[segment];
   if (segment.length > 18 || /^[a-f0-9-]{10,}$/i.test(segment)) {
     const parent = parts[index - 1];

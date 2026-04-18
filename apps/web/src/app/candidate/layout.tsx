@@ -14,7 +14,7 @@ const navItems: AppFrameNavItem[] = [
   { key: "candidate-simulations", label: "Simulations", href: "/candidate/simulations", icon: "sparkles" },
   { key: "candidate-results", label: "Results", href: "/candidate/results", icon: "trophy" },
   { key: "candidate-proof", label: "Proof profile", href: "/candidate/proof", icon: "badgeCheck" },
-  { key: "candidate-settings", label: "Settings", href: "/candidate/settings", icon: "settings" },
+  { key: "candidate-settings", label: "Profile", href: "/candidate/settings", icon: "users" },
 ];
 
 const navGroups: AppFrameNavGroup[] = [
@@ -36,7 +36,7 @@ const navGroups: AppFrameNavGroup[] = [
   },
   {
     title: "Account",
-    items: [{ key: "candidate-settings", label: "Settings", href: "/candidate/settings", icon: "settings" }],
+    items: [{ key: "candidate-settings", label: "Profile", href: "/candidate/settings", icon: "users" }],
   },
 ];
 
