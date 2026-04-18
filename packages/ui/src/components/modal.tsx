@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 
 import { cn } from "../lib/cn";
 import { Button } from "./ui/button";
@@ -16,6 +17,12 @@ export type ModalProps = {
 };
 
 export function Modal({ open, title, description, children, onClose, footer, className }: ModalProps) {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useLayoutEffect(() => {
+    setMounted(true);
+  }, []);
+
   React.useEffect(() => {
     if (!open) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -25,10 +32,19 @@ export function Modal({ open, title, description, children, onClose, footer, cla
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  if (!open) return null;
+  React.useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
-  return (
-    <div className="fixed inset-0 z-50">
+  if (!open || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[220]" data-metriq-modal-overlay>
       <div className="absolute inset-0 bg-foreground/25 backdrop-blur-sm dark:bg-foreground/35" onClick={onClose} />
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div
@@ -56,7 +72,8 @@ export function Modal({ open, title, description, children, onClose, footer, cla
           {footer ? <div className="border-t border-border p-4">{footer}</div> : null}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

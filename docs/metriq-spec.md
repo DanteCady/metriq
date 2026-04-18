@@ -343,3 +343,9 @@ Focus on:
 - structure
 - quality
 - extensibility
+
+---
+
+## Companion documentation (not duplicated here)
+
+Role names, org vs workspace personas, seat meaning, and future roles (e.g. recruiters) live in a **separate** document so this spec stays stable while access control evolves: [`roles-and-permissions.md`](./roles-and-permissions.md).

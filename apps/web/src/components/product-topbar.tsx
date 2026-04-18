@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Bell, Menu, Search, Sparkles } from "lucide-react";
+import { Bell, ChevronDown, Menu, Sparkles } from "lucide-react";
 
-import { Badge, Breadcrumbs, Button, Modal, SearchInput, useToast } from "@metriq/ui";
+import { Badge, Breadcrumbs, Button, Modal, useToast } from "@metriq/ui";
 
 import { DEFAULT_WORKSPACE_SLUG } from "../mocks/tenancy";
 import { ThemeToggle } from "./theme-toggle";
@@ -15,55 +15,6 @@ export type ProductTopbarProps = {
   breadcrumbItems: { label: string; href?: string }[];
   topRight?: React.ReactNode;
 };
-
-type SearchHit = { id: string; label: string; hint: string; href: string };
-
-function searchCatalog(pathname: string): SearchHit[] {
-  const norm = pathname.replace(/\/$/, "") || "/";
-  if (norm.startsWith("/dept/")) {
-    const m = norm.match(/^(\/dept\/[^/]+)/);
-    const base = m?.[1] ?? `/dept/${DEFAULT_WORKSPACE_SLUG}`;
-    return [
-      { id: "home", label: "Workspace overview", hint: "Dashboard", href: base },
-      { id: "aud", label: "Auditions", hint: "Roles and templates", href: `${base}/auditions` },
-      { id: "pipe", label: "Pipeline", hint: "Candidates by stage", href: `${base}/pipeline` },
-      { id: "rev", label: "Review queue", hint: "Submissions to score", href: `${base}/review` },
-      { id: "cmp", label: "Compare", hint: "Side-by-side signal", href: `${base}/compare` },
-      { id: "an", label: "Analytics", hint: "Funnel and rubric", href: `${base}/analytics` },
-      { id: "tm", label: "Team", hint: "Members and invites", href: `${base}/team` },
-      { id: "st", label: "Workspace settings", hint: "Integrations and audit", href: `${base}/settings` },
-      { id: "org", label: "Organization console", hint: "Workspaces and seats", href: "/employer" },
-    ];
-  }
-  if (norm.startsWith("/candidate")) {
-    return [
-      { id: "ch", label: "Candidate home", hint: "Overview", href: "/candidate" },
-      { id: "caud", label: "My auditions", hint: "In progress and upcoming", href: "/candidate/auditions" },
-      { id: "csub", label: "Submissions", hint: "Artifacts you submitted", href: "/candidate/submissions" },
-      { id: "cres", label: "Results", hint: "Evaluated work", href: "/candidate/results" },
-      { id: "cpr", label: "Proof profile", hint: "Evidence highlights", href: "/candidate/proof" },
-      { id: "cset", label: "Settings", hint: "Preview preferences", href: "/candidate/settings" },
-      { id: "csim", label: "Simulations", hint: "Practice runs", href: "/candidate/simulations" },
-    ];
-  }
-  if (norm.startsWith("/employer")) {
-    return [
-      { id: "org", label: "Organization overview", hint: "KPIs and workspaces", href: "/employer" },
-      { id: "ws", label: "Workspaces", hint: "Departments and status", href: "/employer/workspaces" },
-      { id: "se", label: "Seats", hint: "Pool and allocation", href: "/employer/seats" },
-      { id: "bi", label: "Billing", hint: "Stub — procurement", href: "/employer/billing" },
-      { id: "sec", label: "Security", hint: "Stub — SSO defaults", href: "/employer/security" },
-    ];
-  }
-  if (norm.startsWith("/admin")) {
-    return [{ id: "adm", label: "Admin overview", hint: "Platform controls", href: "/admin" }];
-  }
-  return [
-    { id: "login", label: "Sign in", hint: "Preview role picker", href: "/login" },
-    { id: "cand", label: "Candidate preview", hint: "Mock candidate home", href: "/candidate" },
-    { id: "emp", label: "Employer preview", hint: "Org console", href: "/employer" },
-  ];
-}
 
 type Notif = { id: string; title: string; body: string; time: string; read: boolean };
 
@@ -113,32 +64,31 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
   const pathname = usePathname() ?? "/";
   const { push: toast } = useToast();
 
-  const [searchOpen, setSearchOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
   const [notifOpen, setNotifOpen] = React.useState(false);
   const [notifications, setNotifications] = React.useState<Notif[]>(() => [...INITIAL_NOTIFICATIONS]);
-  const [quickOpen, setQuickOpen] = React.useState(false);
+  const [quickMenuOpen, setQuickMenuOpen] = React.useState(false);
+  const quickWrapRef = React.useRef<HTMLDivElement>(null);
 
-  const catalog = React.useMemo(() => searchCatalog(pathname), [pathname]);
-  const filtered = React.useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return catalog;
-    return catalog.filter((h) => `${h.label} ${h.hint}`.toLowerCase().includes(q));
-  }, [catalog, searchQuery]);
+  const quickActions = React.useMemo(() => quickActionList(pathname), [pathname]);
 
   React.useEffect(() => {
-    if (!searchOpen) setSearchQuery("");
-  }, [searchOpen]);
+    if (!quickMenuOpen) return;
+    const onDocMouseDown = (e: MouseEvent) => {
+      if (quickWrapRef.current?.contains(e.target as Node)) return;
+      setQuickMenuOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setQuickMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onDocMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onDocMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [quickMenuOpen]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
-
-  const openSearch = () => setSearchOpen(true);
-
-  const navigateHit = (hit: SearchHit) => {
-    router.push(hit.href);
-    setSearchOpen(false);
-    toast({ title: "Navigated", description: hit.label, tone: "success" });
-  };
 
   const markNotifRead = (id: string) => {
     setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
@@ -153,8 +103,7 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
 
   const runQuick = (a: QuickAction) => {
     if (a.href) router.push(a.href);
-    setQuickOpen(false);
-    toast({ title: a.label, description: a.description, tone: "default" });
+    setQuickMenuOpen(false);
   };
 
   return (
@@ -174,31 +123,19 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
         <div className="min-w-0 flex-1 py-2">
           <Breadcrumbs items={breadcrumbItems} />
         </div>
-        <Badge variant="secondary" className="hidden shrink-0 sm:inline-flex">
+        <Badge variant="secondary" className="hidden shrink-0 md:inline-flex">
           Preview
         </Badge>
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1 rounded-lg border border-border/60 bg-muted/30 p-0.5 dark:bg-muted/20">
           <Tooltip label="Color theme: switch light or dark">
             <ThemeToggle />
-          </Tooltip>
-          <Tooltip label="Search and jump to a page (preview)">
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              className="hidden border border-border px-2.5 sm:inline-flex"
-              onClick={openSearch}
-              aria-label="Search and jump (preview)"
-            >
-              <Search className="size-4 shrink-0" aria-hidden />
-            </Button>
           </Tooltip>
           <Tooltip label="Notifications (preview, local mock data)">
             <Button
               type="button"
               variant="secondary"
               size="sm"
-              className="relative hidden border border-border px-2.5 md:inline-flex"
+              className="relative hidden border-0 bg-transparent px-2.5 shadow-none hover:bg-background/80 dark:hover:bg-background/10 md:inline-flex"
               onClick={() => setNotifOpen(true)}
               aria-label="Notifications (preview)"
             >
@@ -210,59 +147,46 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
               ) : null}
             </Button>
           </Tooltip>
-          <Tooltip label="Quick actions and shortcuts (preview)">
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              className="hidden border border-border px-2.5 lg:inline-flex"
-              onClick={() => setQuickOpen(true)}
-              aria-label="Quick actions (preview)"
-            >
-              <Sparkles className="size-4 shrink-0" aria-hidden />
-            </Button>
-          </Tooltip>
+          <div ref={quickWrapRef} className="relative">
+            <Tooltip label="Quick actions">
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                className="inline-flex border-0 bg-transparent px-2 shadow-none hover:bg-background/80 dark:hover:bg-background/10"
+                aria-label="Quick actions"
+                aria-haspopup="menu"
+                aria-expanded={quickMenuOpen}
+                onClick={() => setQuickMenuOpen((o) => !o)}
+              >
+                <Sparkles className="size-4 shrink-0" aria-hidden />
+                <ChevronDown className="ml-0.5 size-3.5 opacity-70" aria-hidden />
+              </Button>
+            </Tooltip>
+            {quickMenuOpen ? (
+              <div
+                role="menu"
+                aria-label="Quick actions"
+                className="absolute right-0 top-full z-[100] mt-1 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-md border border-border bg-popover py-1 text-popover-foreground shadow-lg"
+              >
+                {quickActions.map((a) => (
+                  <button
+                    key={a.id}
+                    role="menuitem"
+                    type="button"
+                    className="flex w-full flex-col gap-0.5 px-3 py-2.5 text-left text-sm transition-colors hover:bg-muted/70 focus-visible:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+                    onClick={() => runQuick(a)}
+                  >
+                    <span className="font-medium text-foreground">{a.label}</span>
+                    <span className="text-xs leading-snug text-muted-foreground">{a.description}</span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
         {topRight ? <div className="flex shrink-0 items-center gap-2 border-l border-border pl-3">{topRight}</div> : null}
       </div>
-
-      <Modal
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        title="Jump to"
-        description="Preview search — pick a shortcut. No server index yet."
-        footer={
-          <div className="flex justify-end gap-2">
-            <Button type="button" variant="secondary" size="sm" onClick={() => setSearchOpen(false)}>
-              Close
-            </Button>
-          </div>
-        }
-      >
-        <div className="space-y-3">
-          <SearchInput value={searchQuery} onValueChange={setSearchQuery} placeholder="Filter shortcuts…" autoFocus />
-          <ul className="max-h-64 space-y-1 overflow-y-auto pr-1">
-            {filtered.length === 0 ? (
-              <li className="rounded-md border border-dashed border-border px-3 py-6 text-center text-sm text-muted-foreground">
-                No matches. Try another word or clear the filter.
-              </li>
-            ) : (
-              filtered.map((hit) => (
-                <li key={hit.id}>
-                  <button
-                    type="button"
-                    className="flex w-full flex-col rounded-md border border-transparent px-3 py-2 text-left hover:border-border hover:bg-muted/60"
-                    onClick={() => navigateHit(hit)}
-                  >
-                    <span className="text-sm font-medium text-foreground">{hit.label}</span>
-                    <span className="text-xs text-muted-foreground">{hit.hint}</span>
-                  </button>
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
-      </Modal>
 
       <Modal
         open={notifOpen}
@@ -304,27 +228,6 @@ export function ProductTopbar({ onOpenMobileNav, breadcrumbItems, topRight }: Pr
             </li>
           ))}
         </ul>
-      </Modal>
-
-      <Modal
-        open={quickOpen}
-        onClose={() => setQuickOpen(false)}
-        title="Quick actions"
-        description="One-tap shortcuts — same routes as the sidebar, mocked for demos."
-        footer={
-          <Button type="button" variant="secondary" size="sm" onClick={() => setQuickOpen(false)}>
-            Close
-          </Button>
-        }
-      >
-        <div className="grid gap-2 sm:grid-cols-2">
-          {quickActionList(pathname).map((a) => (
-            <Button key={a.id} type="button" variant="secondary" className="h-auto flex-col items-start gap-1 py-3 text-left" onClick={() => runQuick(a)}>
-              <span className="font-medium">{a.label}</span>
-              <span className="text-xs font-normal text-muted-foreground">{a.description}</span>
-            </Button>
-          ))}
-        </div>
       </Modal>
     </>
   );
