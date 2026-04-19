@@ -1,5 +1,4 @@
-import "dotenv/config";
-
+import dotenv from "dotenv";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promises as fs } from "node:fs";
@@ -19,6 +18,9 @@ if (command !== "latest" && command !== "down") usage();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../../.env.local") });
+
 const migrationsFolder = path.join(__dirname, "..", "migrations");
 
 const db = createDb();

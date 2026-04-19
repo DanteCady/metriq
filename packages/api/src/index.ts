@@ -1,4 +1,6 @@
 export * from "./context";
+export * from "./entitlements";
+export * from "./metriq-error";
 export * from "./root";
 export * from "./trpc";
 export * from "./routers/candidate";

@@ -1,8 +1,10 @@
+import { applicationQueries, candidateQueries, inviteQueries, submissionQueries } from "@metriq/db";
 import { z } from "zod";
 
-import { candidateQueries, submissionQueries } from "@metriq/db";
 import { candidateProfileSchema } from "@metriq/validators";
 
+import { emitInviteRedeemed } from "../notification-events";
+import { throwMetriqError } from "../metriq-error";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const candidateRouter = createTRPCRouter({
@@ -36,5 +38,46 @@ export const candidateRouter = createTRPCRouter({
         bio: input.profile.bio ?? null,
       }, ctx.scope);
     }),
+
+  /** Preview: binds invite to the first seeded candidate. Replace with session candidate id when auth lands. */
+  redeemInvite: publicProcedure.input(z.object({ token: z.string().min(8) })).mutation(async ({ ctx, input }) => {
+    if (ctx.role !== "candidate") throwMetriqError("METRIQ_AUTH_FORBIDDEN_ROLE");
+    const inv = await inviteQueries.getInviteByToken(ctx.db, input.token, ctx.scope);
+    if (!inv) throwMetriqError("METRIQ_CANDIDATE_INVITE_NOT_FOUND");
+    if (inv.expires_at && new Date(inv.expires_at) < new Date()) {
+      throwMetriqError("METRIQ_CANDIDATE_INVITE_EXPIRED");
+    }
+    const candidate = (await candidateQueries.listCandidates(ctx.db, ctx.scope)).at(0) ?? null;
+    if (!candidate) throwMetriqError("METRIQ_CANDIDATE_RECORD_MISSING");
+    await applicationQueries.upsertAuditionApplication(
+      ctx.db,
+      {
+        audition_id: inv.audition_id,
+        workspace_id: inv.workspace_id,
+        candidate_id: candidate.id,
+        invite_id: inv.id,
+        status: "active",
+      },
+      ctx.scope,
+    );
+    await emitInviteRedeemed(
+      ctx.db,
+      {
+        candidateId: candidate.id,
+        candidateName: candidate.full_name,
+        workspaceId: inv.workspace_id,
+        auditionId: inv.audition_id,
+      },
+      ctx.scope,
+    );
+    return { auditionId: inv.audition_id, workspaceId: inv.workspace_id };
+  }),
+
+  myApplications: publicProcedure.query(async ({ ctx }) => {
+    if (ctx.role !== "candidate") throwMetriqError("METRIQ_AUTH_FORBIDDEN_ROLE");
+    const candidate = (await candidateQueries.listCandidates(ctx.db, ctx.scope)).at(0) ?? null;
+    if (!candidate) return [];
+    return applicationQueries.listApplicationsForCandidate(ctx.db, candidate.id, ctx.scope);
+  }),
 });
 

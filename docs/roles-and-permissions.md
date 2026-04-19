@@ -30,7 +30,7 @@ These control **which routes** you can access in the demo (`metriq.role` cookie)
 
 | Concept | Meaning in Metriq |
 |---------|-------------------|
-| **Organization (org)** | The **customer company** (e.g. Northwind Labs): billing, seat pool, SSO intent, list of workspaces. Routes: `/employer`, `/employer/workspaces`, `/employer/seats`, `/employer/billing`, `/employer/security`. |
+| **Organization (org)** | The **customer company** (e.g. Metriq (demo) in local seed): billing, seat pool, SSO intent, list of workspaces. Routes: `/employer`, `/employer/workspaces`, `/employer/seats`, `/employer/billing`, `/employer/security`. |
 | **Workspace (dept)** | An **internal department or unit** with isolated hiring context (auditions, pipeline, team). Routes: `/dept/[workspaceSlug]/...`. Mock data: `mockWorkspaces` in `apps/web/src/mocks/tenancy.ts`. |
 
 **Seat (today’s product intent):** A **seat** is a **licensed user who operates the platform** for the org/workspace (reviewers, hiring managers, admins) — **not** a count of candidates. Candidate volume is better handled as **usage or invites**, not seats (see org Seats UI copy).

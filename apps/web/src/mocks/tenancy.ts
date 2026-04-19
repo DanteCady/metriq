@@ -25,7 +25,7 @@ export type MockOrganization = {
 export const DEFAULT_WORKSPACE_SLUG = "engineering";
 
 export const mockOrganization: MockOrganization = {
-  id: "org_nw_001",
+  id: "org_metriq_001",
   name: mockUniverse.orgName,
   legalName: mockUniverse.orgLegalName,
   slug: mockUniverse.orgSlug,
@@ -48,10 +48,10 @@ export type MockOrgSeatRow = {
 
 /** Cross-workspace seat assignments (org-wide view). */
 export const mockOrgSeatAssignments: MockOrgSeatRow[] = [
-  { id: "seat_1", email: "aisha.khan@northwindlabs.io", name: "Aisha Khan", workspaceSlug: "engineering", role: "Lead reviewer" },
-  { id: "seat_2", email: "marcus.chen@northwindlabs.io", name: "Marcus Chen", workspaceSlug: "gtm", role: "Hiring manager" },
-  { id: "seat_3", email: "jordan.lee@northwindlabs.io", name: "Jordan Lee", workspaceSlug: "engineering", role: "Reviewer" },
-  { id: "seat_4", email: "sam.rivera@northwindlabs.io", name: "Sam Rivera", workspaceSlug: "engineering", role: "Admin" },
+  { id: "seat_1", email: "aisha.khan@demo.metriq.dev", name: "Aisha Khan", workspaceSlug: "engineering", role: "Lead reviewer" },
+  { id: "seat_2", email: "marcus.chen@demo.metriq.dev", name: "Marcus Chen", workspaceSlug: "gtm", role: "Hiring manager" },
+  { id: "seat_3", email: "jordan.lee@demo.metriq.dev", name: "Jordan Lee", workspaceSlug: "engineering", role: "Reviewer" },
+  { id: "seat_4", email: "sam.rivera@demo.metriq.dev", name: "Sam Rivera", workspaceSlug: "engineering", role: "Admin" },
 ];
 
 export const mockOrgSeatPool = {

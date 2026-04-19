@@ -19,7 +19,7 @@ export const mockAuditions: MockAudition[] = [
   {
     auditionId: "sim_demo_api",
     roleTitle: "Full‑Stack Engineer (Platform)",
-    companyName: "Northwind Health",
+    companyName: "Meridian Health",
     estimatedMinutes: 90,
     status: "invited",
     submissionId: "sub_demo_invited",

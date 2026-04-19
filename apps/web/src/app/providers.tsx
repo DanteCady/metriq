@@ -13,7 +13,15 @@ import superjson from "superjson";
 import type { AppRouter } from "@metriq/api";
 import { ToastProvider } from "@metriq/ui";
 
+import { AppNotificationProvider } from "../lib/app-notifications";
+
 export const trpc = createTRPCReact<AppRouter>();
+
+/** Seeded demo org slug (`company.slug`); must match `METRIQ_ORG_SLUG` — set in root `.env`, no code default. */
+function clientOrgSlug(): string | undefined {
+  const v = process.env.NEXT_PUBLIC_METRIQ_ORG_SLUG?.trim();
+  return v || undefined;
+}
 
 function getBaseUrl() {
   if (typeof window !== "undefined") return "";
@@ -38,7 +46,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "/";
   const role = roleFromDocumentCookie() ?? roleFromPathname(pathname);
 
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: { retry: 1 },
+        },
+      }),
+  );
   const trpcClient = React.useMemo(() => {
     return trpc.createClient({
       links: [
@@ -47,9 +62,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
           transformer: superjson,
           headers() {
             const h: Record<string, string> = { "x-metriq-role": role satisfies Role };
+            const org = clientOrgSlug();
+            if (org) {
+              h["x-metriq-org-slug"] = org;
+            }
             if (typeof window !== "undefined") {
               const m = window.location.pathname.match(/^\/dept\/([^/]+)/);
-              if (m?.[1]) h["x-metriq-workspace-slug"] = m[1];
+              if (m?.[1]) {
+                h["x-metriq-workspace-slug"] = m[1];
+              }
             }
             return h;
           },
@@ -62,7 +83,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <ToastProvider>
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
-          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppNotificationProvider>{children}</AppNotificationProvider>
+          </QueryClientProvider>
         </trpc.Provider>
       </ToastProvider>
     </ThemeProvider>

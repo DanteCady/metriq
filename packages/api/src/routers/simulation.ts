@@ -3,6 +3,7 @@ import { z } from "zod";
 import { candidateQueries, simulationQueries, submissionQueries } from "@metriq/db";
 import { createSimulationSchema } from "@metriq/validators";
 
+import { throwMetriqError } from "../metriq-error";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 type SimulationType = "debug_task" | "api_design" | "pr_review" | "bug_analysis";
@@ -52,7 +53,7 @@ export const simulationRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const candidateId =
         input.candidateId ?? (await candidateQueries.listCandidates(ctx.db, ctx.scope)).at(0)?.id ?? null;
-      if (!candidateId) throw new Error("No candidates exist to start a simulation.");
+      if (!candidateId) throwMetriqError("METRIQ_SIMULATION_NO_CANDIDATES");
 
       const submission = await simulationQueries.startSimulation(
         ctx.db,

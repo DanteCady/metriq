@@ -83,9 +83,23 @@ Legacy bookmarks under `/employer/...` that used to mean “employer app” are 
 # Install all workspace dependencies
 pnpm install
 
-# Local dev (Next dev server for apps/web)
+# Environment: copy `.env.example` to `.env`, fill in secrets, then encrypt for git:
+#   pnpm env:encrypt
+# Commit the encrypted `.env`. Share `DOTENV_PRIVATE_KEY` (from `.env.keys`) via your secret manager — never commit `.env.keys`.
+# Defaults match docker-compose Postgres for local DB.
+
+# Start Postgres, then migrate + seed:
+pnpm db:up
+pnpm db:migrate
+pnpm db:seed
+
+# Seed scripts live in packages/db/seeds/ (0001_*.ts, …) and run in one transaction via src/run-seeds.ts.
+
+# Local dev (Next dev server for apps/web; decrypts via dotenvx)
 pnpm dev
 ```
+
+Configuration lives in **`.env` at the repo root** (encrypted when committed; decrypted at runtime by [dotenvx](https://github.com/dotenvx/dotenvx) via `apps/web` scripts and root `db:*` commands). Next still resolves the repo root in `apps/web/next.config.ts`. Optional plaintext overrides: `.env.local` (gitignored). For Docker, `DATABASE_URL` defaults to `postgres://postgres:postgres@127.0.0.1:5432/metriq`.
 
 Open [http://localhost:3000](http://localhost:3000). You will be redirected through **`/login`** until a preview role is chosen.
 
@@ -104,7 +118,10 @@ pnpm typecheck  # TypeScript across packages (parallel)
 
 - **Role cookie:** `metriq.role` — set from `/login`; middleware restricts `/candidate`, `/employer`, `/dept`, and `/admin`.
 - **Employer vs workspace:** Both org (`/employer`) and department (`/dept/...`) use the **same employer role** for now; future Better Auth / org plugins can split membership without changing the URL shape.
-- **tRPC stub header:** On department routes, the client may send **`x-metriq-workspace-slug`** for future procedure scoping (see `apps/web/src/app/providers.tsx`).
+- **tRPC headers:** Department routes send **`x-metriq-workspace-slug`** and **`x-metriq-org-slug`** when **`NEXT_PUBLIC_METRIQ_ORG_SLUG`** is set (must match the seeded demo org’s `company.slug`, e.g. `metriq`). The API also reads **`METRIQ_ORG_SLUG`** for the same value. There is no hardcoded default in code — configure both in root `.env` (see `apps/web/src/app/providers.tsx` and `apps/web/src/app/api/trpc/[trpc]/route.ts`).
+- **Admin API:** Set **`METRIQ_ADMIN_API_KEY`** in the environment for `admin/*` tRPC procedures to run (role must still be `admin`).
+
+See [`docs/roadmap.md`](docs/roadmap.md) for the implementation checklist.
 
 ---
 

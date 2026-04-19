@@ -5,7 +5,10 @@ dist
 .turbo
 coverage
 *.tsbuildinfo
-.env
-.env.*
+
+# dotenvx: commit encrypted root `.env`; never commit private keys or local overrides
+.env.keys
+.env.local
+.env.*.local
 
 node_modules

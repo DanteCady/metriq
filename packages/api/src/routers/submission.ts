@@ -1,8 +1,8 @@
+import { candidateQueries, evaluationQueries, submissionQueries } from "@metriq/db";
 import { z } from "zod";
-
-import { evaluationQueries, submissionQueries } from "@metriq/db";
 import { submitSubmissionSchema, upsertArtifactSchema } from "@metriq/validators";
 
+import { throwMetriqError } from "../metriq-error";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const submissionRouter = createTRPCRouter({
@@ -14,7 +14,8 @@ export const submissionRouter = createTRPCRouter({
 
       return {
         id: res.submission.id,
-        simulationId: res.submission.simulation_id,
+        simulationId: res.submission.simulation_id ?? null,
+        auditionId: res.submission.audition_id ?? null,
         candidateId: res.submission.candidate_id,
         status: res.submission.status as "draft" | "submitted",
         artifacts: res.artifacts.map((a) => ({
@@ -34,8 +35,7 @@ export const submissionRouter = createTRPCRouter({
 
   addArtifact: publicProcedure.input(upsertArtifactSchema).mutation(async ({ ctx, input }) => {
     if (input.artifactId) {
-      // Updating artifacts isn't implemented yet; keep DAL writes centralized.
-      throw new Error("Updating an existing artifact is not supported yet.");
+      throwMetriqError("METRIQ_SUBMISSION_ARTIFACT_UPDATE_UNSUPPORTED");
     }
 
     return submissionQueries.addSubmissionArtifact(ctx.db, {
@@ -59,11 +59,35 @@ export const submissionRouter = createTRPCRouter({
     }, ctx.scope);
   }),
 
+  startAuditionSubmission: publicProcedure
+    .input(
+      z.object({
+        auditionId: z.string().uuid(),
+        auditionStageId: z.string().min(1),
+        candidateId: z.string().uuid().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (ctx.role !== "candidate") throwMetriqError("METRIQ_AUTH_FORBIDDEN_ROLE");
+      const candidateId =
+        input.candidateId ?? (await candidateQueries.listCandidates(ctx.db, ctx.scope)).at(0)?.id;
+      if (!candidateId) throwMetriqError("METRIQ_CANDIDATE_RECORD_MISSING");
+      return submissionQueries.createAuditionSubmission(
+        ctx.db,
+        {
+          audition_id: input.auditionId,
+          audition_stage_id: input.auditionStageId,
+          candidate_id: candidateId,
+        },
+        ctx.scope,
+      );
+    }),
+
   getResult: publicProcedure
     .input(z.object({ submissionId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
       const evalRes = await evaluationQueries.getEvaluationBySubmissionId(ctx.db, input.submissionId, ctx.scope);
-      if (!evalRes) throw new Error("No evaluation exists for this submission yet.");
+      if (!evalRes) throwMetriqError("METRIQ_SUBMISSION_EVAL_MISSING");
 
       const criteria = evalRes.breakdown.map((b) => ({
         key: b.criterion_id,

@@ -24,7 +24,7 @@ You are the **DB Migrations & Seed** agent for **Metriq**. You keep the database
 ## You own
 - `packages/db/migrations/*`: creating and maintaining migrations
 - `packages/db/types.ts` (or equivalent): keeping Kysely `Database` interface consistent with migrations
-- `packages/db/seed/*`: realistic data fixtures that match product flows
+- `packages/db/seeds/*`: realistic data fixtures (numbered files, ordered in `src/run-seeds.ts`) that match product flows
 - Seed integrity rules:
   - candidates with varied profiles + performance
   - companies/employers with believable names

@@ -38,6 +38,6 @@ export const mockEmployerIntegrations: IntegrationRow[] = [
 ];
 
 export const mockEmployerWebhooks = [
-  { id: "wh_1", url: "https://hooks.northwindlabs.io/metriq/decisions", events: "audition.decision.finalized", lastDelivery: "2026-04-15T08:02:00.000Z", ok: true },
-  { id: "wh_2", url: "https://internal.northwindlabs.io/hr/ingest", events: "submission.submitted", lastDelivery: "2026-04-14T19:44:00.000Z", ok: true },
+  { id: "wh_1", url: "https://hooks.demo.metriq.dev/metriq/decisions", events: "audition.decision.finalized", lastDelivery: "2026-04-15T08:02:00.000Z", ok: true },
+  { id: "wh_2", url: "https://internal.demo.metriq.dev/hr/ingest", events: "submission.submitted", lastDelivery: "2026-04-14T19:44:00.000Z", ok: true },
 ];

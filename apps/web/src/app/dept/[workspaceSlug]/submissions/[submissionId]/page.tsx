@@ -3,8 +3,19 @@
 import * as React from "react";
 import { useParams } from "next/navigation";
 
-import { ArtifactViewer, Badge, Button, DefinitionList, PageHeader, Panel, RubricTable, type RubricCriterion } from "@metriq/ui";
+import {
+  ArtifactViewer,
+  Badge,
+  Button,
+  DefinitionList,
+  PageHeader,
+  Panel,
+  RubricTable,
+  type RubricCriterion,
+} from "@metriq/ui";
 
+import { trpc } from "../../../../../app/providers";
+import { useNotify } from "../../../../../lib/use-notify";
 import { deptPath } from "../../../../../lib/dept-path";
 import { mockEmployerSubmissionDetail } from "../../../../../mocks/employer/submission-review";
 import { mockUniverse } from "../../../../../mocks/universe";
@@ -13,6 +24,8 @@ export default function DeptSubmissionReviewPage() {
   const params = useParams<{ workspaceSlug: string; submissionId: string }>();
   const submissionId = params?.submissionId ?? "";
   const workspaceSlug = params?.workspaceSlug ?? "";
+  const notify = useNotify();
+  const recordDecision = trpc.employer.recordSubmissionDecision.useMutation();
 
   const detail = React.useMemo(() => mockEmployerSubmissionDetail(submissionId || "sub_unknown"), [submissionId]);
 
@@ -99,13 +112,54 @@ export default function DeptSubmissionReviewPage() {
               {new Date(detail.decision.lastActivityAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
-              <Button type="button" disabled title="Decision actions are disabled in this preview build.">
+              <Button
+                type="button"
+                onClick={() => {
+                  void recordDecision
+                    .mutateAsync({ submissionId, decision: "advance" })
+                    .then(() =>
+                      notify.success({
+                        title: "Recorded",
+                        description: "Advance / shortlist logged (audit trail pending).",
+                      }),
+                    )
+                    .catch((err) => notify.fromTrpcError(err, { title: "Could not record" }));
+                }}
+              >
                 Shortlist
               </Button>
-              <Button type="button" variant="secondary" disabled title="Decision actions are disabled in this preview build.">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => {
+                  void recordDecision
+                    .mutateAsync({ submissionId, decision: "hold" })
+                    .then(() =>
+                      notify.success({
+                        title: "Recorded",
+                        description: "Hold / request changes logged.",
+                      }),
+                    )
+                    .catch((err) => notify.fromTrpcError(err, { title: "Could not record" }));
+                }}
+              >
                 Request changes
               </Button>
-              <Button type="button" variant="destructive" disabled title="Decision actions are disabled in this preview build.">
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={() => {
+                  void recordDecision
+                    .mutateAsync({ submissionId, decision: "reject" })
+                    .then(() =>
+                      notify.success({
+                        title: "Recorded",
+                        description: "Rejection logged.",
+                      }),
+                    )
+                    .catch((err) => notify.fromTrpcError(err, { title: "Could not record" }));
+                }}
+              >
                 Reject
               </Button>
             </div>

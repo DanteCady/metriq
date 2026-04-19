@@ -2,18 +2,18 @@
  * Single demo tenant — reuse across employer, candidate, and admin mocks for a coherent product feel.
  */
 export const mockUniverse = {
-  orgName: "Northwind Labs",
-  orgLegalName: "Northwind Labs, Inc.",
-  orgSlug: "northwind-labs",
-  primaryDomain: "northwindlabs.io",
-  supportEmail: "talent@northwindlabs.io",
+  orgName: "Metriq (demo)",
+  orgLegalName: "Metriq Demo LLC",
+  orgSlug: "metriq",
+  primaryDomain: "demo.metriq.dev",
+  supportEmail: "talent@demo.metriq.dev",
   timezone: "America/New_York",
   dataRegion: "US (East)",
   reviewers: [
-    { id: "rev_01", name: "Aisha Khan", role: "Lead reviewer" as const, email: "aisha.khan@northwindlabs.io" },
-    { id: "rev_02", name: "Marcus Chen", role: "Hiring manager" as const, email: "marcus.chen@northwindlabs.io" },
-    { id: "rev_03", name: "Jordan Lee", role: "Reviewer" as const, email: "jordan.lee@northwindlabs.io" },
-    { id: "rev_04", name: "Sam Rivera", role: "Admin" as const, email: "sam.rivera@northwindlabs.io" },
+    { id: "rev_01", name: "Aisha Khan", role: "Lead reviewer" as const, email: "aisha.khan@demo.metriq.dev" },
+    { id: "rev_02", name: "Marcus Chen", role: "Hiring manager" as const, email: "marcus.chen@demo.metriq.dev" },
+    { id: "rev_03", name: "Jordan Lee", role: "Reviewer" as const, email: "jordan.lee@demo.metriq.dev" },
+    { id: "rev_04", name: "Sam Rivera", role: "Admin" as const, email: "sam.rivera@demo.metriq.dev" },
   ],
   candidateNames: ["Riley Park", "Devon Singh", "Casey Ortiz", "Morgan Ali"],
   auditionTitles: [

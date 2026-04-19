@@ -6,11 +6,21 @@
     "node": ">=20.11.0"
   },
   "scripts": {
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
     "dev": "pnpm -C apps/web dev",
     "build": "pnpm -C apps/web build",
     "start": "pnpm -C apps/web start",
     "lint": "pnpm -C apps/web lint",
-    "typecheck": "pnpm -r --parallel typecheck"
+    "typecheck": "pnpm -r --parallel typecheck",
+    "db:migrate": "pnpm exec dotenvx run -- pnpm -C packages/db run migrate:latest",
+    "db:seed": "pnpm exec dotenvx run -- pnpm -C packages/db run seed",
+    "env:encrypt": "pnpm exec dotenvx encrypt",
+    "env:set": "pnpm exec dotenvx set"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.61.1"
   }
 }
 

@@ -9,12 +9,14 @@ import { Button, PageHeader, useToast } from "@metriq/ui";
 import { AuditionCreationWizard } from "../../../../../components/employer/audition-creation-wizard";
 import { deptPath } from "../../../../../lib/dept-path";
 import { collectDraftValidationIssues, createEmptyDraft, upsertDraft, validateAuditionDraft } from "../../../../../lib/audition-draft";
+import { trpc } from "../../../../../app/providers";
 
 function DeptNewAuditionContent() {
   const params = useParams<{ workspaceSlug: string }>();
   const router = useRouter();
   const slug = params?.workspaceSlug ?? "";
   const { push: toast } = useToast();
+  const upsertRemote = trpc.audition.upsertDraft.useMutation();
 
   const [draft, setDraft] = React.useState(() => createEmptyDraft(""));
 
@@ -42,10 +44,29 @@ function DeptNewAuditionContent() {
       });
       return;
     }
-    upsertDraft(toSave);
-    setDraft(toSave);
-    toast({ title: "Draft saved", description: "You can keep editing from the auditions list.", tone: "success" });
-    router.push(deptPath(slug, `/auditions/${toSave.id}/edit`));
+    void (async () => {
+      try {
+        await upsertRemote.mutateAsync({
+          id: toSave.id,
+          title: toSave.title.trim() || "Untitled",
+          level: toSave.level,
+          template: toSave.template,
+          timeboxMinutes: toSave.timeboxMinutes,
+          stages: toSave.stages,
+        });
+        toast({ title: "Draft saved", description: "Stored in the workspace database.", tone: "success" });
+      } catch {
+        upsertDraft(toSave);
+        toast({
+          title: "Saved locally only",
+          description: "Could not reach the API — draft saved in this browser.",
+          tone: "default",
+        });
+      }
+      upsertDraft(toSave);
+      setDraft(toSave);
+      router.push(deptPath(slug, `/auditions/${toSave.id}/edit`));
+    })();
   };
 
   return (

@@ -6,6 +6,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 
 import { Badge, Button, DataTable, PageHeader, Panel, Toolbar, ToolbarGroup } from "@metriq/ui";
 
+import { trpc } from "../../../../app/providers";
 import { deptPath } from "../../../../lib/dept-path";
 import { listDrafts, type AuditionDraft } from "../../../../lib/audition-draft";
 import type { EmployerAudition } from "../../../../mocks/employer/auditions";
@@ -27,12 +28,37 @@ function isLocalDraftRow(id: string): boolean {
   return id.startsWith("local_");
 }
 
+function mapDbAudition(a: {
+  id: string;
+  title: string;
+  level: string | null;
+  template: string | null;
+  status: string;
+  timebox_minutes: number | null;
+  created_at: unknown;
+}): EmployerAudition {
+  const created = new Date(a.created_at as string | number | Date);
+  return {
+    id: a.id,
+    title: a.title,
+    level: (a.level as EmployerAudition["level"]) ?? "Mid",
+    template: (a.template as EmployerAudition["template"]) ?? "WorkSample_Brief",
+    status:
+      a.status === "published" ? "published" : a.status === "archived" ? "archived" : "draft",
+    timeboxMinutes: a.timebox_minutes ?? 60,
+    createdAt: created.toISOString(),
+  };
+}
+
 export default function DeptAuditionsPage() {
   const params = useParams<{ workspaceSlug: string }>();
   const pathname = usePathname();
   const router = useRouter();
   const slug = params?.workspaceSlug ?? "";
   const base = (p: string) => deptPath(slug, p);
+
+  const { data: serverList = [] } = trpc.audition.list.useQuery(undefined, { enabled: Boolean(slug) });
+  const dbIds = React.useMemo(() => new Set(serverList.map((a) => a.id)), [serverList]);
 
   /** Empty until mount — `listDrafts` reads localStorage and must not run during SSR (hydration mismatch). */
   const [draftRows, setDraftRows] = React.useState<EmployerAudition[]>([]);
@@ -45,13 +71,19 @@ export default function DeptAuditionsPage() {
     setDraftRows(listDrafts(slug).map(draftToRow));
   }, [slug, pathname]);
 
-  const rows = React.useMemo(() => [...draftRows, ...mockEmployerAuditions], [draftRows]);
+  const rows = React.useMemo(() => {
+    const byId = new Map<string, EmployerAudition>();
+    for (const mock of mockEmployerAuditions) byId.set(mock.id, mock);
+    for (const row of serverList) byId.set(row.id, mapDbAudition(row));
+    for (const d of draftRows) byId.set(d.id, d);
+    return [...byId.values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }, [draftRows, serverList]);
 
   return (
     <>
       <PageHeader
         title="Auditions"
-        description="Create proof-aligned assessments (in-session text, choices, ordering, code, lab stubs). Local drafts are stored in this browser until API persistence lands."
+        description="Create proof-aligned assessments (in-session text, choices, ordering, code, lab stubs). Drafts persist to the workspace database when the API is reachable."
         actions={
           <Button type="button" onClick={() => router.push(base("/auditions/new"))}>
             New audition
@@ -69,7 +101,7 @@ export default function DeptAuditionsPage() {
           right={null}
         />
 
-        <Panel title="Audition list" description="Published and draft auditions. Edit is enabled for drafts saved on this device.">
+        <Panel title="Audition list" description="Published and draft auditions. Edit is enabled for drafts stored in the database or saved on this device.">
           <DataTable
             rows={rows}
             getRowKey={(r) => r.id}
@@ -103,7 +135,7 @@ export default function DeptAuditionsPage() {
                 className: "text-right",
                 cell: (r) => (
                   <div className="flex justify-end gap-2">
-                    {isLocalDraftRow(r.id) ? (
+                    {isLocalDraftRow(r.id) || dbIds.has(r.id) ? (
                       <Button size="sm" variant="secondary" type="button" onClick={() => router.push(base(`/auditions/${r.id}/edit`))}>
                         Edit
                       </Button>

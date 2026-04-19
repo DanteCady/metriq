@@ -99,3 +99,44 @@ export async function listSubmissions(
   return { total, items };
 }
 
+export async function createAuditionSubmission(
+  db: Kysely<Database>,
+  input: {
+    audition_id: Uuid;
+    audition_stage_id: string;
+    candidate_id: Uuid;
+  },
+  _scope?: DbScope,
+) {
+  return db
+    .insertInto("submission")
+    .values({
+      audition_id: input.audition_id,
+      audition_stage_id: input.audition_stage_id,
+      candidate_id: input.candidate_id,
+      simulation_id: null,
+      status: "draft",
+      started_at: new Date(),
+      submitted_at: null,
+    })
+    .returningAll()
+    .executeTakeFirstOrThrow();
+}
+
+export async function listSubmissionsByWorkspaceId(
+  db: Kysely<Database>,
+  workspaceId: Uuid,
+  opts: { limit: number; offset: number },
+  _scope?: DbScope,
+) {
+  return db
+    .selectFrom("submission")
+    .innerJoin("audition", "audition.id", "submission.audition_id")
+    .selectAll("submission")
+    .where("audition.workspace_id", "=", workspaceId)
+    .orderBy("submission.created_at", "desc")
+    .limit(opts.limit)
+    .offset(opts.offset)
+    .execute();
+}
+

@@ -27,3 +27,11 @@ export function createDb(config: DbConfig = {}): Kysely<Database> {
   });
 }
 
+let singleton: Kysely<Database> | undefined;
+
+/** Shared app pool (Better Auth + tRPC). Tests should use {@link createDb} for isolation. */
+export function getDb(config: DbConfig = {}): Kysely<Database> {
+  if (!singleton) singleton = createDb(config);
+  return singleton;
+}
+

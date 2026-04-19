@@ -1,20 +1,71 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { AuditionCard, EmptyState, PageHeader, Tabs } from "@metriq/ui";
 
+import { trpc } from "../../../app/providers";
+import { useNotify } from "../../../lib/use-notify";
 import { mockAuditions } from "../../../mocks/candidate/auditions";
 
 type AuditionStatus = "invited" | "active" | "completed";
 
-export default function CandidateAuditionInboxPage() {
+type Row = {
+  auditionId: string;
+  roleTitle: string;
+  companyName: string;
+  estimatedMinutes: number;
+  status: AuditionStatus;
+  submissionId: string;
+};
+
+function CandidateAuditionInboxContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const notify = useNotify();
   const [tab, setTab] = React.useState<AuditionStatus>("active");
 
-  const rows = React.useMemo(() => {
-    return mockAuditions.map((a) => ({
+  const { data: apps = [], refetch } = trpc.candidate.myApplications.useQuery();
+  const redeem = trpc.candidate.redeemInvite.useMutation();
+
+  const inviteHandled = React.useRef(false);
+  React.useEffect(() => {
+    const token = searchParams.get("invite");
+    if (!token || inviteHandled.current) return;
+    inviteHandled.current = true;
+    void redeem
+      .mutateAsync({ token })
+      .then(() => {
+        notify.success({
+          title: "Invite linked",
+          description: "This audition is now on your list.",
+          surface: "toast",
+        });
+        void refetch();
+        router.replace("/candidate/auditions");
+      })
+      .catch((err) => {
+        notify.fromTrpcError(err, { title: "Could not redeem invite" });
+      });
+  }, [searchParams, redeem, notify, router, refetch]);
+
+  const rows = React.useMemo((): Row[] => {
+    const fromDb: Row[] = apps.map((a) => ({
+      auditionId: a.audition_id,
+      roleTitle: a.audition_title,
+      companyName: "Workspace application",
+      estimatedMinutes: a.timebox_minutes ?? 60,
+      status:
+        a.audition_status === "published" && a.application_status === "active"
+          ? "active"
+          : a.application_status === "invited"
+            ? "invited"
+            : "active",
+      submissionId: "",
+    }));
+    const fromMock: Row[] = mockAuditions.map((a) => ({
       auditionId: a.auditionId,
       roleTitle: a.roleTitle,
       companyName: a.companyName,
@@ -22,7 +73,11 @@ export default function CandidateAuditionInboxPage() {
       status: a.status,
       submissionId: a.submissionId,
     }));
-  }, []);
+    const byId = new Map<string, Row>();
+    for (const r of fromMock) byId.set(r.auditionId, r);
+    for (const r of fromDb) byId.set(r.auditionId, r);
+    return [...byId.values()];
+  }, [apps]);
 
   const invited = rows.filter((r) => r.status === "invited");
   const active = rows.filter((r) => r.status === "active");
@@ -94,6 +149,14 @@ export default function CandidateAuditionInboxPage() {
         ) : null}
       </div>
     </>
+  );
+}
+
+export default function CandidateAuditionInboxPage() {
+  return (
+    <Suspense fallback={<PageHeader title="Audition inbox" description="Loading your inbox…" />}>
+      <CandidateAuditionInboxContent />
+    </Suspense>
   );
 }
 

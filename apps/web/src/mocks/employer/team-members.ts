@@ -21,6 +21,6 @@ export const mockEmployerTeamMembers: TeamMemberRow[] = mockUniverse.reviewers.m
 }));
 
 export const mockEmployerTeamInvites = [
-  { email: "priya.n@northwindlabs.io", role: "Reviewer" as const, sentAt: "2026-04-12T15:00:00.000Z" },
-  { email: "eli.b@northwindlabs.io", role: "Hiring manager" as const, sentAt: "2026-04-10T11:20:00.000Z" },
+  { email: "priya.n@demo.metriq.dev", role: "Reviewer" as const, sentAt: "2026-04-12T15:00:00.000Z" },
+  { email: "eli.b@demo.metriq.dev", role: "Hiring manager" as const, sentAt: "2026-04-10T11:20:00.000Z" },
 ];

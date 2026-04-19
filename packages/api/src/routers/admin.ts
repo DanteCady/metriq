@@ -3,14 +3,14 @@ import { z } from "zod";
 import { evaluationQueries, rubricQueries, simulationQueries, submissionQueries } from "@metriq/db";
 import { createSimulationSchema } from "@metriq/validators";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, adminProcedure } from "../trpc";
 
 export const adminRouter = createTRPCRouter({
-  listSimulations: publicProcedure.query(async ({ ctx }) => {
+  listSimulations: adminProcedure.query(async ({ ctx }) => {
     return simulationQueries.listSimulations(ctx.db, ctx.scope);
   }),
 
-  createSimulation: publicProcedure.input(createSimulationSchema).mutation(async ({ ctx, input }) => {
+  createSimulation: adminProcedure.input(createSimulationSchema).mutation(async ({ ctx, input }) => {
     return simulationQueries.createSimulation(ctx.db, {
       title: input.title,
       summary: input.summary,
@@ -21,7 +21,7 @@ export const adminRouter = createTRPCRouter({
     }, ctx.scope);
   }),
 
-  listSubmissions: publicProcedure
+  listSubmissions: adminProcedure
     .input(
       z
         .object({
@@ -38,17 +38,17 @@ export const adminRouter = createTRPCRouter({
       return submissionQueries.listSubmissions(ctx.db, { status, limit, offset }, ctx.scope);
     }),
 
-  getSubmission: publicProcedure.input(z.object({ submissionId: z.string().min(1) })).query(async ({ ctx, input }) => {
+  getSubmission: adminProcedure.input(z.object({ submissionId: z.string().min(1) })).query(async ({ ctx, input }) => {
     return submissionQueries.getSubmissionById(ctx.db, input.submissionId, ctx.scope);
   }),
 
-  getRubricForSimulation: publicProcedure
+  getRubricForSimulation: adminProcedure
     .input(z.object({ simulationId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
       return rubricQueries.getRubricBySimulationId(ctx.db, input.simulationId, ctx.scope);
     }),
 
-  createEvaluation: publicProcedure
+  createEvaluation: adminProcedure
     .input(
       z.object({
         submissionId: z.string().min(1),
